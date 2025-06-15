@@ -1,0 +1,2608 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Računovodstvo Aplikacija</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* CSS Spremenljivke */
+        :root {
+            --barva-ozadja: #f9fafb;
+            --barva-navigacije-ozadje: #ffffff;
+            --barva-navigacije-zavihki-ozadje: #f3f4f6;
+            --barva-besedila-zavihka: #374151;
+            --barva-aktivnega-zavihka-ozadje: #3b82f6;
+            --barva-aktivnega-zavihka-besedilo: #ffffff;
+            --barva-sence: rgba(0, 0, 0, 0.1);
+            --pisava-osnovna: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            
+            --velikost-navigacije-visina: 60px;
+            --odmik-navigacije-zgoraj-spodaj: 0.75rem;
+
+            --barva-napake: #ef4444;
+            --barva-uspeha: #22c55e;
+            --barva-fokusa-obrobe: #3b82f6;
+            --barva-gumba-shrani: #22c55e;
+            --barva-gumba-shrani-hover: #16a34a;
+            --barva-gumba-primarni: #3b82f6;
+            --barva-gumba-primarni-hover: #2563eb;
+            --barva-gumba-preklici-ozadje: #e5e7eb;
+            --barva-gumba-preklici-besedilo: #374151;
+            --barva-gumba-preklici-hover: #d1d5db;
+            --barva-gumba-nevarno: #ef4444;
+            --barva-gumba-nevarno-hover: #dc2626;
+            
+            --barva-kartice-modra-zacetek: #3b82f6;
+            --barva-kartice-modra-konec: #2563eb;
+            --barva-kartice-zelena-zacetek: #22c55e;
+            --barva-kartice-zelena-konec: #16a34a;
+            --barva-kartice-vijolicna-zacetek: #a855f7;
+            --barva-kartice-vijolicna-konec: #9333ea;
+            --barva-kartice-oranzna-zacetek: #f97316;
+            --barva-kartice-oranzna-konec: #ea580c;
+
+            --barva-opozorila-ozadje: #fffbeb;
+            --barva-opozorila-obroba: #facc15;
+            --barva-opozorila-besedilo: #713f12;
+            --barva-opozorila-ikona: #f59e0b;
+
+            --barva-fab-rumena: #eab308;
+            --barva-fab-rumena-hover: #ca8a04;
+            --barva-fab-rdeca: #ef4444;
+            --barva-fab-rdeca-hover: #dc2626;
+            --barva-fab-tooltip-ozadje: #1f2937;
+
+            --barva-tabele-glava-ozadje: #f9fafb;
+            --barva-tabele-glava-besedilo: #6b7280;
+            --barva-tabele-obroba-vrstice: #e5e7eb;
+            --barva-tabele-besedilo-celice: #111827;
+
+            --barva-modala-ozadje-overlay: rgba(0, 0, 0, 0.6);
+            --barva-modala-vsebina-ozadje: #ffffff;
+
+            --barva-toast-uspeh-ozadje: #ecfdf5; /* green-50 */
+            --barva-toast-uspeh-besedilo: #065f46; /* green-800 */
+            --barva-toast-uspeh-ikona: var(--barva-uspeha);
+            --barva-toast-napaka-ozadje: #fff1f2; /* red-50 */
+            --barva-toast-napaka-besedilo: #991b1b; /* red-800 */
+            --barva-toast-napaka-ikona: var(--barva-napake);
+
+            --modal-form-group-margin-bottom: 0.75rem; /* Zmanjšano za manjše razmike */
+            --modal-max-width: 850px; /* Povečano za širša okna - še širše */
+            --modal-padding: 1.5rem;
+        }
+
+        /* Global Scrollbar Styles (po vaši želji) */
+        * {
+            /* Make the scrollbar thin */
+            scrollbar-width: thin;
+        }
+
+        /* This will affect the scrollbar in Webkit browsers like Chrome, Edge, and Safari */
+        *::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        *::-webkit-scrollbar-thumb {
+            border-radius: 20px;
+        }
+        /* Osnovni reset in stili za telo */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--pisava-osnovna);
+            line-height: 1.6;
+            background-color: var(--barva-ozadja);
+            color: #333;
+            padding-top: calc(var(--velikost-navigacije-visina) + (2 * var(--odmik-navigacije-zgoraj-spodaj)) + 2rem);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Navigacijska vrstica */
+        .nav {
+            background-color: var(--barva-navigacije-ozadje);
+            box-shadow: 0 2px 4px var(--barva-sence);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: var(--odmik-navigacije-zgoraj-spodaj) 0;
+            width: 100vw; /* Dodano iz vašega predloga */
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .nav-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            background-color: var(--barva-navigacije-zavihki-ozadje);
+            padding: 0.5rem;
+            border-radius: 50px;
+        }
+
+        .nav-tab-button {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.2rem;
+            border: none;
+            background-color: transparent;
+            color: var(--barva-besedila-zavihka);
+            font-size: 0.9rem;
+            font-weight: 500;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+            white-space: nowrap;
+        }
+
+        .nav-tab-button:hover {
+            background-color: #d1d5db;
+        }
+
+        .nav-tab-button.active {
+            background-color: var(--barva-aktivnega-zavihka-ozadje);
+            color: var(--barva-aktivnega-zavihka-besedilo);
+        }
+
+        .nav-tab-button i {
+            font-size: 1rem;
+        }
+
+        /* Vsebina zavihkov */
+        .tab-pane {
+            display: none;
+            margin-top: 1.5rem;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+        
+        .content-section {
+            background-color: #fff;
+            padding: 1.5rem 2rem;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px var(--barva-sence);
+            margin-bottom: 1.5rem;
+        }
+
+        .content-section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .content-section-header h2 {
+            font-size: 1.5rem;
+            color: #111827;
+            margin: 0;
+        }
+
+        .button {
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+        .button i { font-size: 0.9rem; }
+
+        .button-primary {
+            background-color: var(--barva-gumba-primarni);
+            color: white;
+        }
+        .button-primary:hover {
+            background-color: var(--barva-gumba-primarni-hover);
+        }
+        .button-primary:disabled {
+            background-color: #9ca3af; /* gray-400 */
+            cursor: not-allowed;
+        }
+        
+        .button-success {
+            background-color: var(--barva-gumba-shrani);
+            color: white;
+        }
+        .button-success:hover {
+            background-color: var(--barva-gumba-shrani-hover);
+        }
+
+        .button-cancel {
+            background-color: var(--barva-gumba-preklici-ozadje);
+            color: var(--barva-gumba-preklici-besedilo);
+        }
+        .button-cancel:hover {
+            background-color: var(--barva-gumba-preklici-hover);
+        }
+        .button-danger {
+            background-color: var(--barva-gumba-nevarno);
+            color: white;
+        }
+        .button-danger:hover {
+            background-color: var(--barva-gumba-nevarno-hover);
+        }
+        .button-sm { /* Manjši gumb za akcije v tabelah/seznamih */
+            padding: 0.3rem 0.7rem;
+            font-size: 0.8rem;
+            border-radius: 4px;
+        }
+        .button-sm {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.8rem;
+            border-radius: 20px; /* Bolj zaokroženi */
+            gap: 0.4rem;
+        }
+        .button-sm i { font-size: 0.85rem; }
+        .button-sm.icon-only { /* Za gumbe, ki imajo samo ikono */
+            padding: 0.4rem; width: calc(0.85rem + 2 * 0.4rem); height: calc(0.85rem + 2 * 0.4rem); gap: 0;
+        }
+
+
+        /* Stili za obrazce */
+        .form-section {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px var(--barva-sence);
+        }
+        .form-section h2 {
+            font-size: 1.5rem;
+            color: #111827;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #374151;
+        }
+
+        .form-group label .required-asterisk {
+            color: var(--barva-napake);
+            margin-left: 0.25rem;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="tel"],
+        .form-group input[type="number"],
+        .form-group input[type="date"],
+        .form-group input[type="email"],
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+            background-color: #fff;
+        }
+        .form-group textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+        /* Izboljšava za date input */
+        .form-group input[type="date"] {
+            position: relative;
+            min-height: calc(1.5em + 1.5rem + 2px); /* Uskladi višino z drugimi inputi */
+        }
+        .form-group input[type="date"]::-webkit-calendar-picker-indicator {
+            position: absolute;
+            right: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 0.5rem;
+            cursor: pointer;
+            opacity: 0.7;
+        }
+         .form-group input[type="date"]::-webkit-calendar-picker-indicator:hover {
+            opacity: 1;
+        }
+
+
+        .form-group input[type="text"]:focus,
+        .form-group input[type="tel"]:focus,
+        .form-group input[type="number"]:focus,
+        .form-group input[type="date"]:focus,
+        .form-group input[type="email"]:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: var(--barva-fokusa-obrobe);
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.25);
+        }
+
+        .form-group input.invalid,
+        .form-group textarea.invalid,
+        .form-group select.invalid {
+            border-color: var(--barva-napake);
+        }
+        .form-group input.invalid:focus,
+        .form-group textarea.invalid:focus,
+        .form-group select.invalid:focus {
+            box-shadow: 0 0 0 0.2rem rgba(239, 68, 68, 0.25);
+        }
+
+        .error-message {
+            display: block; /* Lahko tudi flex za lažje poravnavanje ikone, če je potrebno */
+            color: var(--barva-opozorila-besedilo); /* Spremenjeno na barvo opozorilnega besedila */
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+            min-height: 1.2em;
+            padding-left: 1.6em; /* Prostor za ikono */
+            position: relative; /* Za pozicioniranje ikone */
+        }
+        .error-message::before {
+            content: "\f071"; /* FontAwesome koda za exclamation-triangle */
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900; /* Solid ikona */
+            color: var(--barva-opozorila-ikona); /* Barva ikone opozorila */
+            position: absolute;
+            left: 0.2em; /* Majhen odmik od levega roba */
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.9em; /* Prilagodi velikost ikone glede na besedilo */
+        }
+        /* Skrij ikono, če ni sporočila o napaki */
+        .error-message:empty::before {
+            display: none;
+        }
+
+        .submit-button {
+            background-color: var(--barva-gumba-shrani);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+        }
+        .submit-button:hover {
+            background-color: var(--barva-gumba-shrani-hover);
+        }
+
+        /* Dashboard Kartice (Pregled) */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-card {
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .dashboard-card.blue { background: linear-gradient(135deg, var(--barva-kartice-modra-zacetek), var(--barva-kartice-modra-konec)); }
+        .dashboard-card.green { background: linear-gradient(135deg, var(--barva-kartice-zelena-zacetek), var(--barva-kartice-zelena-konec)); }
+        .dashboard-card.purple { background: linear-gradient(135deg, var(--barva-kartice-vijolicna-zacetek), var(--barva-kartice-vijolicna-konec)); }
+        .dashboard-card.orange { background: linear-gradient(135deg, var(--barva-kartice-oranzna-zacetek), var(--barva-kartice-oranzna-konec)); }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+        .card-header p { font-size: 0.875rem; opacity: 0.9; margin-bottom: 0.25rem; }
+        .card-header h3 { font-size: 2rem; font-weight: 700; line-height: 1.2; }
+        .card-header .icon { font-size: 1.75rem; opacity: 0.7; }
+        .card-footer { font-size: 0.875rem; opacity: 0.9; margin-top: auto; }
+
+        /* Grafi (Pregled) */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .chart-container h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem; color: #111827;}
+        .chart-placeholder { height: 250px; display: flex; align-items: center; justify-content: center; color: var(--barva-besedila-zavihka); background-color: #f9fafb; border-radius: 4px;}
+
+        /* Tabele */
+        .table-section .content-section-header h3 { font-size: 1.25rem; font-weight: 600; margin:0; color: #111827;}
+        .table-container { overflow-x: auto; }
+        table {
+            width: 100%;
+            min-width: 600px;
+            border-collapse: collapse;
+        }
+        th {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--barva-tabele-glava-besedilo);
+            background-color: var(--barva-tabele-glava-ozadje);
+            border-bottom: 2px solid var(--barva-tabele-obroba-vrstice);
+        }
+        td {
+            padding: 1rem 1rem;
+            white-space: nowrap;
+            color: var(--barva-tabele-besedilo-celice);
+            border-bottom: 1px solid var(--barva-tabele-obroba-vrstice);
+        }
+        tbody tr:last-child td { border-bottom: none; }
+        tbody tr:hover { background-color: #f9fafb; }
+        td .actions-cell { /* Za gumbe v tabeli */
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        /* Opozorila */
+        .warning-messages-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .warning-message {
+            background-color: var(--barva-opozorila-ozadje);
+            border-left: 4px solid var(--barva-opozorila-obroba);
+            padding: 1rem;
+            display: flex;
+            align-items: flex-start;
+            border-radius: 4px;
+        }
+        .warning-message i {
+            color: var(--barva-opozorila-ikona);
+            margin-right: 0.75rem;
+            font-size: 1.25rem;
+            margin-top: 0.125rem;
+        }
+        .warning-message p {
+            color: var(--barva-opozorila-besedilo);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* Prazna stanja */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+        }
+        .empty-state i {
+            font-size: 3rem;
+            color: #d1d5db;
+            margin-bottom: 1rem;
+        }
+        .empty-state h3 {
+            font-size: 1.25rem;
+            color: #374151;
+            margin-bottom: 0.5rem;
+        }
+        .empty-state p {
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+
+        /* Seznami/Kartice za storitve, partnerje */
+        .item-grid { /* Uporabimo grid za boljši prikaz kartic */
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        .item-card {
+            background-color: #f9fafb;
+            padding: 1rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+        .item-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+        .item-card-header .item-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #111827;
+        }
+        .item-card-actions .button {
+            margin-left: 0.5rem;
+        }
+        .item-card-body .item-detail {
+            font-size: 0.9rem;
+            color: #4b5563;
+            margin-bottom: 0.25rem;
+        }
+        .item-card-body .item-detail strong {
+            color: #374151;
+        }
+
+
+        /* Lebdeči akcijski gumbi (FAB) */
+        .fab-container {
+            position: fixed;
+            right: 1.5rem;
+            bottom: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            z-index: 900;
+        }
+        .fab-button {
+            width: 3.5rem;
+            height: 3.5rem;
+            border-radius: 50%;
+            background-color: var(--barva-gumba-shrani);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: background-color 0.2s, transform 0.1s;
+            position: relative;
+        }
+        .fab-button:hover {
+            transform: translateY(-2px);
+        }
+        .fab-button:active {
+            transform: translateY(0);
+        }
+        .fab-button i { font-size: 1.25rem; }
+
+        .fab-button.yellow { background-color: var(--barva-fab-rumena); }
+        .fab-button.yellow:hover { background-color: var(--barva-fab-rumena-hover); }
+        .fab-button.red { background-color: var(--barva-fab-rdeca); }
+        .fab-button.red:hover { background-color: var(--barva-fab-rdeca-hover); }
+
+        .fab-button::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            right: 100%;
+            top: 50%;
+            transform: translateY(-50%) translateX(-0.5rem);
+            background-color: var(--barva-fab-tooltip-ozadje);
+            color: white;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s, visibility 0.2s;
+            pointer-events: none;
+        }
+        .fab-button:hover::after {
+            opacity: 1;
+            visibility: visible;
+        }
+        #uploadInput { display: none; }
+
+        /* Modalna okna */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1050;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: var(--barva-modala-ozadje-overlay);
+        }
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background-color: var(--barva-modala-vsebina-ozadje);
+            margin: auto;
+            padding: var(--modal-padding);
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            width: 90%;
+            max-width: var(--modal-max-width);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            max-height: calc(100vh - 2rem); /* Max višina z nekaj odmika */
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 1rem;
+            margin-bottom: 1rem; /* Zmanjšano */
+            border-bottom: 1px solid #e5e7eb;
+            flex-shrink: 0;
+        }
+        .modal-body {
+            overflow-y: auto; /* Omogoči drsenje, če je vsebina predolga */
+            flex-grow: 1;
+            padding-right: 0.75rem; /* Dodan odmik na desni strani vsebine pred drsnikom */
+        }
+        .modal-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: #111827;
+        }
+        .modal-close-button {
+            font-size: 1.75rem;
+            font-weight: bold;
+            color: #6b7280;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.25rem 0.5rem;
+            line-height: 1;
+        }
+        .modal-close-button:hover {
+            color: #111827;
+        }
+        .modal-footer {
+            padding-top: 1rem; /* Zmanjšano */
+            margin-top: 1rem; /* Zmanjšano */
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.75rem;
+            flex-shrink: 0;
+        }
+        /* Zmanjšaj odmik za form-group znotraj modalov */
+        .modal .form-group {
+            margin-bottom: var(--modal-form-group-margin-bottom);
+        }
+        .modal-body {
+            /* scrollbar-width in scrollbar-color sta zdaj globalna ali pa ju Firefox ureja preko * { scrollbar-width: thin; } */
+            padding-right: 0.75rem; 
+        }
+        /* Za postavitev dveh elementov v vrstico v modalih */
+        .modal-form-row { display: flex; gap: 1rem; flex-wrap: wrap; }
+        .modal-form-row .form-group { flex: 1; min-width: 200px; /* Prilagodite po potrebi */ }
+        .modal-form-row .form-group.full-width { flex-basis: 100%; }
+
+
+        /* Stili za postavke računa v modalu - IZBOLJŠANO */
+        .invoice-items-section { /* Ovoj za glavo in vrstice postavk */
+            margin-top: 1rem;
+            border: 1px solid var(--barva-tabele-obroba-vrstice);
+            border-radius: 6px;
+            overflow: hidden; /* Za pravilen prikaz border-radius */
+        }
+
+        .invoice-item-header-row,
+        .invoice-item-row {
+            display: flex;
+            align-items: center;
+            padding: 0.6rem 0.8rem;
+            gap: 0.75rem;
+        }
+
+        .invoice-item-header-row {
+            background-color: var(--barva-tabele-glava-ozadje);
+            color: var(--barva-tabele-glava-besedilo);
+            font-size: 0.75rem; /* Prilagojena velikost za glavo postavk */
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            border-bottom: 1px solid var(--barva-tabele-obroba-vrstice);
+        }
+
+        .invoice-item-row {
+            background-color: #ffffff; /* Ozadje vrstice */
+        }
+        .invoice-item-row:not(:last-child) {
+            border-bottom: 1px solid #f3f4f6; /* Svetla črta med vrsticami */
+        }
+
+        /* Definicije širin stolpcev */
+        .invoice-item-col.item-service     { flex: 3; min-width: 180px; }
+        .invoice-item-col.item-quantity    { flex: 1; min-width: 80px; } /* Prilagojena širina za količino */
+        .invoice-item-col.item-price       { flex: 1.5; min-width: 100px; }
+        .invoice-item-col.item-total       { flex: 1.5; min-width: 100px; }
+        .invoice-item-col.item-actions     { flex: 0 0 auto; width: 38px; display: flex; justify-content: center; }
+
+        /* Stili za inpute/selecte znotraj postavk, da se ujemajo z ostalimi .form-control */
+        .invoice-item-row .form-control {
+            width: 100%; /* Naj zavzamejo celotno širino svojega .invoice-item-col */
+            padding: 0.5rem 0.75rem; /* Kompaktnejši padding */
+            font-size: 0.9rem; /* Rahlo manjša pisava */
+            border-radius: 4px; /* Manj zaokroženi robovi */
+            border: 1px solid #d1d5db; /* Standardna obroba */
+            background-color: #fff;
+            height: auto; /* Višina naj se prilagodi vsebini */
+        }
+        .invoice-item-row input[type="text"][readonly].form-control {
+            background-color: #f9fafb; /* Svetlejše ozadje za readonly, podobno kot drugje */
+            cursor: default;
+        }
+        .invoice-item-row .item-price input.form-control, /* Za desno poravnavo vsebine */
+        .invoice-item-row .item-total input.form-control {
+            text-align: right;
+        }
+
+        /* Gumb za brisanje v postavkah */
+        .invoice-item-row .delete-item-btn.button-sm.icon-only {
+            width: calc(0.9em + 1rem + 2px); /* Višina naj se ujema z .form-control v vrstici */
+            height: calc(0.9em + 1rem + 2px);
+            padding: 0.3rem;
+            border-radius: 4px; /* Ujemanje z inputi */
+            background-color: transparent; /* Brez ozadja, samo ikona */
+            color: var(--barva-gumba-nevarno);
+            border: 1px solid transparent; /* Za hover efekt */
+        }
+        .invoice-item-row .delete-item-btn.button-sm.icon-only:hover {
+            background-color: #fee2e2; /* Svetlo rdeče ozadje ob hover */
+            border-color: var(--barva-gumba-nevarno);
+        }
+        .invoice-item-row .delete-item-btn.button-sm.icon-only i {
+            font-size: 0.85rem; /* Prilagojena velikost ikone */
+        }
+
+
+        /* Toast sporočila */
+        .toast-container {
+            position: fixed;
+            bottom: 1.5rem; /* Spremenjeno iz top */
+            left: 50%;      /* Dodano */
+            transform: translateX(-50%); /* Dodano za centriranje */
+            z-index: 1100; /* Nad vsem ostalim */
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        .toast {
+            min-width: 280px;
+            max-width: 350px;
+            padding: 1rem;
+            border-radius: 6px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: flex-start; /* Za poravnavo ikone z vrhom besedila */
+            opacity: 0;
+            transform: translateY(100%) scale(0.95); /* Spremenjeno iz translateX, dodan scale */
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0) scale(1); /* Spremenjeno */
+        }
+        .toast.success {
+            background-color: var(--barva-toast-uspeh-ozadje);
+            color: var(--barva-toast-uspeh-besedilo);
+            border-left: 4px solid var(--barva-uspeha);
+        }
+        .toast.error {
+            background-color: var(--barva-toast-napaka-ozadje);
+            color: var(--barva-toast-napaka-besedilo);
+            border-left: 4px solid var(--barva-napake);
+        }
+        .toast-icon {
+            margin-right: 0.75rem;
+            font-size: 1.25rem;
+            margin-top: 0.125rem; /* Fina nastavitev poravnave */
+        }
+        .toast.success .toast-icon { color: var(--barva-toast-uspeh-ikona); }
+        .toast.error .toast-icon { color: var(--barva-toast-napaka-ikona); }
+        .toast-message {
+            flex-grow: 1;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        .toast-close-button {
+            margin-left: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: inherit; /* Podeduje barvo od .toast.success ali .toast.error */
+            opacity: 0.7;
+        }
+        .toast-close-button:hover {
+            opacity: 1;
+        }
+
+
+        /* Odzivnost */
+        @media (max-width: 768px) {
+            .nav-tab-button span { display: none; }
+            .nav-tab-button { padding: 0.6rem 0.8rem; }
+            body {
+                padding-top: calc(var(--velikost-navigacije-visina) + (2 * var(--odmik-navigacije-zgoraj-spodaj)) + 1rem);
+            }
+            .content-section-header { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+            .content-section-header .button { width: 100%; justify-content: center; } /* Prilagojeno za splošni .button */
+            .dashboard-grid { grid-template-columns: 1fr; }
+            .modal-content { width: 95%; padding: 1.5rem; }
+            .item-grid { grid-template-columns: 1fr; } /* Kartice ena pod drugo na mobilnih */
+        }
+         @media (max-width: 480px) {
+            .nav-tabs { gap: 0.25rem; justify-content: space-around; }
+            .nav-tab-button { padding: 0.5rem 0.6rem; }
+            .container { padding: 0 1rem; }
+            .content-section { padding: 1rem 1.25rem; }
+            .form-section { padding: 1.5rem; }
+            .fab-container { right: 1rem; bottom: 1rem; }
+            .fab-button { width: 3rem; height: 3rem; }
+            .fab-button i { font-size: 1.1rem; }
+            .modal-header h2 { font-size: 1.25rem; }
+            .modal-footer { flex-direction: column; gap: 0.5rem; }
+            .modal-footer .button { width: 100%; justify-content: center; }
+            .toast-container {
+                left: 1rem;
+                right: 1rem;
+                bottom: 1rem; /* Ostane spodaj */
+                width: auto;
+                transform: none; /* Ni več translateX(-50%) */
+                align-items: stretch; /* Toasti naj se raztegnejo */
+            }
+            .toast { min-width: 0; width: 100%;}
+            /* Na mobilnih napravah en element na vrstico v modalih */
+            .modal-form-row { flex-direction: column; gap: 0; }
+            .modal-form-row .form-group { min-width: 100%; }
+
+         }
+
+    </style>
+</head>
+<body>
+
+    <nav class="nav">
+        <div class="nav-container">
+            <div class="nav-tabs">
+                <button class="nav-tab-button active" data-tab="pregled">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Pregled</span>
+                </button>
+                <button class="nav-tab-button" data-tab="racuni">
+                    <i class="fas fa-file-invoice"></i>
+                    <span>Računi</span>
+                </button>
+                <button class="nav-tab-button" data-tab="partnerji">
+                    <i class="fas fa-building"></i>
+                    <span>Poslovni partnerji</span>
+                </button>
+                <button class="nav-tab-button" data-tab="storitve">
+                    <i class="fas fa-briefcase"></i>
+                    <span>Storitve</span>
+                </button>
+                <button class="nav-tab-button" data-tab="podjetja">
+                    <i class="fas fa-industry"></i>
+                    <span>Moja podjetja</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="container">
+            <!-- ZAVIHEK: PREGLED -->
+            <section id="pregled" class="tab-pane active">
+                <div class="dashboard-grid">
+                    <div class="dashboard-card blue">
+                        <div class="card-header">
+                            <div>
+                                <p>Število računov</p>
+                                <h3 id="dashboardInvoiceCount">0</h3>
+                            </div>
+                            <div class="icon"><i class="fas fa-file-alt"></i></div>
+                        </div>
+                        <div class="card-footer">
+                            <span id="dashboardLastInvoiceDate">Ni izdanih računov</span>
+                        </div>
+                    </div>
+                    <div class="dashboard-card green">
+                        <div class="card-header">
+                            <div>
+                                <p>Skupni zaslužek</p>
+                                <h3 id="dashboardTotalEarnings">0,00 €</h3>
+                            </div>
+                            <div class="icon"><i class="fas fa-euro-sign"></i></div>
+                        </div>
+                        <div class="card-footer">
+                            <span id="dashboardAverageInvoiceValue">Povp. vrednost: 0,00 €</span>
+                        </div>
+                    </div>
+                    <div class="dashboard-card purple">
+                        <div class="card-header">
+                            <div>
+                                <p>Poslovni partnerji</p>
+                                <h3 id="dashboardPartnerCount">0</h3>
+                            </div>
+                            <div class="icon"><i class="fas fa-handshake"></i></div>
+                        </div>
+                        <div class="card-footer">
+                            <span id="dashboardActivePartnersCount">Aktivnih: 0</span>
+                        </div>
+                    </div>
+                    <div class="dashboard-card orange">
+                        <div class="card-header">
+                            <div>
+                                <p>Število storitev</p>
+                                <h3 id="dashboardServiceCount">0</h3>
+                            </div>
+                            <div class="icon"><i class="fas fa-cogs"></i></div>
+                        </div>
+                        <div class="card-footer">
+                            <span id="dashboardActiveServicesCount">Aktivnih: 0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="charts-grid">
+                    <div class="chart-container content-section">
+                        <h3>Zaslužek po mesecih</h3>
+                        <div class="chart-placeholder">
+                            <p>Graf bo prikazan tukaj.</p>
+                        </div>
+                    </div>
+                    <div class="chart-container content-section">
+                        <h3>Top partnerji</h3>
+                        <div class="chart-placeholder">
+                            <p>Graf bo prikazan tukaj.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-section table-section">
+                    <div class="content-section-header">
+                        <h3>Nedavni računi</h3>
+                        <button id="exportCsvButton" class="button button-primary">
+                            <i class="fas fa-download"></i>
+                            <span>Izvozi CSV</span>
+                        </button>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Št. računa</th>
+                                    <th>Partner</th>
+                                    <th>Datum izdaje</th>
+                                    <th>Zapadlost</th>
+                                    <th>Znesek (€)</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recentInvoicesTableBody">
+                                <!-- Dinamično dodane vrstice -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ZAVIHEK: RAČUNI -->
+            <section id="racuni" class="tab-pane">
+                <div class="content-section">
+                    <div class="content-section-header">
+                        <h2>Računi</h2>
+                        <button id="createInvoiceBtn" class="button button-primary">
+                            <i class="fas fa-plus"></i>
+                            <span>Ustvari račun</span>
+                        </button>
+                    </div>
+                    
+                    <div class="warning-messages-container" id="invoiceWarningsContainer">
+                        <!-- Opozorila se dodajo dinamično -->
+                    </div>
+
+                    <div id="invoicesListContainer">
+                        <div class="table-container">
+                             <table>
+                                <thead>
+                                    <tr>
+                                        <th>Številka računa</th>
+                                        <th>Plačnik</th>
+                                        <th>Znesek (€)</th>
+                                        <th></th> <!-- Prazen header za Akcije -->
+                                    </tr>
+                                </thead>
+                                <tbody id="allInvoicesTableBody">
+                                    <!-- Dinamično dodane vrstice -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="empty-state" id="invoicesEmptyState">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                            <h3>Ni izdanih računov</h3>
+                            <p>Začnite z ustvarjanjem prvega računa s klikom na gumb "Ustvari račun".</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ZAVIHEK: POSLOVNI PARTNERJI -->
+            <section id="partnerji" class="tab-pane">
+                <div class="content-section">
+                    <div class="content-section-header">
+                        <h2>Poslovni partnerji</h2>
+                        <button id="addPartnerBtn" class="button button-primary">
+                            <i class="fas fa-user-plus"></i>
+                            <span>Dodaj partnerja</span>
+                        </button>
+                    </div>
+                    <div id="partnersListContainer" class="item-grid">
+                        <!-- Dinamično dodane kartice partnerjev -->
+                    </div>
+                    <div class="empty-state" id="partnersEmptyState">
+                        <i class="fas fa-users"></i>
+                        <h3>Ni dodanih partnerjev</h3>
+                        <p>Dodajte svoje prvo partnersko podjetje.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ZAVIHEK: STORITVE -->
+            <section id="storitve" class="tab-pane">
+                <div class="content-section">
+                    <div class="content-section-header">
+                        <h2>Storitve</h2>
+                        <button id="addServiceBtn" class="button button-primary">
+                            <i class="fas fa-concierge-bell"></i>
+                            <span>Dodaj storitev</span>
+                        </button>
+                    </div>
+                    <div id="servicesListContainer" class="item-grid">
+                        <!-- Dinamično dodane kartice storitev -->
+                    </div>
+                    <div class="empty-state" id="servicesEmptyState">
+                        <i class="fas fa-tools"></i>
+                        <h3>Ni dodanih storitev</h3>
+                        <p>Dodajte svojo prvo storitev ali izdelek.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ZAVIHEK: MOJE PODJETJE -->
+            <section id="podjetja" class="tab-pane">
+                <div class="content-section">
+                    <div class="content-section-header">
+                        <h2>Moja podjetja</h2>
+                        <button id="addCompanyBtn" class="button button-primary">
+                            <i class="fas fa-plus-circle"></i>
+                            <span>Dodaj podjetje</span>
+                        </button>
+                    </div>
+                    <div id="companiesListContainer" class="item-grid">
+                        <!-- Dinamično dodane kartice podjetij -->
+                    </div>
+                    <div class="empty-state" id="companiesEmptyState">
+                        <i class="fas fa-industry"></i>
+                        <h3>Ni dodanih podjetij</h3>
+                        <p>Dodajte podatke o svojem prvem podjetju.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Lebdeči akcijski gumbi (FAB) -->
+    <div class="fab-container">
+        <button class="fab-button" id="fabDownload" data-tooltip="Prenesi podatke">
+            <i class="fas fa-download"></i>
+        </button>
+        <button class="fab-button yellow" id="fabUpload" data-tooltip="Naloži podatke">
+            <i class="fas fa-upload"></i>
+        </button>
+        <input type="file" id="uploadInput" accept=".json">
+        <button class="fab-button red" id="fabDelete" data-tooltip="Izbriši vse podatke">
+            <i class="fas fa-trash-alt"></i>
+        </button>
+    </div>
+
+    <!-- Modalno okno -->
+    <div id="genericModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle"></h2>
+                <button class="modal-close-button" id="modalCloseBtn">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent">
+                <!-- Vsebina modala bo vstavljena tukaj -->
+            </div>
+            <div class="modal-footer" id="modalFooterContent">
+                <!-- Gumbi za modal bodo vstavljeni tukaj -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+
+    <script>
+        // --- Globalni podatki aplikacije ---
+        let appData = {
+            companies: [], // Spremenjeno iz companyInfo: {}
+            services: [],
+            partners: [],
+            invoices: []
+        };
+
+        // --- Funkcije za localStorage ---
+        function saveDataToLocalStorage() {
+            localStorage.setItem('racunovodstvoAppData', JSON.stringify(appData));
+            console.log("Podatki shranjeni v localStorage:", appData);
+        }
+
+        function loadDataFromLocalStorage() {
+            const data = localStorage.getItem('racunovodstvoAppData');
+            if (data) {
+                try {
+                    let tempData = JSON.parse(data);
+                    
+                    // Pravilno ravnanje s podjetji: migracija in nalaganje
+                    if (tempData.companyInfo && (!tempData.companies || tempData.companies.length === 0)) {
+                        // Migriraj iz starega objekta companyInfo, če obstaja in če je seznam companies prazen ali manjka
+                        if (Object.keys(tempData.companyInfo).length > 0) {
+                            // Staremu companyInfo objektu dodeli ID ob migraciji
+                            appData.companies = [{ ...tempData.companyInfo, id: generateUniqueId('mig_comp_') }];
+                        } else {
+                            appData.companies = [];
+                        }
+                    } else {
+                        // Uporabi obstoječi seznam companies, če obstaja
+                        appData.companies = tempData.companies || [];
+                    }
+
+                    appData.services = tempData.services || [];
+                    appData.partners = tempData.partners || [];
+                    appData.invoices = tempData.invoices || [];
+
+                    // Zagotovi, da imajo vsi elementi v seznamih ID-je
+                    const ensureIds = (items, prefix) => {
+                        return items.map(item => {
+                            if (!item.id) {
+                                console.warn(`Elementu v '${prefix}' manjka ID, dodeljujem novega:`, item);
+                                item.id = generateUniqueId(prefix);
+                            }
+                            return item;
+                        });
+                    };
+
+                    appData.companies = ensureIds(appData.companies, 'comp_');
+                    appData.services = ensureIds(appData.services, 'serv_');
+                    appData.partners = ensureIds(appData.partners, 'part_');
+                    appData.invoices = ensureIds(appData.invoices, 'inv_');
+
+                    console.log("Podatki naloženi iz localStorage:", appData);
+                } catch (e) {
+                    console.error("Napaka pri razčlenjevanju podatkov iz localStorage:", e);
+                    appData = { companies: [], services: [], partners: [], invoices: [] };
+                }
+            } else {
+                // Če ni podatkov, inicializiraj s praznimi seznami
+                appData = { companies: [], services: [], partners: [], invoices: [] };
+            }
+        }
+        
+        function refreshAllUI() {
+            renderCompaniesList(); // Novo za podjetja
+            renderServicesList();
+            renderPartnersList();
+            renderInvoicesTable();
+            renderAllInvoicesTable();
+            updateDashboardCards();
+            checkInitialWarnings();
+        }
+
+        // --- Toast sporočila ---
+        const toastContainer = document.getElementById('toastContainer');
+        function showToast(message, type = 'success', duration = 3000) {
+            if (!toastContainer) return;
+
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`; 
+            
+            let iconClass = 'fas fa-check-circle'; 
+            if (type === 'error') {
+                iconClass = 'fas fa-times-circle';
+            }
+
+            toast.innerHTML = `
+                <i class="toast-icon ${iconClass}"></i>
+                <div class="toast-message">${message}</div>
+                <button class="toast-close-button">&times;</button>
+            `;
+            toastContainer.appendChild(toast);
+
+            setTimeout(() => toast.classList.add('show'), 10);
+
+            const closeButton = toast.querySelector('.toast-close-button');
+            closeButton.addEventListener('click', () => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300); 
+            });
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, duration);
+        }
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const tabButtons = document.querySelectorAll('.nav-tab-button');
+            const tabPanes = document.querySelectorAll('.tab-pane');
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabPanes.forEach(pane => pane.classList.remove('active'));
+                    this.classList.add('active');
+                    const targetTab = this.getAttribute('data-tab');
+                    const targetPane = document.getElementById(targetTab);
+                    if (targetPane) {
+                        targetPane.classList.add('active');
+                    } else {
+                        console.error(`Panel z ID '${targetTab}' ni bil najden.`);
+                    }
+                });
+            });
+            
+            loadDataFromLocalStorage(); 
+            refreshAllUI(); // Kličemo refresh tukaj, da se UI posodobi po nalaganju podatkov
+
+            // Odstranjen event listener za staro formo #companyForm
+            // Zdaj se upravlja preko modalov in renderCompaniesList
+
+            setupFabButtons();
+            setupModalTriggers();
+
+            const modalCloseBtn = document.getElementById('modalCloseBtn');
+            const genericModalEl = document.getElementById('genericModal'); 
+            if (modalCloseBtn && genericModalEl) {
+                modalCloseBtn.addEventListener('click', closeModal);
+                genericModalEl.addEventListener('click', function(event) {
+                    if (event.target === genericModalEl) {
+                        closeModal();
+                    }
+                });
+            }
+        }); 
+
+        function validateField(input, errorElement, fieldConfig) {
+            let errorMessage = '';
+            if (!input) return true; 
+            input.value = input.value.trimStart();
+            input.removeAttribute('title'); // Počisti prejšnji title
+            const value = input.value;
+
+            if (fieldConfig.required && value === '') {
+                errorMessage = `Polje '${fieldConfig.label}' je obvezno.`;
+            } else if (value !== '' && fieldConfig.maxLength && value.length > fieldConfig.maxLength) {
+                errorMessage = `Vnos za polje '${fieldConfig.label}' je predolg (največ ${fieldConfig.maxLength} znakov).`;
+            } else if (value !== '' && fieldConfig.type === 'number' && isNaN(parseFloat(value))) {
+                errorMessage = `Vnesite veljavno število za polje '${fieldConfig.label}'.`;
+            } else if (value !== '' && fieldConfig.type === 'number' && fieldConfig.min !== undefined && parseFloat(value) < fieldConfig.min) {
+                errorMessage = `Vrednost za polje '${fieldConfig.label}' mora biti vsaj ${fieldConfig.min}.`;
+            } else if (value !== '' && fieldConfig.pattern && !fieldConfig.pattern.test(value)) {
+                errorMessage = fieldConfig.patternMessage || `Vnos za polje '${fieldConfig.label}' ni v pravilnem formatu.`;
+                if (fieldConfig.patternMessage) input.setAttribute('title', fieldConfig.patternMessage);
+            } else if (value !== '' && fieldConfig.customValidation) {
+                const customError = fieldConfig.customValidation(value);
+                if (customError) {
+                    errorMessage = customError;
+                    if (input) input.setAttribute('title', customError);
+                }
+            }
+
+            if (errorElement) errorElement.textContent = errorMessage;
+            input.setAttribute('aria-describedby', errorElement ? errorElement.id : '');
+            if (errorMessage) {
+                input.classList.add('invalid');
+                input.setAttribute('aria-invalid', 'true');
+                return false;
+            } else {
+                input.classList.remove('invalid');
+                input.setAttribute('aria-invalid', 'false');
+                return true;
+            }
+        }
+
+        function validateIban(iban) {
+            const cleanedIban = iban.replace(/\s/g, '').toUpperCase();
+            if (!/^[A-Z]{2}\d{2}[A-Z0-9]{11,30}$/.test(cleanedIban)) {
+                return "Neveljaven format IBAN-a. Preverite dolžino in znake.";
+            }
+            const rearrangedIban = cleanedIban.substring(4) + cleanedIban.substring(0, 4);
+            let numericIban = '';
+            for (let i = 0; i < rearrangedIban.length; i++) {
+                const charCode = rearrangedIban.charCodeAt(i);
+                if (charCode >= 65 && charCode <= 90) { 
+                    numericIban += (charCode - 55).toString();
+                } else {
+                    numericIban += rearrangedIban.charAt(i);
+                }
+            }
+            try {
+                const num = BigInt(numericIban);
+                if (num % 97n !== 1n) {
+                    return "Neveljavna kontrolna vsota IBAN-a.";
+                }
+            } catch (e) {
+                return "Napaka pri preverjanju IBAN-a.";
+            }
+            return '';
+        }
+
+        const genericModalEl = document.getElementById('genericModal'); 
+        const modalTitleEl = document.getElementById('modalTitle');
+        const modalBodyEl = document.getElementById('modalBodyContent');
+        const modalFooterEl = document.getElementById('modalFooterContent');
+
+        function openModal(title, bodyHTML, footerHTML) {
+            if (modalTitleEl) modalTitleEl.textContent = title;
+            if (modalBodyEl) modalBodyEl.innerHTML = bodyHTML;
+            if (modalFooterEl) modalFooterEl.innerHTML = footerHTML;
+            if (genericModalEl) genericModalEl.classList.add('active');
+        }
+
+        function closeModal() {
+            if (genericModalEl) genericModalEl.classList.remove('active');
+            if (modalBodyEl) modalBodyEl.innerHTML = ''; 
+            if (modalFooterEl) modalFooterEl.innerHTML = '';
+        }
+
+        function setupModalTriggers() {
+            document.getElementById('addServiceBtn')?.addEventListener('click', () => openServiceModal());
+            document.getElementById('addCompanyBtn')?.addEventListener('click', () => openCompanyModal()); // Novo za podjetja
+            document.getElementById('addPartnerBtn')?.addEventListener('click', () => openPartnerModal());
+            document.getElementById('createInvoiceBtn')?.addEventListener('click', () => openInvoiceModal());
+        }
+        
+        function generateUniqueId(prefix = 'id_') {
+            return prefix + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        }
+
+        // --- Moja podjetja ---
+        const companyModalFormFields = [
+            { id: 'companyNameModal', name: 'companyName', errorId: 'companyNameModalError', required: true, maxLength: 100, label: 'Ime podjetja' },
+            { id: 'companyAddressModal', name: 'address', errorId: 'companyAddressModalError', required: true, maxLength: 100, label: 'Naslov' },
+            { id: 'companyPostalCodeModal', name: 'postalCode', errorId: 'companyPostalCodeModalError', required: true, pattern: /^\d{4}$/, patternMessage: "Vnesite 4-mestno poštno številko (samo številke).", label: 'Poštna številka', type: 'tel', maxLength: 4 },
+            { id: 'companyCityModal', name: 'city', errorId: 'companyCityModalError', required: true, maxLength: 50, pattern: /^[A-Za-zčćžđšČĆŽĐŠ\s]+$/, patternMessage: "Kraj lahko vsebuje samo črke in presledke.", label: 'Kraj' },
+            { id: 'companyTaxNumberModal', name: 'taxNumber', errorId: 'companyTaxNumberModalError', required: true, pattern: /^\d{8}$/, patternMessage: "Vnesite 8-mestno davčno številko.", label: 'Davčna številka', type: 'tel', maxLength: 8 },
+            { id: 'companyRegistrationNumberModal', name: 'registrationNumber', errorId: 'companyRegistrationNumberModalError', required: true, pattern: /^\d{8}$/, patternMessage: "Vnesite 8-mestno matično številko.", label: 'Matična številka', type: 'tel', maxLength: 8 },
+            { id: 'companyIbanModal', name: 'iban', errorId: 'companyIbanModalError', required: true, customValidation: validateIban, label: 'IBAN' },
+            { id: 'companyBicModal', name: 'bic', errorId: 'companyBicModalError', required: false, pattern: /^[A-Z]{6}[A-Z0-9]{2}([A-Z0-9]{3})?$/, patternMessage: "Neveljaven BIC/SWIFT format (8 ali 11 znakov).", label: 'BIC/SWIFT' }
+        ];
+
+        function openCompanyModal(companyToEdit = null) {
+            let formHTML = '<form id="companyFormModal" novalidate>';
+            companyModalFormFields.forEach(f => {
+                const value = companyToEdit && companyToEdit[f.name] !== undefined ? companyToEdit[f.name] : '';
+                formHTML += `<div class="form-group">
+                                <label for="${f.id}">${f.label} ${f.required ? '<span class="required-asterisk">*</span>' : ''}</label>
+                                <input type="${f.type || 'text'}" id="${f.id}" name="${f.name}" value="${value}" 
+                                    ${f.required ? 'required' : ''} ${f.maxLength ? `maxlength="${f.maxLength}"` : ''} 
+                                    ${f.pattern ? `pattern="${f.pattern.source}"` : ''} 
+                                    ${f.pattern && f.patternMessage ? `title="${f.patternMessage}"` : ''}
+                                    aria-describedby="${f.errorId}">
+                                <span class="error-message" id="${f.errorId}"></span>
+                             </div>`;
+            });
+            formHTML += '</form>';
+            
+            const footerHTML = `
+                <button type="button" class="button button-cancel" id="cancelCompanyModalBtn">Prekliči</button>
+                <button type="submit" form="companyFormModal" class="button button-success">${companyToEdit ? 'Shrani spremembe' : 'Dodaj podjetje'}</button>
+            `;
+            openModal(companyToEdit ? 'Uredi podatke o podjetju' : 'Dodaj novo podjetje', formHTML, footerHTML);
+            
+            const companyFormModal = document.getElementById('companyFormModal');
+            companyModalFormFields.forEach(field => {
+                const inputElement = document.getElementById(field.id);
+                const errorElement = document.getElementById(field.errorId);
+                if (inputElement && errorElement) {
+                    inputElement.addEventListener('input', () => validateField(inputElement, errorElement, field));
+                }
+            });
+
+            document.getElementById('cancelCompanyModalBtn')?.addEventListener('click', closeModal);
+            companyFormModal?.addEventListener('submit', (event) => handleCompanyFormSubmit(event, companyToEdit ? companyToEdit.id : null));
+        }
+
+        function handleCompanyFormSubmit(event, editingId = null) {
+            event.preventDefault();
+            const form = event.target;
+            let isFormValid = true;
+            companyModalFormFields.forEach(field => {
+                if (!validateField(form.elements[field.name], document.getElementById(field.errorId), field)) {
+                    isFormValid = false;
+                }
+            });
+
+            if (isFormValid) {
+                const companyData = {};
+                companyModalFormFields.forEach(f => companyData[f.name] = form.elements[f.name].value);
+
+                if (editingId) {
+                    const index = appData.companies.findIndex(c => c.id === editingId);
+                    if (index > -1) {
+                        appData.companies[index] = { ...appData.companies[index], ...companyData };
+                        showToast('Podatki o podjetju uspešno posodobljeni!');
+                    }
+                } else {
+                    companyData.id = generateUniqueId('company_');
+                    appData.companies.push(companyData);
+                    showToast('Podjetje uspešno dodano!');
+                }
+                
+                saveDataToLocalStorage();
+                renderCompaniesList();
+                updateDashboardCards(); // Če dashboard prikazuje info o podjetjih
+                checkInitialWarnings(); // Preveri, če so zdaj izpolnjeni pogoji za račune
+                closeModal();
+            } else {
+                showToast('Prosimo, popravite napake v obrazcu.', 'error');
+            }
+        }
+
+        function deleteCompany(companyId) {
+            // Preveri, če je to zadnje podjetje in ali so od njega odvisni računi (za prihodnjo implementacijo)
+            if (confirm(`Ali ste prepričani, da želite izbrisati to podjetje?`)) {
+                appData.companies = appData.companies.filter(c => c.id !== companyId);
+                saveDataToLocalStorage();
+                renderCompaniesList();
+                updateDashboardCards();
+                checkInitialWarnings();
+                showToast('Podjetje izbrisano.');
+            }
+        }
+
+        function renderCompaniesList() {
+            // Podobno kot renderServicesList ali renderPartnersList
+            // Prikazuje kartice podjetij v #companiesListContainer
+            // Implementacija te funkcije je potrebna, sledi vzorcu ostalih render*List funkcij
+            const listContainer = document.getElementById('companiesListContainer');
+            const emptyState = document.getElementById('companiesEmptyState');
+            if (!listContainer || !emptyState) return;
+
+            listContainer.innerHTML = ''; 
+            if (appData.companies.length === 0) {
+                emptyState.style.display = 'block';
+                listContainer.style.display = 'none';
+            } else {
+                emptyState.style.display = 'none';
+                listContainer.style.display = 'grid';
+                appData.companies.forEach(company => {
+                    const card = document.createElement('div');
+                    card.className = 'item-card';
+                    // Prilagodi prikaz podatkov glede na companyModalFormFields
+                    card.innerHTML = `
+                        <div class="item-card-header">
+                            <span class="item-name">${company.companyName}</span>
+                            <div class="item-card-actions">
+                                <button class="button button-sm button-primary edit-company-btn" data-id="${company.id}"><i class="fas fa-edit"></i> Uredi</button>
+                                <button class="button button-sm button-danger delete-company-btn" data-id="${company.id}"><i class="fas fa-trash"></i> Izbriši</button>
+                            </div>
+                        </div>
+                        <div class="item-card-body">
+                            <p class="item-detail"><strong>Davčna št.:</strong> ${company.taxNumber}</p>
+                            <p class="item-detail"><strong>Naslov:</strong> ${company.address}, ${company.postalCode} ${company.city}</p>
+                            <p class="item-detail"><strong>IBAN:</strong> ${company.iban}</p>
+                        </div>
+                    `;
+                    listContainer.appendChild(card);
+                });
+                listContainer.querySelectorAll('.edit-company-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const companyId = e.currentTarget.dataset.id;
+                        const company = appData.companies.find(c => c.id === companyId);
+                        if (company) openCompanyModal(company);
+                    });
+                });
+                listContainer.querySelectorAll('.delete-company-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => deleteCompany(e.currentTarget.dataset.id));
+                });
+            }
+        }
+
+        // --- Storitve ---
+        const serviceFormFields = [
+            { id: 'serviceName', name: 'name', errorId: 'serviceNameError', required: true, maxLength: 100, label: 'Ime storitve' },
+            { id: 'servicePrice', name: 'price', errorId: 'servicePriceError', required: true, type: 'text', inputmode: 'decimal', label: 'Cena (€)', customValidation: validateServicePriceFormat },
+            { id: 'serviceTaxRate', name: 'taxRate', errorId: 'serviceTaxRateError', required: true, type: 'select', options: [{v:22,t:'22%'},{v:9.5,t:'9.5%'},{v:0,t:'0%'}], defaultValue: '22', label: 'Davčna stopnja' },
+            { id: 'serviceUnit', name: 'unit', errorId: 'serviceUnitError', required: true, type: 'select', options: [{v:'kos',t:'kos'},{v:'ura',t:'ura'},{v:'dan',t:'dan'},{v:'mesec',t:'mesec'},{v:'artikel',t:'artikel'},{v:'storitev',t:'storitev'}, {v:'custom', t:'Drugo...'}], defaultValue: 'kos', label: 'Enota' },
+            { id: 'serviceNotes', name: 'notes', errorId: 'serviceNotesError', required: false, maxLength: 500, label: 'Opomba', type: 'textarea' }
+        ];
+
+        function normalizeDecimalForStorage(valueStr) {
+            if (typeof valueStr !== 'string') return '';
+            let s = valueStr.trim();
+            if (s === '') return '';
+            s = s.replace(/,/g, '.');
+            const dotCount = (s.match(/\./g) || []).length;
+            if (dotCount > 1) {
+                const lastDotIndex = s.lastIndexOf('.');
+                s = s.substring(0, lastDotIndex).replace(/\./g, '') + s.substring(lastDotIndex);
+            }
+            return s;
+        }
+
+        function validateServicePriceFormat(valueStr) {
+            const normalized = normalizeDecimalForStorage(valueStr);
+            if (valueStr.trim() !== '' && normalized === '') return "Neveljaven format cene."; // Catch if normalization results in empty from non-empty
+            if (valueStr.trim() === '') return ''; // If not required and empty, it's fine. Required check is separate.
+            
+            if (isNaN(parseFloat(normalized))) {
+                return "Vnesite veljavno število za ceno.";
+            }
+            if (parseFloat(normalized) < 0) {
+                return "Cena ne sme biti negativna.";
+            }
+            return ''; // No error
+        }
+
+        function openServiceModal(serviceToEdit = null) {
+            let formHTML = '<form id="serviceFormModal" novalidate>';
+            let fieldBuffer = [];
+
+            serviceFormFields.forEach(f => {
+                let value = '';
+                let customUnitValue = ''; // Za polje "Enota"
+
+                if (serviceToEdit) {
+                    if (f.name === 'price' && serviceToEdit.price !== undefined) {
+                        value = serviceToEdit.price.toFixed(2); // Prikaži z dvema decimalkama
+                    } else if (f.name === 'unit') {
+                        const standardUnitValues = f.options.map(opt => opt.v);
+                        if (!standardUnitValues.includes(serviceToEdit.unit)) {
+                            value = 'custom';
+                            customUnitValue = serviceToEdit.unit;
+                        } else {
+                            value = serviceToEdit.unit;
+                        }
+                    } else if (f.name === 'notes' && serviceToEdit.description !== undefined) { // Migracija iz starega 'description'
+                        value = serviceToEdit.description;
+                    }
+                     else if (serviceToEdit[f.name] !== undefined) {
+                        value = serviceToEdit[f.name];
+                    }
+                } else { // Za novo storitev
+                    value = f.defaultValue !== undefined ? f.defaultValue : '';
+                    if (f.name === 'price') value = '0.00'; // Privzeta cena za novo storitev
+                }
+
+                let currentFieldHTML = `<div class="form-group">
+                                            <label for="${f.id}">${f.label} ${f.required ? '<span class="required-asterisk">*</span>' : ''}</label>`;
+                if (f.type === 'textarea') {
+                    currentFieldHTML += `<textarea id="${f.id}" name="${f.name}" ${f.maxLength ? `maxlength="${f.maxLength}"` : ''} aria-describedby="${f.errorId}">${value}</textarea>`;
+                } else if (f.type === 'select') {
+                    currentFieldHTML += `<select id="${f.id}" name="${f.name}" aria-describedby="${f.errorId}">`;
+                    f.options.forEach(opt => {
+                        currentFieldHTML += `<option value="${opt.v}" ${value == opt.v ? 'selected' : ''}>${opt.t}</option>`;
+                    });
+                    currentFieldHTML += `</select>`;
+                    if (f.name === 'unit') {
+                        currentFieldHTML += `<input type="text" id="serviceCustomUnit" name="customUnit" class="form-control" value="${customUnitValue}" placeholder="Vnesite enoto po meri" style="margin-top: 0.5rem; ${value === 'custom' ? '' : 'display:none;'}">`;
+                    }
+                } else {
+                    currentFieldHTML += `<input type="${f.type || 'text'}" id="${f.id}" name="${f.name}" value="${value}"
+                                    ${f.inputmode ? `inputmode="${f.inputmode}"` : ''}
+                                    ${f.maxLength ? `maxlength="${f.maxLength}"` : ''} 
+                                    ${f.pattern ? `pattern="${f.pattern.source}"` : ''} 
+                                    ${f.pattern && f.patternMessage ? `title="${f.patternMessage}"` : ''}
+                                    aria-describedby="${f.errorId}">`;
+                }
+                currentFieldHTML += `<span class="error-message" id="${f.errorId}"></span></div>`;
+
+                if (f.type === 'textarea') { // Opomba vedno v svoji vrstici
+                    if (fieldBuffer.length > 0) {
+                        formHTML += `<div class="modal-form-row">${fieldBuffer.join('')}</div>`;
+                        fieldBuffer = [];
+                    }
+                    formHTML += `<div class="modal-form-row"><div class="form-group full-width">${currentFieldHTML.replace('<div class="form-group">','')}</div></div>`; // Odstrani notranji form-group in dodaj full-width
+                } else {
+                    fieldBuffer.push(currentFieldHTML);
+                    if (fieldBuffer.length === 2) {
+                        formHTML += `<div class="modal-form-row">${fieldBuffer.join('')}</div>`;
+                        fieldBuffer = [];
+                    }
+                }
+            });
+            if (fieldBuffer.length > 0) { // Zaostala polja
+                formHTML += `<div class="modal-form-row">${fieldBuffer.join('')}</div>`;
+            }
+            formHTML += `</form>`;
+            
+            const footerHTML = `
+                <button type="button" class="button button-cancel" id="cancelServiceModalBtn">Prekliči</button>
+                <button type="submit" form="serviceFormModal" class="button button-success">${serviceToEdit ? 'Shrani spremembe' : 'Dodaj storitev'}</button>
+            `;
+            openModal(serviceToEdit ? 'Uredi storitev' : 'Dodaj novo storitev', formHTML, footerHTML);
+            
+            const serviceFormModal = document.getElementById('serviceFormModal');
+            const serviceUnitSelect = document.getElementById('serviceUnit');
+            const serviceCustomUnitInput = document.getElementById('serviceCustomUnit');
+
+            serviceUnitSelect?.addEventListener('change', function() {
+                if (this.value === 'custom') {
+                    serviceCustomUnitInput.style.display = 'block';
+                    serviceCustomUnitInput.focus();
+                } else {
+                    serviceCustomUnitInput.style.display = 'none';
+                    serviceCustomUnitInput.value = ''; // Počisti vrednost, če ni izbrano "Drugo"
+                }
+            });
+
+            serviceFormFields.forEach(field => {
+                const inputElement = document.getElementById(field.id);
+                const errorElement = document.getElementById(field.errorId);
+                if (inputElement && errorElement) {
+                    const eventType = (field.type === 'select') ? 'change' : 'input';
+                    inputElement.addEventListener(eventType, () => validateField(inputElement, errorElement, field));
+                }
+            });
+
+            document.getElementById('cancelServiceModalBtn')?.addEventListener('click', closeModal);
+            serviceFormModal?.addEventListener('submit', (event) => handleServiceFormSubmit(event, serviceToEdit ? serviceToEdit.id : null));
+        }
+
+        function handleServiceFormSubmit(event, editingId = null) {
+            event.preventDefault();
+            const form = event.target;
+            let isFormValid = true;
+            serviceFormFields.forEach(field => {
+                if (!validateField(form.elements[field.name], document.getElementById(field.errorId), field)) {
+                    isFormValid = false;
+                }
+            });
+
+            if (isFormValid) {
+                let unitValue = form.elements.unit.value;
+                if (unitValue === 'custom') {
+                    unitValue = form.elements.customUnit.value.trim();
+                    if (unitValue === '') { // Če je "Drugo" izbrano, a ni nič vneseno, je napaka
+                        validateField(form.elements.customUnit, document.getElementById('serviceUnitError'), {label: 'Enota po meri', required: true});
+                        showToast('Vnesite enoto po meri ali izberite standardno.', 'error');
+                        return;
+                    }
+                }
+                const serviceData = {
+                    name: form.elements.name.value,
+                    price: parseFloat(normalizeDecimalForStorage(form.elements.price.value)),
+                    taxRate: parseFloat(form.elements.taxRate.value),
+                    unit: unitValue,
+                    notes: form.elements.notes.value // Prej description, zdaj notes
+                };
+
+                if (editingId) {
+                    const index = appData.services.findIndex(s => s.id === editingId);
+                    if (index > -1) {
+                        appData.services[index] = { ...appData.services[index], ...serviceData };
+                        showToast('Storitev uspešno posodobljena!');
+                    }
+                } else {
+                    serviceData.id = generateUniqueId('service_');
+                    appData.services.push(serviceData); // Shranjujemo notes namesto description
+                    showToast('Storitev uspešno dodana!');
+                }
+                
+                saveDataToLocalStorage();
+                renderServicesList();
+                updateDashboardCards();
+                checkInitialWarnings();
+                closeModal();
+            } else {
+                showToast('Prosimo, popravite napake v obrazcu.', 'error');
+            }
+        }
+        
+        function deleteService(serviceId) {
+            if (confirm(`Ali ste prepričani, da želite izbrisati to storitev?`)) {
+                appData.services = appData.services.filter(s => s.id !== serviceId);
+                saveDataToLocalStorage();
+                renderServicesList();
+                updateDashboardCards();
+                checkInitialWarnings();
+                showToast('Storitev izbrisana.');
+            }
+        }
+
+        function renderServicesList() {
+            const listContainer = document.getElementById('servicesListContainer');
+            const emptyState = document.getElementById('servicesEmptyState');
+            if (!listContainer || !emptyState) return;
+
+            listContainer.innerHTML = ''; 
+            if (appData.services.length === 0) {
+                emptyState.style.display = 'block';
+                listContainer.style.display = 'none'; // Skrij grid, če je prazen
+            } else {
+                emptyState.style.display = 'none';
+                listContainer.style.display = 'grid'; // Pokaži grid
+                appData.services.forEach(service => {
+                    const card = document.createElement('div');
+                    card.className = 'item-card';
+                    card.innerHTML = `
+                        <div class="item-card-header">
+                            <span class="item-name">${service.name}</span>
+                            <div class="item-card-actions">
+                                <button class="button button-sm button-primary edit-service-btn" data-id="${service.id}" title="Uredi storitev"><i class="fas fa-edit"></i> Uredi</button>
+                                <button class="button button-sm button-danger delete-service-btn" data-id="${service.id}" title="Izbriši storitev"><i class="fas fa-trash"></i> Izbriši</button>
+                            </div>
+                        </div>
+                        <div class="item-card-body">
+                            ${service.notes ? `<p class="item-detail">${service.notes}</p>` : ''}
+                            <p class="item-detail"><strong>Cena:</strong> ${(service.price || 0).toFixed(2)} €</p>
+                            <p class="item-detail"><strong>Enota:</strong> ${service.unit}</p>
+                            <p class="item-detail"><strong>DDV:</strong> ${service.taxRate}%</p>
+                        </div>
+                    `;
+                    listContainer.appendChild(card);
+                });
+                listContainer.querySelectorAll('.edit-service-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const serviceId = e.currentTarget.dataset.id;
+                        const service = appData.services.find(s => s.id === serviceId);
+                        if (service) openServiceModal(service);
+                    });
+                });
+                listContainer.querySelectorAll('.delete-service-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => deleteService(e.currentTarget.dataset.id));
+                });
+            }
+        }
+
+        // --- Partnerji ---
+        const partnerFormFields = [
+            { id: 'partnerNameModal', name: 'name', errorId: 'partnerNameModalError', required: true, maxLength: 100, label: 'Ime podjetja*' }, // Obvezno z zvezdico v labeli
+            { id: 'partnerIsTaxPayerModal', name: 'isTaxPayer', errorId: 'partnerIsTaxPayerModalError', required: false, type: 'select', label: 'Davčni zavezanec za DDV', defaultValue: 'false', options: [{v: 'false', t: 'Ne'}, {v: 'true', t: 'Da'}] },
+            { id: 'partnerTaxNumberModal', name: 'taxNumber', errorId: 'partnerTaxNumberModalError', required: false, pattern: /^(SI)?\d{8}$/, patternMessage: "Vnesite (SI) + 8-mestno davčno številko.", label: 'Davčna številka (ID za DDV)', maxLength: 10 },
+            { id: 'partnerAddressModal', name: 'address', errorId: 'partnerAddressModalError', required: false, maxLength: 150, label: 'Naslov' },
+            { id: 'partnerPostalCodeModal', name: 'postalCode', errorId: 'partnerPostalCodeModalError', required: false, pattern: /^\d{4}$/, patternMessage: "Vnesite 4-mestno poštno številko (samo številke).", label: 'Poštna številka', maxLength: 4 },
+            { id: 'partnerCityModal', name: 'city', errorId: 'partnerCityModalError', required: false, maxLength: 50, pattern: /^[A-Za-zčćžđšČĆŽĐŠ\s]+$/, patternMessage: "Kraj lahko vsebuje samo črke in presledke.", label: 'Kraj' },
+            { id: 'partnerCountryModal', name: 'country', errorId: 'partnerCountryModalError', required: false, maxLength: 50, label: 'Država', defaultValue: 'Slovenija' },
+            { id: 'partnerNotesModal', name: 'notes', errorId: 'partnerNotesModalError', required: false, maxLength: 500, label: 'Opombe', type: 'textarea' }
+        ];
+        
+        function openPartnerModal(partnerToEdit = null) {
+            let formHTML = '<form id="partnerFormModal" novalidate>';
+            let fieldBuffer = [];
+
+            partnerFormFields.forEach(f => {
+                let valueToSet;
+
+                if (f.type === 'select' && f.name === 'isTaxPayer') {
+                    if (partnerToEdit && typeof partnerToEdit.isTaxPayer === 'boolean') {
+                        valueToSet = partnerToEdit.isTaxPayer.toString(); // "true" ali "false"
+                    } else if (partnerToEdit && partnerToEdit.isTaxPayer !== undefined) {
+                        valueToSet = partnerToEdit.isTaxPayer.toString(); // Če je že shranjeno kot niz
+                    } else {
+                        valueToSet = f.defaultValue; // Privzeto "false"
+                    }
+                } else if (f.type === 'checkbox') { // Za druge morebitne checkboxe
+                    // Logika za checkbox ostane, če bi jo kdaj potrebovali za druga polja
+                    valueToSet = (partnerToEdit && typeof partnerToEdit[f.name] === 'boolean') ? partnerToEdit[f.name] : (f.defaultValue === true);
+                } else { // Za tekstovna/splošna polja
+                    if (partnerToEdit && partnerToEdit[f.name] !== undefined && partnerToEdit[f.name] !== null) {
+                        valueToSet = partnerToEdit[f.name];
+                    } else if (f.defaultValue !== undefined && f.defaultValue !== null) {
+                        valueToSet = f.defaultValue;
+                    }
+                }
+
+                let currentFieldHTML = '';
+                const labelHTML = `<label for="${f.id}">${f.label}${f.required && f.id === 'partnerNameModal' ? '<span class="required-asterisk">*</span>' : ''}</label>`;
+
+                if (f.type === 'textarea') {
+                    currentFieldHTML = `<div class="form-group full-width">
+                                        ${labelHTML}
+                                        <textarea id="${f.id}" name="${f.name}" ${f.maxLength ? `maxlength="${f.maxLength}"` : ''} aria-describedby="${f.errorId}">${valueToSet}</textarea>
+                                        <span class="error-message" id="${f.errorId}"></span>
+                                     </div>`; // valueToSet za textarea je string
+                } else if (f.type === 'select' && f.name === 'isTaxPayer') {
+                    currentFieldHTML = `<div class="form-group"> 
+                                            ${labelHTML}
+                                            <select id="${f.id}" name="${f.name}" aria-describedby="${f.errorId}">`;
+                    f.options.forEach(opt => {
+                        currentFieldHTML += `<option value="${opt.v}" ${valueToSet === opt.v ? 'selected' : ''}>${opt.t}</option>`;
+                    });
+                    currentFieldHTML += `</select><span class="error-message" id="${f.errorId}"></span></div>`;
+                } else if (f.type === 'checkbox') { // Za druge morebitne checkboxe
+                    const isChecked = valueToSet; // valueToSet je že boolean za checkbox
+                    currentFieldHTML = `<div class="form-group full-width">
+                                            <div style="display: flex; align-items: center; margin-top: 0.5rem;">
+                                                <input type="checkbox" id="${f.id}" name="${f.name}" ${isChecked ? 'checked' : ''} style="width: auto; height: auto; margin-right: 0.5rem; margin-bottom: 0;">
+                                                <label for="${f.id}" style="margin-bottom: 0; font-weight: normal; display: inline;">${f.label}</label>
+                                            </div>
+                                            <span class="error-message" id="${f.errorId}"></span>
+                                         </div>`;
+                } else {
+                    currentFieldHTML = `<div class="form-group">
+                                        ${labelHTML}
+                                        <input type="${f.type || 'text'}" id="${f.id}" name="${f.name}" value="${valueToSet}"
+                                            ${f.required && f.id === 'partnerNameModal' ? 'required' : ''} ${f.maxLength ? `maxlength="${f.maxLength}"` : ''}
+                                            ${f.pattern ? `pattern="${f.pattern.source}"` : ''} ${f.pattern && f.patternMessage ? `title="${f.patternMessage}"` : ''}
+                                            aria-describedby="${f.errorId}">
+                                        <span class="error-message" id="${f.errorId}"></span>
+                                     </div>`;
+                }
+                if (f.id === 'partnerNameModal' || f.type === 'textarea' || f.type === 'checkbox') { // Prilagojeno za partnerNameModal in splošno za textarea/checkbox
+                    if (fieldBuffer.length > 0) {
+                        formHTML += `<div class="modal-form-row">${fieldBuffer.join('')}</div>`;
+                        fieldBuffer = [];
+                    }
+                    formHTML += `<div class="modal-form-row">${currentFieldHTML}</div>`;
+                } else {
+                    fieldBuffer.push(currentFieldHTML);
+                    if (fieldBuffer.length === 2) {
+                        formHTML += `<div class="modal-form-row">${fieldBuffer.join('')}</div>`;
+                        fieldBuffer = [];
+                    }
+                }
+            });
+
+            if (fieldBuffer.length > 0) {
+                formHTML += `<div class="modal-form-row">${fieldBuffer.join('')}</div>`;
+            }
+            formHTML += `</form>`;
+
+            const footerHTML = `
+                <button type="button" class="button button-cancel" id="cancelPartnerModalBtn">Prekliči</button>
+                <button type="submit" form="partnerFormModal" class="button button-success">${partnerToEdit ? 'Shrani spremembe' : 'Dodaj partnerja'}</button>
+            `;
+            openModal(partnerToEdit ? 'Uredi poslovnega partnerja' : 'Dodaj novega poslovnega partnerja', formHTML, footerHTML);
+
+            const partnerFormModal = document.getElementById('partnerFormModal');
+            partnerFormFields.forEach(field => {
+                const inputElement = document.getElementById(field.id);
+                const errorElement = document.getElementById(field.errorId);
+                if (inputElement && errorElement) {
+                    const eventType = (field.type === 'checkbox' || field.type === 'select') ? 'change' : 'input';
+                    inputElement.addEventListener(eventType, () => validateField(inputElement, errorElement, field));
+                }
+            });
+            
+            document.getElementById('cancelPartnerModalBtn')?.addEventListener('click', closeModal);
+            partnerFormModal?.addEventListener('submit', (event) => handlePartnerFormSubmit(event, partnerToEdit ? partnerToEdit.id : null));
+        }
+
+
+        function handlePartnerFormSubmit(event, editingId = null) {
+            event.preventDefault();
+            const form = event.target;
+            let isFormValid = true;
+            partnerFormFields.forEach(field => {
+                if (!validateField(form.elements[field.name], document.getElementById(field.errorId), field)) {
+                    isFormValid = false;
+                }
+            });
+
+            if (isFormValid) {
+                const partnerData = {};
+                partnerFormFields.forEach(f => {
+                    if (f.name === 'isTaxPayer' && f.type === 'select') {
+                        partnerData[f.name] = form.elements[f.name].value === 'true'; // Pretvori string "true"/"false" v boolean
+                    } else if (f.type === 'checkbox') {
+                        partnerData[f.name] = form.elements[f.name].checked;
+                    } else {
+                        partnerData[f.name] = form.elements[f.name].value;
+                    }
+                });
+
+                if (editingId) {
+                    const index = appData.partners.findIndex(p => p.id === editingId);
+                    if (index > -1) {
+                        appData.partners[index] = { ...appData.partners[index], ...partnerData };
+                        showToast('Partner uspešno posodobljen!');
+                    }
+                } else {
+                    partnerData.id = generateUniqueId('partner_');
+                    appData.partners.push(partnerData);
+                    showToast('Partner uspešno dodan!');
+                }
+                
+                saveDataToLocalStorage();
+                renderPartnersList();
+                updateDashboardCards();
+                checkInitialWarnings();
+                closeModal();
+            } else {
+                showToast('Prosimo, popravite napake v obrazcu.', 'error');
+            }
+        }
+        
+        function deletePartner(partnerId) {
+            if (confirm(`Ali ste prepričani, da želite izbrisati tega partnerja? Vsi povezani računi bodo ostali, a ne bodo več kazali na tega partnerja.`)) {
+                appData.partners = appData.partners.filter(p => p.id !== partnerId);
+                saveDataToLocalStorage();
+                renderPartnersList();
+                updateDashboardCards();
+                checkInitialWarnings();
+                showToast('Partner izbrisan.');
+            }
+        }
+
+        function renderPartnersList() {
+            const listContainer = document.getElementById('partnersListContainer');
+            const emptyState = document.getElementById('partnersEmptyState');
+            if (!listContainer || !emptyState) return;
+
+            listContainer.innerHTML = '';
+            if (appData.partners.length === 0) {
+                emptyState.style.display = 'block';
+                listContainer.style.display = 'none';
+            } else {
+                emptyState.style.display = 'none';
+                listContainer.style.display = 'grid';
+                appData.partners.forEach(partner => {
+                    const card = document.createElement('div');
+                    card.className = 'item-card';
+                    card.innerHTML = `
+                        <div class="item-card-header">
+                            <span class="item-name">${partner.name}</span>
+                            <div class="item-card-actions">
+                                <button class="button button-sm button-primary edit-partner-btn" data-id="${partner.id}" title="Uredi partnerja"><i class="fas fa-edit"></i> Uredi</button>
+                                <button class="button button-sm button-danger delete-partner-btn" data-id="${partner.id}" title="Izbriši partnerja"><i class="fas fa-trash"></i> Izbriši</button>
+                            </div>
+                        </div>
+                        <div class="item-card-body">
+                            <p class="item-detail"><strong>Davčna št.:</strong> ${partner.taxNumber || 'N/A'}</p>
+                            <p class="item-detail"><strong>Zavezanec za DDV:</strong> ${partner.isTaxPayer ? 'Da' : 'Ne'}</p>
+                            <p class="item-detail"><strong>Naslov:</strong> ${partner.address ? `${partner.address}, ${partner.postalCode || ''} ${partner.city || ''}, ${partner.country || ''}` : 'N/A'}</p>
+                            ${partner.notes ? `<p class="item-detail"><strong>Opombe:</strong> ${partner.notes}</p>` : ''}
+                        </div>
+                    `;
+                    listContainer.appendChild(card);
+                });
+                listContainer.querySelectorAll('.edit-partner-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const partnerId = e.currentTarget.dataset.id;
+                        const partner = appData.partners.find(p => p.id === partnerId);
+                        if (partner) openPartnerModal(partner);
+                    });
+                });
+                listContainer.querySelectorAll('.delete-partner-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => deletePartner(e.currentTarget.dataset.id));
+                });
+            }
+        }
+
+        // --- Pomožne funkcije za datume ---
+        function getNext15th(date = new Date()) {
+            let day = date.getDate();
+            let month = date.getMonth(); // 0-11
+            let year = date.getFullYear();
+            if (day <= 5) { // Spremenjena logika: če je dan <= 5
+                return new Date(year, month, 15);
+            } else {
+                return new Date(year, month + 1, 15); 
+            }
+        }
+
+        function getServicePeriod(date = new Date()) {
+            let day = date.getDate();
+            let targetMonthDate;
+            if (day <= 5) { // Spremenjena logika: če je dan <= 5
+                // Previous month
+                targetMonthDate = new Date(date.getFullYear(), date.getMonth() - 1, 1);
+            } else {
+                // Current month
+                targetMonthDate = new Date(date.getFullYear(), date.getMonth(), 1);
+            }
+            const year = targetMonthDate.getFullYear();
+            const month = targetMonthDate.getMonth(); // 0-11
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0); // Day 0 of next month is last day of current
+            return { start: firstDay, end: lastDay };
+        }
+
+        function formatDateForInput(date) {
+            if (!date || !(date instanceof Date) || isNaN(date)) return '';
+            // Zanesljivejše formatiranje, ki upošteva lokalni datum in se izogne težavam s časovnimi pasovi pri .toISOString()
+            const year = date.getFullYear();
+            const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Meseci so 0-indeksirani
+            const day = date.getDate().toString().padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+
+        // --- Računi ---
+        const invoiceFormFields = [
+            { id: 'invoiceMyCompany', name: 'myCompanyId', errorId: 'invoiceMyCompanyError', required: true, type: 'select', label: 'Moje podjetje (izdajatelj)' },
+            { id: 'invoicePartner', name: 'partnerId', errorId: 'invoicePartnerError', required: true, type: 'select', label: 'Partner (plačnik)' },
+            { id: 'invoiceDateIssued', name: 'dateIssued', errorId: 'invoiceDateIssuedError', required: true, type: 'date', label: 'Datum izdaje računa' },
+            { id: 'invoiceDateDue', name: 'dateDue', errorId: 'invoiceDateDueError', required: true, type: 'date', label: 'Datum zapadlosti plačila računa' }
+            // Odstranjeni invoiceServicePeriodStart in invoiceServicePeriodEnd od tukaj, ker so definirani ročno spodaj z boljšo logiko
+        ];
+
+        function openInvoiceModal(invoiceToEdit = null) {
+            const today = new Date();
+            const defaultDateIssued = formatDateForInput(today);
+            const defaultDateDue = formatDateForInput(getNext15th(today));
+            const { start: defaultServiceStart, end: defaultServiceEnd } = getServicePeriod(today);
+
+            let myCompanyOptionsHTML = appData.companies.map(c => `<option value="${c.id}" ${invoiceToEdit && invoiceToEdit.myCompanyId === c.id ? 'selected' : (!invoiceToEdit && appData.companies.length > 0 && appData.companies[0].id === c.id ? 'selected' : '')}>${c.companyName}</option>`).join('');
+            if (appData.companies.length === 0) myCompanyOptionsHTML = '<option value="" disabled>Najprej dodajte svoje podjetje</option>';
+
+            let partnerOptionsHTML = appData.partners.map(p => `<option value="${p.id}" ${invoiceToEdit && invoiceToEdit.partnerId === p.id ? 'selected' : ''}>${p.name}</option>`).join('');
+            if (appData.partners.length === 0) partnerOptionsHTML = '<option value="" disabled>Najprej dodajte partnerja</option>';
+            
+            let formHTML = '<form id="invoiceFormModal" novalidate>';
+
+            // Polje "Moje podjetje" - v svoji vrstici
+            const myCompanyField = invoiceFormFields.find(f => f.name === 'myCompanyId');
+            if (myCompanyField) {
+                formHTML += `<div class="modal-form-row">
+                                <div class="form-group full-width">
+                                    <label for="${myCompanyField.id}">${myCompanyField.label} ${myCompanyField.required ? '<span class="required-asterisk">*</span>' : ''}</label>
+                                    <select id="${myCompanyField.id}" name="${myCompanyField.name}" ${myCompanyField.required ? 'required' : ''} ${appData.companies.length === 0 ? 'disabled' : ''} aria-describedby="${myCompanyField.errorId}">
+                                        ${myCompanyOptionsHTML}
+                                    </select>
+                                    <span class="error-message" id="${myCompanyField.errorId}"></span>
+                                </div>
+                             </div>`;
+            }
+
+            // Polje Partner - v svoji vrstici (prej je bilo mišljeno, da je zraven št. računa)
+            formHTML += '<div class="modal-form-row">';
+            invoiceFormFields.forEach(f => {
+                if (f.name === 'partnerId') { // Samo še partner ostane v tej logiki
+                    let value = '';
+                    if (invoiceToEdit) {
+                        value = invoiceToEdit[f.name];
+                    }
+
+                    formHTML += `<div class="form-group full-width">
+                                    <label for="${f.id}">${f.label} ${f.required ? '<span class="required-asterisk">*</span>' : ''}</label>`;
+                    if (f.type === 'select' && f.name === 'partnerId') {
+                        formHTML += `<select id="${f.id}" name="${f.name}" ${f.required ? 'required' : ''} ${appData.partners.length === 0 ? 'disabled' : ''} aria-describedby="${f.errorId}">${partnerOptionsHTML}</select>`;
+                    }
+                    formHTML += `<span class="error-message" id="${f.errorId}"></span></div>`;
+                }
+            });
+            formHTML += '</div>'; // Konec flex containerja za partnerja
+            
+            // Dodamo Datum izdaje in Datum zapadlosti v eno vrstico
+            formHTML += '<div class="modal-form-row">';
+            ['dateIssued', 'dateDue'].forEach(fieldName => {
+                const f = invoiceFormFields.find(field => field.name === fieldName);
+                if (f) {
+                    // Preverimo, ali je invoiceToEdit[f.name] definiran, sicer uporabimo privzeto vrednost
+                    const value = invoiceToEdit && invoiceToEdit[f.name] !== undefined ? invoiceToEdit[f.name] : (f.name === 'dateIssued' ? defaultDateIssued : defaultDateDue);
+                    formHTML += `<div class="form-group" style="flex: 1; min-width: 150px;">
+                                    <label for="${f.id}">${f.label} ${f.required ? '<span class="required-asterisk">*</span>' : ''}</label>
+                                    <input type="${f.type || 'text'}" id="${f.id}" name="${f.name}" value="${value || ''}" 
+                                        ${f.required ? 'required' : ''} aria-describedby="${f.errorId}">
+                                    <span class="error-message" id="${f.errorId}"></span>
+                                 </div>`;
+                }
+            });
+            formHTML += '</div>'; // Konec flex containerja za datume izdaje/zapadlosti
+
+            // Obdobje storitve - ta del ostane, ker ima pravilno logiko predizpolnjevanja
+            const serviceStartValue = invoiceToEdit?.servicePeriodStart || formatDateForInput(defaultServiceStart);
+            const serviceEndValue = invoiceToEdit?.servicePeriodEnd || formatDateForInput(defaultServiceEnd);
+            formHTML += `<div class="modal-form-row">
+                <div class="form-group" style="flex: 1; min-width: 150px;">
+                    <label for="invoiceServicePeriodStart" id="invoiceServicePeriodStartLabel">Obdobje storitve OD datuma</label>
+                    <input type="date" id="invoiceServicePeriodStart" name="servicePeriodStart" value="${serviceStartValue}" aria-describedby="invoiceServicePeriodStartError">
+                    <span class="error-message" id="invoiceServicePeriodStartError"></span>
+                </div>
+                <div class="form-group" style="flex: 1; min-width: 150px;" id="invoiceServicePeriodEndGroup">
+                    <label for="invoiceServicePeriodEnd">Obdobje storitve DO datuma</label>
+                    <input type="date" id="invoiceServicePeriodEnd" name="servicePeriodEnd" value="${serviceEndValue}" aria-describedby="invoiceServicePeriodEndError">
+                    <span class="error-message" id="invoiceServicePeriodEndError"></span>
+                </div>
+            </div>
+                <div class="form-group" style="display: flex; align-items: center; margin-top: -0.5rem; margin-bottom: 1rem;">
+                    <input type="checkbox" id="singleDayService" name="singleDayService" style="margin-right: 0.5rem; width:auto; height:auto;" ${invoiceToEdit && invoiceToEdit.singleDayService ? 'checked' : ''}>
+                    <label for="singleDayService" style="display: inline; font-weight: normal; margin-bottom: 0;">Storitev opravljena na en dan</label>
+                </div>
+            `;
+
+            // Placeholder za postavke računa
+            formHTML += `
+                <hr style="margin: 1.5rem 0;">
+                <h4 style="margin-bottom: 0.75rem;">Postavke računa</h4>
+                <div class="invoice-items-section">
+                    <div class="invoice-item-header-row">
+                        <div class="invoice-item-col item-service">Storitev</div>
+                        <div class="invoice-item-col item-quantity">Količina</div>
+                        <div class="invoice-item-col item-price">Cena/en. (€)</div>
+                        <div class="invoice-item-col item-total">Skupaj (€)</div>
+                        <div class="invoice-item-col item-actions">Akcija</div>
+                    </div>
+                    <div id="invoiceItemsContainer">
+                        <!-- Dinamično dodane vrstice postavk -->
+                    </div>
+                </div>
+                <button type="button" id="addInvoiceItemBtn" class="button button-primary button-sm" style="margin-top: 1rem;"><i class="fas fa-plus"></i> Dodaj postavko</button>
+                <div id="invoiceTotalAmountDisplay" style="text-align: right; font-size: 1.2rem; font-weight: bold; margin-top: 1rem;">Skupaj: 0.00 €</div>
+            </form>`; 
+
+            const footerHTML = `
+                <button type="button" class="button button-cancel" id="cancelInvoiceModalBtn">Prekliči</button>
+                <button type="submit" form="invoiceFormModal" class="button button-success">${invoiceToEdit ? 'Shrani spremembe' : 'Shrani račun'}</button>
+            `;
+            openModal(invoiceToEdit ? 'Uredi račun' : 'Ustvari nov račun', formHTML, footerHTML);
+
+            const invoiceFormModal = document.getElementById('invoiceFormModal');
+            if (invoiceFormModal) {
+                invoiceFormFields.forEach(field => { // Validacija samo za polja definirana v invoiceFormFields
+                    const inputElement = invoiceFormModal.elements[field.name]; // Uporabi form.elements
+                    const errorElement = document.getElementById(field.errorId);
+                    if (inputElement && errorElement) {
+                        inputElement.addEventListener('input', () => validateField(inputElement, errorElement, field));
+                    }
+                });
+            }
+
+            // Logika za checkbox "Storitev opravljena na en dan" - ta del ostane
+            const singleDayServiceCheckbox = document.getElementById('singleDayService');
+            const periodStartInputEl = document.getElementById('invoiceServicePeriodStart'); 
+            const periodEndInputEl = document.getElementById('invoiceServicePeriodEnd'); // To polje se uporablja, tudi če je skrito
+            const periodStartLabelEl = document.getElementById('invoiceServicePeriodStartLabel');
+            const periodEndGroupEl = document.getElementById('invoiceServicePeriodEndGroup');
+
+            function toggleServicePeriodFields() {
+                if (singleDayServiceCheckbox.checked) {
+                    periodEndGroupEl.style.display = 'none';
+                    periodEndInputEl.value = ''; 
+                    periodStartLabelEl.textContent = 'Datum storitve'; // Oznaka se spremeni
+                } else { // Ko ni en dan, uporabi novo, daljšo oznako
+                    periodEndGroupEl.style.display = '';
+                    periodStartLabelEl.textContent = 'Obdobje storitve OD datuma';
+                }
+            }
+            singleDayServiceCheckbox.addEventListener('change', toggleServicePeriodFields);
+            toggleServicePeriodFields(); // Začetno stanje ob odprtju modala
+
+            document.getElementById('cancelInvoiceModalBtn')?.addEventListener('click', closeModal);
+            invoiceFormModal?.addEventListener('submit', (event) => handleInvoiceFormSubmit(event, invoiceToEdit ? invoiceToEdit.id : null));
+            
+            // Inicializacija postavk (to bo kasneje razširjeno)
+            initializeInvoiceItems(invoiceToEdit ? invoiceToEdit.items : []);
+        }
+
+        function handleInvoiceFormSubmit(event, editingId = null) {
+            event.preventDefault();
+            const form = event.target;
+            let isFormValid = true;
+            invoiceFormFields.forEach(field => {
+                const inputEl = form.elements[field.name];
+                if (inputEl && !validateField(inputEl, document.getElementById(field.errorId), field)) {
+                    isFormValid = false;
+                }
+            });
+
+            // Dodatna validacija za ročno dodana polja za obdobje storitve, če je potrebno
+            // Zaenkrat jih puščamo neobvezna, kot je bilo prvotno
+            // const servicePeriodStartInput = document.getElementById('invoiceServicePeriodStart');
+            // const servicePeriodStartError = document.getElementById('invoiceServicePeriodStartError');
+            // if (servicePeriodStartInput) servicePeriodStartInput.addEventListener('input', () => validateField(servicePeriodStartInput, servicePeriodStartError, {label: 'Obdobje storitve OD', required: false, type: 'date'}));
+            // const servicePeriodEndInput = document.getElementById('invoiceServicePeriodEnd');
+            // const servicePeriodEndError = document.getElementById('invoiceServicePeriodEndError');
+            // if (servicePeriodEndInput) servicePeriodEndInput.addEventListener('input', () => validateField(servicePeriodEndInput, servicePeriodEndError, {label: 'Obdobje storitve DO', required: false, type: 'date'}));
+            if (isFormValid) {
+                const invoiceData = {
+                    // Polje 'number' se bo generiralo spodaj, če gre za nov račun
+                    myCompanyId: form.elements.myCompanyId.value,
+                    partnerId: form.elements.partnerId.value,
+                    dateIssued: form.elements.dateIssued.value,
+                    dateDue: form.elements.dateDue.value,
+                    servicePeriodStart: form.elements.servicePeriodStart.value,
+                    servicePeriodEnd: form.elements.servicePeriodEnd.value,
+                    singleDayService: form.elements.singleDayService.checked,
+                    items: collectInvoiceItems(), // Zberi postavke
+                    totalAmount: calculateTotalAmountFromItems(collectInvoiceItems()) // Izračunaj skupni znesek
+                };
+
+                if (editingId) {
+                    const index = appData.invoices.findIndex(inv => inv.id === editingId);
+                    if (index > -1) { // Pri urejanju ohranimo obstoječo številko računa
+                        const existingInvoiceNumber = appData.invoices[index].number;
+                        appData.invoices[index] = { ...appData.invoices[index], ...invoiceData, number: existingInvoiceNumber };
+                        showToast('Račun uspešno posodobljen!');
+                    }
+                } else {
+                    // Generiraj številko računa za nov račun
+                    invoiceData.number = generateInvoiceNumber(invoiceData.dateIssued, appData.invoices);
+                    invoiceData.id = generateUniqueId('invoice_');
+                    appData.invoices.push(invoiceData);
+                    showToast('Račun uspešno dodan!');
+                }
+                
+                saveDataToLocalStorage();
+                renderInvoicesTable();
+                renderAllInvoicesTable();
+                updateDashboardCards();
+                closeModal();
+            } else {
+                showToast('Prosimo, popravite napake v obrazcu.', 'error');
+            }
+        }
+        
+        function generateInvoiceNumber(dateIssuedStr, existingInvoices) {
+            const issueDate = new Date(dateIssuedStr);
+            const yearOfIssue = issueDate.getFullYear();
+            const monthOfIssue = String(issueDate.getMonth() + 1).padStart(2, '0');
+            const dayOfIssue = String(issueDate.getDate()).padStart(2, '0');
+            const datePrefix = `${yearOfIssue}-${monthOfIssue}-${dayOfIssue}`;
+
+            let maxSeqThisYear = 0;
+            for (const inv of existingInvoices) {
+                if (inv.number && typeof inv.number === 'string') {
+                    const parts = inv.number.split('-'); // Format: LLLL-MM-DD-ZZ
+                    if (parts.length === 4) {
+                        const invYear = parseInt(parts[0], 10);
+                        const invSeq = parseInt(parts[3], 10);
+                        if (invYear === yearOfIssue && !isNaN(invSeq)) {
+                            if (invSeq > maxSeqThisYear) {
+                                maxSeqThisYear = invSeq;
+                            }
+                        }
+                    }
+                }
+            }
+            const newSeq = maxSeqThisYear + 1;
+            return `${datePrefix}-${String(newSeq).padStart(2, '0')}`;
+        }
+
+        // --- FUNKCIJE ZA POSTAVKE RAČUNA ---
+        let currentInvoiceItems = []; // Začasno hrani postavke med urejanjem v modalu
+
+        function initializeInvoiceItems(items = []) {
+            currentInvoiceItems = JSON.parse(JSON.stringify(items || [])); // Globoka kopija
+            const container = document.getElementById('invoiceItemsContainer');
+            if (!container) return;
+            container.innerHTML = ''; // Počisti prejšnje
+
+            if (currentInvoiceItems.length === 0) {
+                // Po želji lahko dodamo eno prazno vrstico ob odprtju novega računa
+                // addInvoiceItemRow(); 
+            } else {
+                currentInvoiceItems.forEach(item => addInvoiceItemRow(item));
+            }
+            updateInvoiceTotalDisplay();
+
+            document.getElementById('addInvoiceItemBtn')?.addEventListener('click', () => addInvoiceItemRow());
+        }
+
+        function addInvoiceItemRow(itemData = null) {
+            const container = document.getElementById('invoiceItemsContainer');
+            if (!container) return;
+
+            const itemId = itemData ? itemData.itemId : generateUniqueId('item_');
+            if (!itemData) { // Če dodajamo novo prazno vrstico, jo dodajmo tudi v currentInvoiceItems
+                itemData = { itemId, serviceId: '', quantity: 1, unitPrice: 0, taxRate: 22, itemTotal: 0, description: '' };
+                currentInvoiceItems.push(itemData);
+            }
+            
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'invoice-item-row';
+            itemDiv.dataset.itemId = itemId;
+
+            // Spustni seznam za storitve
+            let serviceOptions = '<option value="">Izberi storitev...</option>';
+            appData.services.forEach(s => {
+                serviceOptions += `<option value="${s.id}" ${itemData && s.id === itemData.serviceId ? 'selected' : ''}>${s.name}</option>`;
+            });
+
+            itemDiv.innerHTML = `
+                <div class="invoice-item-col item-service">
+                    <select name="item_service" class="form-control">${serviceOptions}</select>
+                </div>
+                <div class="invoice-item-col item-quantity">
+                    <input type="number" name="item_quantity" value="${itemData ? itemData.quantity : 1}" min="1" class="form-control" placeholder="Vnesi količino">
+                </div>
+                <div class="invoice-item-col item-price">
+                    <input type="text" name="item_unit_price" value="${itemData ? itemData.unitPrice.toFixed(2) : '0.00'}" class="form-control" readonly title="Cena na enoto">
+                </div>
+                <div class="invoice-item-col item-total">
+                    <input type="text" name="item_total" value="${itemData ? itemData.itemTotal.toFixed(2) : '0.00'}" class="form-control" readonly title="Skupaj postavka">
+                </div>
+                <div class="invoice-item-col item-actions">
+                    <button type="button" class="button button-danger button-sm delete-item-btn icon-only" title="Odstrani postavko"><i class="fas fa-trash"></i></button>
+                </div>
+            `;
+            container.appendChild(itemDiv);
+
+            // Event listenerji za to vrstico
+            const serviceSelect = itemDiv.querySelector('select[name="item_service"]');
+            const quantityInput = itemDiv.querySelector('input[name="item_quantity"]');
+            
+            serviceSelect.addEventListener('change', (e) => handleItemChange(itemId, e.target));
+            quantityInput.addEventListener('input', (e) => handleItemChange(itemId, e.target));
+
+            itemDiv.querySelector('.delete-item-btn').addEventListener('click', () => {
+                currentInvoiceItems = currentInvoiceItems.filter(it => it.itemId !== itemId);
+                itemDiv.remove();
+                updateInvoiceTotalDisplay();
+            });
+            
+            // Če je itemData že imel serviceId, sproži začetni izračun
+            if (itemData && itemData.serviceId) {
+                handleItemChange(itemId, serviceSelect); // Da se izračunajo cene ob nalaganju
+            }
+        }
+
+        function handleItemChange(itemId, changedElement) {
+            const itemRow = document.querySelector(`.invoice-item-row[data-item-id="${itemId}"]`);
+            if (!itemRow) return;
+
+            const serviceSelect = itemRow.querySelector('select[name="item_service"]');
+            const quantityInput = itemRow.querySelector('input[name="item_quantity"]');
+            const unitPriceInput = itemRow.querySelector('input[name="item_unit_price"]');
+            const itemTotalInput = itemRow.querySelector('input[name="item_total"]');
+
+            const selectedServiceId = serviceSelect.value;
+            const quantity = parseInt(quantityInput.value) || 0;
+            
+            const service = appData.services.find(s => s.id === selectedServiceId);
+            let unitPrice = 0;
+            let taxRate = 22; // Privzeto, če storitev ni najdena
+
+            if (service) {
+                unitPrice = service.price;
+                taxRate = service.taxRate;
+                unitPriceInput.value = unitPrice.toFixed(2);
+            } else {
+                unitPriceInput.value = '0.00';
+            }
+            
+            const itemTotal = quantity * unitPrice;
+            itemTotalInput.value = itemTotal.toFixed(2);
+
+            // Posodobi currentInvoiceItems
+            const currentItem = currentInvoiceItems.find(it => it.itemId === itemId);
+            if (currentItem) {
+                currentItem.serviceId = selectedServiceId;
+                currentItem.quantity = quantity;
+                currentItem.unitPrice = unitPrice;
+                currentItem.taxRate = taxRate;
+                currentItem.itemTotal = itemTotal;
+                currentItem.description = service ? service.name : ''; // Ali drug opis
+            }
+            updateInvoiceTotalDisplay();
+        }
+
+        function updateInvoiceTotalDisplay() {
+            const total = calculateTotalAmountFromItems(currentInvoiceItems);
+            const displayEl = document.getElementById('invoiceTotalAmountDisplay');
+            if (displayEl) {
+                displayEl.textContent = `Skupaj: ${total.toFixed(2)} €`;
+            }
+        }
+
+        function collectInvoiceItems() {
+            // Vrne kopijo currentInvoiceItems, da se preprečijo reference
+            return JSON.parse(JSON.stringify(currentInvoiceItems.filter(item => item.serviceId))); // Samo postavke, ki imajo izbrano storitev
+        }
+
+        function calculateTotalAmountFromItems(items) {
+            return items.reduce((sum, item) => sum + (item.itemTotal || 0), 0);
+        }
+
+        function deleteInvoice(invoiceId) {
+            if (confirm(`Ali ste prepričani, da želite izbrisati ta račun?`)) {
+                appData.invoices = appData.invoices.filter(inv => inv.id !== invoiceId);
+                saveDataToLocalStorage();
+                renderInvoicesTable();
+                renderAllInvoicesTable();
+                updateDashboardCards();
+                showToast('Račun izbrisan.');
+            }
+        }
+
+        function renderInvoicesTable() { 
+            const tableBody = document.getElementById('recentInvoicesTableBody');
+            if (!tableBody) return;
+            tableBody.innerHTML = '';
+            const recentInvoices = appData.invoices.slice(-5).reverse(); 
+
+            if (recentInvoices.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 2rem;">Ni nedavnih računov.</td></tr>';
+            } else {
+                recentInvoices.forEach(invoice => {
+                    const myCompany = appData.companies.find(c => c.id === invoice.myCompanyId);
+                    const partner = appData.partners.find(p => p.id === invoice.partnerId);
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${invoice.number || 'N/A'} <small style="display:block; color: #666;">(${myCompany ? myCompany.companyName : 'Neznano podjetje'})</small></td>
+                        <td>${partner ? partner.name : 'Neznan partner'}</td>
+                        <td>${invoice.dateIssued ? new Date(invoice.dateIssued).toLocaleDateString('sl-SI') : 'N/A'}</td>
+                        <td>${invoice.dateDue ? new Date(invoice.dateDue).toLocaleDateString('sl-SI') : 'N/A'}</td>
+                        <td>${(invoice.totalAmount || 0).toFixed(2)}</td>
+                        <td>Plačano</td> <!-- TODO: Status -->
+                    `;
+                    tableBody.appendChild(tr);
+                });
+            }
+        }
+        function renderAllInvoicesTable() { 
+            const tableBody = document.getElementById('allInvoicesTableBody');
+            const emptyState = document.getElementById('invoicesEmptyState');
+            if (!tableBody || !emptyState) return;
+            
+            tableBody.innerHTML = '';
+            if (appData.invoices.length === 0) {
+                emptyState.style.display = 'block';
+                tableBody.closest('.table-container').style.display = 'none';
+            } else {
+                emptyState.style.display = 'none';
+                tableBody.closest('.table-container').style.display = '';
+                appData.invoices.forEach(invoice => {
+                    const myCompany = appData.companies.find(c => c.id === invoice.myCompanyId);
+                    const partner = appData.partners.find(p => p.id === invoice.partnerId);
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${invoice.number || 'N/A'} ${myCompany ? `<small style="display:block; color: #666;">(Izdajatelj: ${myCompany.companyName})</small>` : ''}</td>
+                        <td>${partner ? partner.name : 'Neznan partner'}</td>
+                        <td>${(invoice.totalAmount || 0).toFixed(2)}</td>
+                        <td class="actions-cell">
+                            <button class="button button-sm button-primary open-pdf-btn" data-id="${invoice.id}" title="Odpri PDF"><i class="fas fa-file-pdf"></i> PDF</button>
+                            <button class="button button-sm button-primary edit-invoice-btn" data-id="${invoice.id}" title="Uredi račun"><i class="fas fa-edit"></i> Uredi</button>
+                            <button class="button button-sm button-danger delete-invoice-btn" data-id="${invoice.id}" title="Izbriši račun"><i class="fas fa-trash"></i> Izbriši</button>
+                        </td>
+                    `;
+                    tableBody.appendChild(tr);
+                });
+                tableBody.querySelectorAll('.edit-invoice-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const invoiceId = e.currentTarget.dataset.id;
+                        const invoice = appData.invoices.find(inv => inv.id === invoiceId);
+                        if (invoice) openInvoiceModal(invoice);
+                    });
+                });
+                tableBody.querySelectorAll('.delete-invoice-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => deleteInvoice(e.currentTarget.dataset.id));
+                });
+                tableBody.querySelectorAll('.open-pdf-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        showToast(`Funkcija PDF za račun ${e.currentTarget.dataset.id} še ni implementirana.`, 'info');
+                    });
+                });
+            }
+        }
+
+
+        // --- FAB Gumbi ---
+        function setupFabButtons() {
+            const fabDownload = document.getElementById('fabDownload');
+            const fabUpload = document.getElementById('fabUpload');
+            const uploadInput = document.getElementById('uploadInput');
+            const fabDelete = document.getElementById('fabDelete');
+
+            fabDownload?.addEventListener('click', () => {
+                const dataStr = JSON.stringify(appData, null, 2);
+                const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+                const exportFileDefaultName = `racunovodstvo_podatki_${new Date().toISOString().slice(0,10)}.json`;
+                
+                const linkElement = document.createElement('a');
+                linkElement.setAttribute('href', dataUri);
+                linkElement.setAttribute('download', exportFileDefaultName);
+                linkElement.click();
+                linkElement.remove();
+                showToast('Podatki preneseni!');
+            });
+
+            fabUpload?.addEventListener('click', () => uploadInput?.click());
+            uploadInput?.addEventListener('change', (event) => {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        try {
+                            const importedData = JSON.parse(e.target.result);
+                            if (confirm("Ali ste prepričani, da želite naložiti te podatke? Obstoječi podatki bodo prepisani.")) {
+                                appData = importedData;
+                                appData.companyInfo = appData.companyInfo || {};
+                                appData.services = appData.services || [];
+                                appData.partners = appData.partners || [];
+                                appData.invoices = appData.invoices || [];
+                                saveDataToLocalStorage(); // Shrani preden osvežiš
+                                window.location.reload(true); 
+                            }
+                        } catch (error) {
+                            showToast('Napaka pri branju datoteke. Preverite, ali je veljavna JSON datoteka.', 'error');
+                            console.error("Napaka pri uvozu:", error);
+                        } finally {
+                           uploadInput.value = '';
+                        }
+                    };
+                    reader.readAsText(file);
+                }
+            });
+
+            fabDelete?.addEventListener('click', () => {
+                if (confirm("Ali ste prepričani, da želite izbrisati VSE podatke aplikacije? Tega dejanja ni mogoče razveljaviti.")) {
+                    if (confirm("ZADNJE OPOZORILO: Res želite izbrisati vse podatke? Vsi računi, partnerji, storitve in nastavitve bodo trajno odstranjeni.")) {
+                        appData = { companies: [], services: [], partners: [], invoices: [] };
+                        saveDataToLocalStorage();
+                        window.location.reload(true); 
+                    }
+                }
+            });
+        }
+
+        // --- Pomožne UI funkcije ---
+        function updateDashboardCards() {
+            document.getElementById('dashboardInvoiceCount').textContent = appData.invoices.length;
+            const totalEarnings = appData.invoices.reduce((sum, inv) => sum + (inv.totalAmount || 0), 0);
+            document.getElementById('dashboardTotalEarnings').textContent = totalEarnings.toFixed(2) + ' €';
+            const avgInvoiceValue = appData.invoices.length > 0 ? (totalEarnings / appData.invoices.length) : 0;
+            document.getElementById('dashboardAverageInvoiceValue').textContent = `Povp. vrednost: ${avgInvoiceValue.toFixed(2)} €`;
+            
+            document.getElementById('dashboardPartnerCount').textContent = appData.partners.length;
+            document.getElementById('dashboardServiceCount').textContent = appData.services.length;
+            
+            const lastInvoice = appData.invoices.length > 0 ? appData.invoices.sort((a,b) => new Date(b.dateIssued) - new Date(a.dateIssued))[0] : null;
+            document.getElementById('dashboardLastInvoiceDate').textContent = lastInvoice ? `Zadnji: ${new Date(lastInvoice.dateIssued).toLocaleDateString('sl-SI')}` : 'Ni izdanih računov';
+        }
+
+        function checkInitialWarnings() {
+            const warningsContainer = document.getElementById('invoiceWarningsContainer');
+            if (!warningsContainer) return;
+            warningsContainer.innerHTML = ''; 
+
+            let needsSetup = false;
+            if (appData.companies.length === 0 || !appData.companies[0]?.companyName) {
+                addWarning(warningsContainer, 'Pred ustvarjanjem računov morate vnesti podatke vsaj enega vašega podjetja v zavihku "Moja podjetja".');
+                needsSetup = true;
+            }
+            if (appData.partners.length === 0) {
+                addWarning(warningsContainer, 'Pred ustvarjanjem računov morate dodati vsaj eno partnersko podjetje.');
+                needsSetup = true;
+            }
+            if (appData.services.length === 0) {
+                addWarning(warningsContainer, 'Pred ustvarjanjem računov morate dodati vsaj eno storitev.');
+                needsSetup = true;
+            }
+            document.getElementById('createInvoiceBtn').disabled = needsSetup;
+        }
+
+        function addWarning(container, message) {
+            const warningDiv = document.createElement('div');
+            warningDiv.className = 'warning-message';
+            warningDiv.innerHTML = `<i class="fas fa-exclamation-triangle"></i><p>${message}</p>`;
+            container.appendChild(warningDiv);
+        }
+
+    </script>
+
+</body>
+</html>
