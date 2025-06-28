@@ -3,8 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20width%3D%22174%22%20height%3D%22146%22%20viewBox%3D%220%200%20174%20146%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M36.9298%2051.2818C39.9426%2051.2818%2042.3847%2053.7241%2042.3849%2056.7368V122.689C41.8419%20122.906%2041.3041%20123.123%2040.7696%20123.334C28.1272%20128.318%2017.8896%20131.451%2010.8478%20133.333C10.4475%20133.439%2010.0573%20133.541%209.67785%20133.64C9.66126%20133.467%209.65247%20133.291%209.65246%20133.114V56.7368C9.65264%2053.7242%2012.0949%2051.282%2015.1075%2051.2818H36.9298ZM76.2091%2025.0952C79.222%2025.0953%2081.6642%2027.5384%2081.6642%2030.5513V104.127C69.9315%20110.516%2059.0507%20115.677%2049.3077%20119.828C49.0661%20119.211%2048.9318%20118.541%2048.9318%20117.838V30.5513C48.9318%2027.5384%2051.374%2025.0954%2054.3868%2025.0952H76.2091ZM77.9083%20111.798C77.188%20112.174%2076.4719%20112.546%2075.7589%20112.913C76.4719%20112.546%2077.1881%20112.174%2077.9083%20111.798ZM115.488%200.000518799C118.501%200.000657819%20120.943%202.44289%20120.943%205.4556V79.8052C109.561%2087.7348%2098.5896%2094.5828%2088.2111%20100.487V5.4556C88.2113%202.44288%2090.6534%200.000636947%2093.6661%200.000518799H115.488ZM116.747%2088.7222C116.537%2088.8625%20116.328%2089.0026%20116.118%2089.1421C116.328%2089.0026%20116.537%2088.8625%20116.747%2088.7222ZM118.95%2087.2417C118.681%2087.424%20118.411%2087.6046%20118.143%2087.7857C118.411%2087.6046%20118.681%2087.424%20118.95%2087.2417Z%22%20fill%3D%22url%28%23paint0_linear_3_39%29%22%2F%3E%3Cpath%20d%3D%22M166.149%2045.2997C169.518%2043.438%20173.638%2045.9212%20173.566%2049.7694L172.825%2089.4569C172.753%2093.3052%20168.542%2095.6328%20165.245%2093.6464L159.541%2090.2089C109.591%20170.048%200.923746%20140.751%200.923746%20140.751C0.976584%20140.742%2061.2247%20130.767%20135.317%2075.6141L131.245%2073.16C127.948%2071.1736%20128.038%2066.3627%20131.407%2064.5009L166.149%2045.2997Z%22%20fill%3D%22url%28%23paint1_linear_3_39%29%22%2F%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22paint0_linear_3_39%22%20x1%3D%220.923756%22%20y1%3D%22145.073%22%20x2%3D%22106.592%22%20y2%3D%22169.392%22%20gradientUnits%3D%22userSpaceOnUse%22%3E%3Cstop%20stop-color%3D%22%2306B9FF%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23525BFF%22%2F%3E%3C%2FlinearGradient%3E%3ClinearGradient%20id%3D%22paint1_linear_3_39%22%20x1%3D%225.83402%22%20y1%3D%22150.064%22%20x2%3D%22156.093%22%20y2%3D%2228.8822%22%20gradientUnits%3D%22userSpaceOnUse%22%3E%3Cstop%20stop-color%3D%22%2306B9FF%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23525BFF%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3C%2Fsvg%3E">
     <title>Računovodstvo Aplikacija</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/kjua-svg@1.13.1/kjua.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.12/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.12/vfs_fonts.js"></script>
     <style>
         /* CSS Spremenljivke */
         :root {
@@ -68,6 +73,7 @@
             --barva-toast-napaka-besedilo: #991b1b; /* red-800 */
             --barva-toast-napaka-ikona: var(--barva-napake);
 
+            --barva-drsnika-palec: #cccccc; /* Dodana spremenljivka za barvo palca drsnika */
             --modal-form-group-margin-bottom: 0.75rem; /* Zmanjšano za manjše razmike */
             --modal-max-width: 850px; /* Povečano za širša okna - še širše */
             --modal-padding: 1.5rem;
@@ -86,6 +92,8 @@
 
         *::-webkit-scrollbar-thumb {
             border-radius: 20px;
+            background-color: var(--barva-drsnika-palec, #cccccc); /* Uporaba CSS spremenljivke */
+            border: 3px solid var(--barva-ozadja); /* Ustvari videz, da je palec "znotraj" drsnika */
         }
         /* Osnovni reset in stili za telo */
         * {
@@ -249,11 +257,6 @@
         .button-danger:hover {
             background-color: var(--barva-gumba-nevarno-hover);
         }
-        .button-sm { /* Manjši gumb za akcije v tabelah/seznamih */
-            padding: 0.3rem 0.7rem;
-            font-size: 0.8rem;
-            border-radius: 4px;
-        }
         .button-sm {
             padding: 0.4rem 0.8rem;
             font-size: 0.8rem;
@@ -302,6 +305,7 @@
         .form-group input[type="number"],
         .form-group input[type="date"],
         .form-group input[type="email"],
+        .form-group input[type="url"],
         .form-group textarea,
         .form-group select {
             width: 100%;
@@ -340,6 +344,7 @@
         .form-group input[type="number"]:focus,
         .form-group input[type="date"]:focus,
         .form-group input[type="email"]:focus,
+        .form-group input[type="url"]:focus,
         .form-group textarea:focus,
         .form-group select:focus {
             border-color: var(--barva-fokusa-obrobe);
@@ -530,6 +535,8 @@
             padding: 1rem;
             border: 1px solid #e5e7eb;
             border-radius: 6px;
+            display: flex; /* Omogoči flexbox za postavitev elementov v stolpec */
+            flex-direction: column; /* Postavi elemente v stolpec */
             box-shadow: 0 1px 2px rgba(0,0,0,0.05);
         }
         .item-card-header {
@@ -543,16 +550,24 @@
             font-size: 1.1rem;
             color: #111827;
         }
-        .item-card-actions .button {
-            margin-left: 0.5rem;
+        .item-card-body { /* Dodano za zapolnitev prostora */
+            flex-grow: 1;
+            margin-bottom: 1rem; /* Dodaj malo prostora med telesom in gumbi */
         }
         .item-card-body .item-detail {
+            /* Ostali stili ostanejo enaki */
             font-size: 0.9rem;
             color: #4b5563;
             margin-bottom: 0.25rem;
         }
         .item-card-body .item-detail strong {
             color: #374151;
+        }
+        .item-card-actions { /* Novi stili za gumbe na dnu */
+            display: flex;
+            justify-content: flex-end; /* Poravnaj gumbe desno */
+            gap: 0.5rem; /* Razmak med gumbi */
+            margin-top: auto; /* Potisni ta element na dno flex kontejnerja */
         }
 
 
@@ -881,7 +896,65 @@
             .modal-form-row { flex-direction: column; gap: 0; }
             .modal-form-row .form-group { min-width: 100%; }
 
-         }
+        }
+
+        /* Stili za filtre računov */
+        .invoice-filters-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            padding: 1.5rem;
+            background-color: #f9fafb; /* Svetlo sivo ozadje */
+            border: 1px solid #e5e7eb; /* Svetla obroba */
+            border-radius: 6px;
+            margin-bottom: 1.5rem;
+        }
+
+        .invoice-filters-container .form-group {
+            margin-bottom: 0; /* Odstranimo spodnji odmik, ker ga že ureja 'gap' */
+        }
+
+        .invoice-filters-container .form-group label {
+            font-size: 0.875rem; /* Manjša pisava za labele */
+            font-weight: 500;
+        }
+
+        .invoice-filter-actions {
+            grid-column: 1 / -1; /* Gumbi naj se raztezajo čez celotno širino */
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.75rem;
+            margin-top: 0.5rem;
+        }
+
+        .status-badge:hover {
+            opacity: 0.85; /* Rahlo zmanjšaj prosojnost za povratno informacijo */
+            box-shadow: 0 0 5px rgba(0,0,0,0.1); /* Dodaj blago senco */
+            cursor: pointer;
+        }
+
+        .status-badge.status-paid .status-icon {
+            color: var(--barva-uspeha); /* Uporaba shranjene zelene barve */
+        }
+        .status-badge.status-unpaid .status-icon {
+            color: var(--barva-napake); /* Uporaba shranjene rdeče barve */
+        }
+
+        /* Dodano za širine stolpcev v tabelah */
+        #pregled .table-container table thead th:nth-child(3),
+        #racuni .table-container table thead th:nth-child(3) {
+            min-width: 100px; /* Za stolpec "Datum izdaje" */
+        }
+        /* Omejitev širine za stolpec "Plačnik" v tabeli Nedavni računi na zavihku Pregled */
+        #pregled .table-container table th:nth-child(2),
+        #pregled .table-container table td:nth-child(2),
+        #racuni .table-container table th:nth-child(2), /* Dodano za zavihek Računi */
+        #racuni .table-container table td:nth-child(2) { /* Dodano za zavihek Računi */
+            max-width: 25ch; /* Približna širina za ~30 znakov, odvisno od pisave */
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap; /* Prepreči prelom vrstic, nujno za ellipsis */
+        }
 
     </style>
 </head>
@@ -890,23 +963,23 @@
     <nav class="nav">
         <div class="nav-container">
             <div class="nav-tabs">
-                <button class="nav-tab-button active" data-tab="pregled">
+                <button class="nav-tab-button active" data-tab="pregled" title="Pregled">
                     <i class="fas fa-chart-line"></i>
                     <span>Pregled</span>
                 </button>
-                <button class="nav-tab-button" data-tab="racuni">
+                <button class="nav-tab-button" data-tab="racuni" title="Računi">
                     <i class="fas fa-file-invoice"></i>
                     <span>Računi</span>
                 </button>
-                <button class="nav-tab-button" data-tab="partnerji">
+                <button class="nav-tab-button" data-tab="partnerji" title="Poslovni partnerji">
                     <i class="fas fa-building"></i>
                     <span>Poslovni partnerji</span>
                 </button>
-                <button class="nav-tab-button" data-tab="storitve">
+                <button class="nav-tab-button" data-tab="storitve" title="Storitve">
                     <i class="fas fa-briefcase"></i>
                     <span>Storitve</span>
                 </button>
-                <button class="nav-tab-button" data-tab="podjetja">
+                <button class="nav-tab-button" data-tab="podjetja" title="Moja podjetja">
                     <i class="fas fa-industry"></i>
                     <span>Moja podjetja</span>
                 </button>
@@ -952,7 +1025,7 @@
                             <div class="icon"><i class="fas fa-handshake"></i></div>
                         </div>
                         <div class="card-footer">
-                            <span id="dashboardActivePartnersCount">Aktivnih: 0</span>
+                            <!-- <span id="dashboardActivePartnersCount">Aktivnih: 0</span> -->
                         </div>
                     </div>
                     <div class="dashboard-card orange">
@@ -964,7 +1037,7 @@
                             <div class="icon"><i class="fas fa-cogs"></i></div>
                         </div>
                         <div class="card-footer">
-                            <span id="dashboardActiveServicesCount">Aktivnih: 0</span>
+                            <!-- <span id="dashboardActiveServicesCount">Aktivnih: 0</span> -->
                         </div>
                     </div>
                 </div>
@@ -972,14 +1045,14 @@
                 <div class="charts-grid">
                     <div class="chart-container content-section">
                         <h3>Zaslužek po mesecih</h3>
-                        <div class="chart-placeholder">
-                            <p>Graf bo prikazan tukaj.</p>
+                        <div style="height: 250px; position: relative;">
+                            <canvas id="earningsChartCanvas"></canvas>
                         </div>
                     </div>
                     <div class="chart-container content-section">
                         <h3>Top partnerji</h3>
-                        <div class="chart-placeholder">
-                            <p>Graf bo prikazan tukaj.</p>
+                        <div style="height: 250px; position: relative;">
+                            <canvas id="topPartnersChartCanvas"></canvas>
                         </div>
                     </div>
                 </div>
@@ -997,11 +1070,12 @@
                             <thead>
                                 <tr>
                                     <th>Št. računa</th>
-                                    <th>Partner</th>
+                                    <th>Plačnik</th>
                                     <th>Datum izdaje</th>
-                                    <th>Zapadlost</th>
-                                    <th>Znesek (€)</th>
+                                    <th>Neto (€)</th>
+                                    <th>Bruto (€)</th>
                                     <th>Status</th>
+                                    <th>Akcije</th>
                                 </tr>
                             </thead>
                             <tbody id="recentInvoicesTableBody">
@@ -1023,7 +1097,57 @@
                         </button>
                     </div>
                     
-                    <div class="warning-messages-container" id="invoiceWarningsContainer">
+                    <!-- Sekcija za filtriranje -->
+                    <div class="invoice-filters-container">
+                        <div class="form-group">
+                            <label for="filterInvoiceNumber">Št. računa</label>
+                            <input type="text" id="filterInvoiceNumber" placeholder="Išči po številki...">
+                        </div>
+                        <div class="form-group">
+                            <label for="filterPartner">Plačnik</label>
+                            <select id="filterPartner">
+                                <!-- Dinamično polnjeno -->
+                            </select>
+                        </div>
+                         <div class="form-group">
+                            <label for="filterStatus">Status</label>
+                            <select id="filterStatus">
+                                <option value="">Vsi statusi</option>
+                                <option value="paid">Plačano</option>
+                                <option value="unpaid">Neplačano</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="filterDateFrom">Datum izdaje od</label>
+                            <input type="date" id="filterDateFrom">
+                        </div>
+                        <div class="form-group">
+                            <label for="filterDateTo">Datum izdaje do</label>
+                            <input type="date" id="filterDateTo">
+                        </div>
+                        <div class="form-group">
+                            <label for="filterNetFrom">Neto od (€)</label>
+                            <input type="number" id="filterNetFrom" placeholder="0.00" step="0.01" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="filterNetTo">Neto do (€)</label>
+                            <input type="number" id="filterNetTo" placeholder="1000.00" step="0.01" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="filterGrossFrom">Bruto od (€)</label>
+                            <input type="number" id="filterGrossFrom" placeholder="0.00" step="0.01" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="filterGrossTo">Bruto do (€)</label>
+                            <input type="number" id="filterGrossTo" placeholder="1220.00" step="0.01" min="0">
+                        </div>
+                        <div class="invoice-filter-actions">
+                            <button id="applyFiltersBtn" class="button button-primary"><i class="fas fa-filter"></i> Filtriraj</button>
+                            <button id="resetFiltersBtn" class="button button-cancel"><i class="fas fa-undo"></i> Ponastavi</button>
+                        </div>
+                    </div>
+
+                    <div class="warning-messages-container" id="invoiceWarningsContainer" aria-live="polite" aria-atomic="true">
                         <!-- Opozorila se dodajo dinamično -->
                     </div>
 
@@ -1032,10 +1156,13 @@
                              <table>
                                 <thead>
                                     <tr>
-                                        <th>Številka računa</th>
+                                        <th>Št. računa</th>
                                         <th>Plačnik</th>
-                                        <th>Znesek (€)</th>
-                                        <th></th> <!-- Prazen header za Akcije -->
+                                        <th>Datum izdaje</th>
+                                        <th>Neto (€)</th>
+                                        <th>Bruto (€)</th>
+                                        <th>Status</th>
+                                        <th>Akcije</th>
                                     </tr>
                                 </thead>
                                 <tbody id="allInvoicesTableBody">
@@ -1119,14 +1246,14 @@
 
     <!-- Lebdeči akcijski gumbi (FAB) -->
     <div class="fab-container">
-        <button class="fab-button" id="fabDownload" data-tooltip="Prenesi podatke">
+        <button class="fab-button" id="fabDownload" data-tooltip="Prenesi podatke" aria-label="Prenesi podatke">
             <i class="fas fa-download"></i>
         </button>
-        <button class="fab-button yellow" id="fabUpload" data-tooltip="Naloži podatke">
+        <button class="fab-button yellow" id="fabUpload" data-tooltip="Naloži podatke" aria-label="Naloži podatke">
             <i class="fas fa-upload"></i>
         </button>
         <input type="file" id="uploadInput" accept=".json">
-        <button class="fab-button red" id="fabDelete" data-tooltip="Izbriši vse podatke">
+        <button class="fab-button red" id="fabDelete" data-tooltip="Izbriši vse podatke" aria-label="Izbriši vse podatke">
             <i class="fas fa-trash-alt"></i>
         </button>
     </div>
@@ -1136,7 +1263,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2 id="modalTitle"></h2>
-                <button class="modal-close-button" id="modalCloseBtn">&times;</button>
+                <button class="modal-close-button" id="modalCloseBtn" title="Zapri" aria-label="Zapri">&times;</button>
             </div>
             <div class="modal-body" id="modalBodyContent">
                 <!-- Vsebina modala bo vstavljena tukaj -->
@@ -1148,76 +1275,140 @@
     </div>
 
     <!-- Toast Container -->
-    <div id="toastContainer" class="toast-container"></div>
+    <div id="toastContainer" class="toast-container" aria-live="assertive" aria-atomic="true"></div>
 
 
     <script>
-        // --- Globalni podatki aplikacije ---
-        let appData = {
-            companies: [], // Spremenjeno iz companyInfo: {}
-            services: [],
-            partners: [],
-            invoices: []
-        };
+        // --- Strukturirano upravljanje stanja (AppStore) ---
+        const AppStore = (function() {
+            let _appData = {
+                companies: [],
+                services: [],
+                partners: [],
+                invoices: []
+            };
+            let _lastFocusedElement = null;
 
-        // --- Funkcije za localStorage ---
-        function saveDataToLocalStorage() {
-            localStorage.setItem('racunovodstvoAppData', JSON.stringify(appData));
-            console.log("Podatki shranjeni v localStorage:", appData);
-        }
+            // --- Interni metodi za shranjevanje in osveževanje ---
+            function _saveToLocalStorageInternal() {
+                localStorage.setItem('racunovodstvoAppData', JSON.stringify(_appData));
+                console.log("Podatki shranjeni v localStorage (preko AppStore):", _appData);
+            }
 
-        function loadDataFromLocalStorage() {
-            const data = localStorage.getItem('racunovodstvoAppData');
-            if (data) {
-                try {
-                    let tempData = JSON.parse(data);
-                    
-                    // Pravilno ravnanje s podjetji: migracija in nalaganje
-                    if (tempData.companyInfo && (!tempData.companies || tempData.companies.length === 0)) {
-                        // Migriraj iz starega objekta companyInfo, če obstaja in če je seznam companies prazen ali manjka
-                        if (Object.keys(tempData.companyInfo).length > 0) {
-                            // Staremu companyInfo objektu dodeli ID ob migraciji
-                            appData.companies = [{ ...tempData.companyInfo, id: generateUniqueId('mig_comp_') }];
-                        } else {
-                            appData.companies = [];
+            function _saveAndRefresh() {
+                _saveToLocalStorageInternal();
+                refreshAllUI(); // refreshAllUI bo klical AppStore.getData()
+            }
+            
+            const ensureIdsInternal = (items, prefix) => {
+                return items.map(item => {
+                    if (!item.id) {
+                        console.warn(`Elementu v '${prefix}' manjka ID, dodeljujem novega:`, item);
+                        item.id = generateUniqueId(prefix);
+                    }
+                    return item;
+                });
+            };
+
+            return {
+                loadInitialData: function() {
+                    const data = localStorage.getItem('racunovodstvoAppData');
+                    if (data) {
+                        try {
+                            let tempData = JSON.parse(data);
+                            if (tempData.companyInfo && (!tempData.companies || tempData.companies.length === 0)) {
+                                if (Object.keys(tempData.companyInfo).length > 0) {
+                                    _appData.companies = [{ ...tempData.companyInfo, id: generateUniqueId('mig_comp_') }];
+                                } else {
+                                    _appData.companies = [];
+                                }
+                            } else {
+                                _appData.companies = tempData.companies || [];
+                            }
+                            _appData.services = tempData.services || [];
+                            _appData.partners = tempData.partners || [];
+                            _appData.invoices = tempData.invoices || [];
+
+                            _appData.companies = ensureIdsInternal(_appData.companies, 'comp_');
+                            _appData.services = ensureIdsInternal(_appData.services, 'serv_');
+                            _appData.partners = ensureIdsInternal(_appData.partners, 'part_');
+                            _appData.invoices = ensureIdsInternal(_appData.invoices, 'inv_');
+                            console.log("Podatki naloženi iz localStorage (preko AppStore):", _appData);
+                        } catch (e) {
+                            console.error("Napaka pri razčlenjevanju podatkov iz localStorage (AppStore):", e);
+                            showToast('Napaka pri nalaganju shranjenih podatkov. Podatki so morda ponastavljeni.', 'error', 5000);
+                            _appData = { companies: [], services: [], partners: [], invoices: [] };
                         }
                     } else {
-                        // Uporabi obstoječi seznam companies, če obstaja
-                        appData.companies = tempData.companies || [];
+                        _appData = { companies: [], services: [], partners: [], invoices: [] };
                     }
+                },
+                getData: function() {
+                    // Vračamo globoko kopijo, da preprečimo neposredne modifikacije od zunaj
+                    return JSON.parse(JSON.stringify(_appData));
+                },
+                // Metode za upravljanje s podjetji
+                addCompany: function(companyData) { _appData.companies.push({ ...companyData, id: generateUniqueId('company_') }); _saveAndRefresh(); },
+                updateCompany: function(id, updatedData) { const index = _appData.companies.findIndex(c => c.id === id); if (index > -1) _appData.companies[index] = { ..._appData.companies[index], ...updatedData }; _saveAndRefresh(); },
+                deleteCompany: function(id) { _appData.companies = _appData.companies.filter(c => c.id !== id); _saveAndRefresh(); },
+                // Metode za upravljanje s storitvami
+                addService: function(serviceData) { _appData.services.push({ ...serviceData, id: generateUniqueId('service_') }); _saveAndRefresh(); },
+                updateService: function(id, updatedData) { const index = _appData.services.findIndex(s => s.id === id); if (index > -1) _appData.services[index] = { ..._appData.services[index], ...updatedData }; _saveAndRefresh(); },
+                deleteService: function(id) { _appData.services = _appData.services.filter(s => s.id !== id); _saveAndRefresh(); },
+                // Metode za upravljanje s partnerji
+                addPartner: function(partnerData) { _appData.partners.push({ ...partnerData, id: generateUniqueId('partner_') }); _saveAndRefresh(); },
+                updatePartner: function(id, updatedData) { const index = _appData.partners.findIndex(p => p.id === id); if (index > -1) _appData.partners[index] = { ..._appData.partners[index], ...updatedData }; _saveAndRefresh(); },
+                deletePartner: function(id) { _appData.partners = _appData.partners.filter(p => p.id !== id); _saveAndRefresh(); },
+                // Metode za upravljanje z računi
+                addInvoice: function(invoiceData) { 
+                    invoiceData.number = generateInvoiceNumber(invoiceData.dateIssued, _appData.invoices); // generateInvoiceNumber bo uporabil _appData.invoices
+                    _appData.invoices.push({ ...invoiceData, id: generateUniqueId('invoice_') }); 
+                    _saveAndRefresh(); 
+                },
+                updateInvoice: function(id, updatedData) { const index = _appData.invoices.findIndex(i => i.id === id); if (index > -1) { const oldNum = _appData.invoices[index].number; _appData.invoices[index] = { ..._appData.invoices[index], ...updatedData, number: oldNum }; } _saveAndRefresh(); },
+                deleteInvoice: function(id) { _appData.invoices = _appData.invoices.filter(i => i.id !== id); _saveAndRefresh(); },
+                // Za FAB gumbe
+                replaceAllData: function(importedData) { _appData = importedData; _saveToLocalStorageInternal(); /* Osvežitev bo po reloadu */},
+                deleteAllData: function() { _appData = { companies: [], services: [], partners: [], invoices: [] }; _saveToLocalStorageInternal(); /* Osvežitev bo po reloadu */},
+                // Upravljanje fokusa
+                setLastFocusedElement: function(el) { _lastFocusedElement = el; },
+                getLastFocusedElement: function() { return _lastFocusedElement; },
+                clearLastFocusedElement: function() { _lastFocusedElement = null; }
+            };
+        })();
 
-                    appData.services = tempData.services || [];
-                    appData.partners = tempData.partners || [];
-                    appData.invoices = tempData.invoices || [];
+        // --- Globalna instanca za graf ---
+        let earningsChartInstance = null;
+        let topPartnersChartInstance = null;
 
-                    // Zagotovi, da imajo vsi elementi v seznamih ID-je
-                    const ensureIds = (items, prefix) => {
-                        return items.map(item => {
-                            if (!item.id) {
-                                console.warn(`Elementu v '${prefix}' manjka ID, dodeljujem novega:`, item);
-                                item.id = generateUniqueId(prefix);
-                            }
-                            return item;
-                        });
-                    };
+        // --- Pomožna funkcija za pridobivanje CSS spremenljivk ---
+        function getCssVariable(variableName) {
+            return getComputedStyle(document.documentElement).getPropertyValue(variableName).trim();
+        }
 
-                    appData.companies = ensureIds(appData.companies, 'comp_');
-                    appData.services = ensureIds(appData.services, 'serv_');
-                    appData.partners = ensureIds(appData.partners, 'part_');
-                    appData.invoices = ensureIds(appData.invoices, 'inv_');
+        // --- Globalne nastavitve za Chart.js ---
+        // To je treba nastaviti, preden se ustvari prvi graf
+        // Najbolje je, da to storimo enkrat, ko je DOM naložen, ali pa kar tukaj globalno.
+        // Vendar, ker se getCssVariable zanaša na DOM, bomo to prestavili v DOMContentLoaded.
+        function setupChartDefaults() {
+            const fontFamily = getCssVariable('--pisava-osnovna') || 'sans-serif';
+            const textColor = getCssVariable('--barva-besedila-zavihka') || '#374151';
+            const gridColor = getCssVariable('--barva-tabele-obroba-vrstice') || '#e5e7eb';
+            const tooltipBgColor = getCssVariable('--barva-fab-tooltip-ozadje') || '#1f2937';
 
-                    console.log("Podatki naloženi iz localStorage:", appData);
-                } catch (e) {
-                    console.error("Napaka pri razčlenjevanju podatkov iz localStorage:", e);
-                    appData = { companies: [], services: [], partners: [], invoices: [] };
-                }
-            } else {
-                // Če ni podatkov, inicializiraj s praznimi seznami
-                appData = { companies: [], services: [], partners: [], invoices: [] };
-            }
+            Chart.defaults.font.family = fontFamily;
+            Chart.defaults.color = textColor;
+            Chart.defaults.borderColor = gridColor; // Barva mrežnih črt
+
+            Chart.defaults.plugins.tooltip.backgroundColor = tooltipBgColor;
+            Chart.defaults.plugins.tooltip.titleColor = getCssVariable('--barva-aktivnega-zavihka-besedilo') || '#ffffff';
+            Chart.defaults.plugins.tooltip.bodyColor = getCssVariable('--barva-aktivnega-zavihka-besedilo') || '#ffffff';
+            Chart.defaults.plugins.tooltip.padding = 10;
+            Chart.defaults.plugins.tooltip.cornerRadius = 4;
         }
         
         function refreshAllUI() {
+            // Vse render funkcije bodo zdaj implicitno ali eksplicitno uporabljale AppStore.getData()
             renderCompaniesList(); // Novo za podjetja
             renderServicesList();
             renderPartnersList();
@@ -1225,8 +1416,49 @@
             renderAllInvoicesTable();
             updateDashboardCards();
             checkInitialWarnings();
+            populatePartnerFilterDropdown(); // Napolni filter za partnerje
+            renderEarningsChart();
+            renderTopPartnersChart();
         }
 
+        // --- Pomožne funkcije za formatiranje in parsiranje cen ---
+        function formatPriceForDisplay(number) {
+            if (typeof number !== 'number' || isNaN(number)) {
+                return '0,00'; // Privzeta vrednost ali prikaz napake
+            }
+            return number.toFixed(2).replace('.', ',');
+        }
+
+        function parsePriceFromInput(valueStr) {
+            if (typeof valueStr !== 'string') return NaN;
+            const s = valueStr.trim();
+            if (s === '') return NaN;
+
+            const lastCommaIdx = s.lastIndexOf(',');
+            const lastDotIdx = s.lastIndexOf('.');
+            
+            // Določi indeks dejanskega decimalnega ločila (zadnja vejica ali pika)
+            // Če ločil ni, bo actualDecimalSeparatorIdx -1.
+            const actualDecimalSeparatorIdx = Math.max(lastCommaIdx, lastDotIdx);
+
+            let normalizedString = "";
+            for (let i = 0; i < s.length; i++) {
+                const char = s[i];
+                if (i === actualDecimalSeparatorIdx) { // Če je znak na mestu zadnjega ločila
+                    normalizedString += "."; // Dodaj piko kot decimalno ločilo
+                } else if (/\d/.test(char)) { // Če je znak števka
+                    normalizedString += char; // Dodaj števko
+                }
+                // Vsi ostali znaki (vključno z morebitnimi ločili tisočic ali drugimi ločili, ki niso zadnje) se preskočijo.
+            }
+
+            // Če je po normalizaciji niz prazen (npr. vhod "abc") ali vsebuje samo piko (npr. vhod "," ali ".")
+            if (normalizedString === "" || normalizedString === ".") {
+                return NaN;
+            }
+            
+            return parseFloat(normalizedString); // parseFloat bo pravilno obdelal nize kot ".5" (v 0.5) ali "10." (v 10)
+        }
         // --- Toast sporočila ---
         const toastContainer = document.getElementById('toastContainer');
         function showToast(message, type = 'success', duration = 3000) {
@@ -1243,7 +1475,7 @@
             toast.innerHTML = `
                 <i class="toast-icon ${iconClass}"></i>
                 <div class="toast-message">${message}</div>
-                <button class="toast-close-button">&times;</button>
+                <button class="toast-close-button" title="Zapri sporočilo" aria-label="Zapri sporočilo">&times;</button>
             `;
             toastContainer.appendChild(toast);
 
@@ -1281,14 +1513,16 @@
                 });
             });
             
-            loadDataFromLocalStorage(); 
+            AppStore.loadInitialData(); 
             refreshAllUI(); // Kličemo refresh tukaj, da se UI posodobi po nalaganju podatkov
+            setupChartDefaults(); // Nastavi privzete vrednosti za grafe po nalaganju DOM-a in CSS
 
             // Odstranjen event listener za staro formo #companyForm
             // Zdaj se upravlja preko modalov in renderCompaniesList
 
             setupFabButtons();
             setupModalTriggers();
+            setupInvoiceFilters(); // Nastavi poslušalce za filtre
 
             const modalCloseBtn = document.getElementById('modalCloseBtn');
             const genericModalEl = document.getElementById('genericModal'); 
@@ -1372,17 +1606,141 @@
         const modalBodyEl = document.getElementById('modalBodyContent');
         const modalFooterEl = document.getElementById('modalFooterContent');
 
+        function getFocusableElements(parentElement) {
+            if (!parentElement) return [];
+            return Array.from(
+                parentElement.querySelectorAll(
+                    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+                )
+            ).filter(el => !el.disabled && el.offsetParent !== null); // Preveri, ali je element viden in omogočen
+        }
+
+        function trapFocusInModal(event) {
+            if (event.key !== 'Tab' || !genericModalEl.classList.contains('active')) {
+                return;
+            }
+            const focusableElements = getFocusableElements(genericModalEl);
+            if (focusableElements.length === 0) {
+                event.preventDefault();
+                return;
+            }
+            const firstFocusableElement = focusableElements[0];
+            const lastFocusableElement = focusableElements[focusableElements.length - 1];
+
+            if (event.shiftKey) { // Shift + Tab
+                if (document.activeElement === firstFocusableElement) {
+                    lastFocusableElement.focus();
+                    event.preventDefault();
+                }
+            } else { // Tab
+                if (document.activeElement === lastFocusableElement) {
+                    firstFocusableElement.focus();
+                    event.preventDefault();
+                }
+            }
+        }
+
         function openModal(title, bodyHTML, footerHTML) {
+            AppStore.setLastFocusedElement(document.activeElement); // Shrani trenutno fokusiran element
+
             if (modalTitleEl) modalTitleEl.textContent = title;
             if (modalBodyEl) modalBodyEl.innerHTML = bodyHTML;
             if (modalFooterEl) modalFooterEl.innerHTML = footerHTML;
-            if (genericModalEl) genericModalEl.classList.add('active');
+            if (modalBodyEl) { // Zagotovimo, da je drsnik na vrhu
+                modalBodyEl.scrollTop = 0;
+            }
+            if (genericModalEl) {
+                genericModalEl.classList.add('active');
+                const focusableElements = getFocusableElements(genericModalEl);
+                if (focusableElements.length > 0) {
+                    focusableElements[0].focus(); // Fokus na prvi element (pogosto gumb za zapiranje ali prvo polje)
+                }
+                genericModalEl.addEventListener('keydown', trapFocusInModal);
+            }
         }
 
         function closeModal() {
             if (genericModalEl) genericModalEl.classList.remove('active');
             if (modalBodyEl) modalBodyEl.innerHTML = ''; 
             if (modalFooterEl) modalFooterEl.innerHTML = '';
+            genericModalEl.removeEventListener('keydown', trapFocusInModal);
+            const prevFocused = AppStore.getLastFocusedElement();
+            if (prevFocused) {
+                prevFocused.focus(); // Vrni fokus na prejšnji element
+                AppStore.clearLastFocusedElement();
+            }
+        }
+        
+        // --- Pomožna funkcija za gradnjo HTML obrazcev ---
+        function _buildFormHTML(formId, fieldsConfig, itemToEdit = null, twoColumns = true) {
+            let formHTML = `<form id="${formId}" novalidate>`;
+            let fieldBuffer = [];
+        
+            fieldsConfig.forEach(f => {
+                let valueToSet;
+                if (f.getValue) {
+                    valueToSet = f.getValue(itemToEdit, f);
+                } else {
+                    // Generična logika za pridobivanje vrednosti
+                    valueToSet = (itemToEdit && itemToEdit[f.name] !== undefined) ? itemToEdit[f.name] : (f.defaultValue !== undefined ? f.defaultValue : '');
+                }
+        
+                let inputHtml;
+                if (f.type === 'textarea') {
+                    inputHtml = `<textarea id="${f.id}" name="${f.name}" class="form-control" ${f.maxLength ? `maxlength="${f.maxLength}"` : ''} aria-describedby="${f.errorId}">${valueToSet}</textarea>`;
+                } else if (f.type === 'select') {
+                    inputHtml = `<select id="${f.id}" name="${f.name}" class="form-control" aria-describedby="${f.errorId}">`;
+                    (f.options || []).forEach(opt => {
+                        // Primerjava vrednosti mora biti pozorna na tipe (npr. string vs boolean string)
+                        const isSelected = String(valueToSet) === String(opt.v);
+                        inputHtml += `<option value="${opt.v}" ${isSelected ? 'selected' : ''}>${opt.t}</option>`;
+                    });
+                    inputHtml += `</select>`;
+                } else if (f.type === 'checkbox') {
+                     inputHtml = `<div style="display: flex; align-items: center; margin-top: 0.5rem;">
+                                     <input type="checkbox" id="${f.id}" name="${f.name}" ${valueToSet ? 'checked' : ''} style="width: auto; height: auto; margin-right: 0.5rem; margin-bottom: 0;">
+                                     <label for="${f.id}" style="margin-bottom: 0; font-weight: normal; display: inline;">${f.checkboxLabel || f.label}</label>
+                                  </div>`;
+                }
+                else {
+                    inputHtml = `<input type="${f.type || 'text'}" id="${f.id}" name="${f.name}" value="${valueToSet}"
+                                    class="form-control" ${f.required ? 'required' : ''} ${f.maxLength ? `maxlength="${f.maxLength}"` : ''}
+                                    ${f.pattern ? `pattern="${f.pattern.source}"` : ''}
+                                    ${f.pattern && f.patternMessage ? `title="${f.patternMessage}"` : ''}
+                                    ${f.inputmode ? `inputmode="${f.inputmode}"` : ''}
+                                    aria-describedby="${f.errorId}">`;
+                }
+
+                // Dodajanje dodatnega HTML-ja, če je definiran
+                if (f.additionalHTML) {
+                    inputHtml += f.additionalHTML(f, valueToSet, itemToEdit);
+                }
+
+                const formGroupClass = `form-group ${ (f.fullWidth || f.type === 'textarea' || f.type === 'checkbox') ? 'full-width' : '' }`;
+                const fieldGroupHtmlString = `
+                    <div class="${formGroupClass}">
+                        ${f.type !== 'checkbox' ? `<label for="${f.id}">${f.label} ${f.required ? '<span class="required-asterisk">*</span>' : ''}</label>` : ''}
+                        ${inputHtml}
+                        <span class="error-message" id="${f.errorId}"></span>
+                    </div>`;
+
+                if (!twoColumns || f.fullWidth || f.type === 'textarea' || f.type === 'checkbox') {
+                    if (fieldBuffer.length > 0) {
+                        formHTML += `<div class="modal-form-row">${fieldBuffer.join('')}</div>`;
+                        fieldBuffer = [];
+                    }
+                    formHTML += `<div class="modal-form-row">${fieldGroupHtmlString}</div>`;
+                } else {
+                    fieldBuffer.push(fieldGroupHtmlString);
+                    if (fieldBuffer.length === 2) {
+                        formHTML += `<div class="modal-form-row">${fieldBuffer.join('')}</div>`;
+                        fieldBuffer = [];
+                    }
+                }
+            });
+            if (fieldBuffer.length > 0) { formHTML += `<div class="modal-form-row">${fieldBuffer.join('')}</div>`; }
+            formHTML += '</form>';
+            return formHTML;
         }
 
         function setupModalTriggers() {
@@ -1403,26 +1761,92 @@
             { id: 'companyPostalCodeModal', name: 'postalCode', errorId: 'companyPostalCodeModalError', required: true, pattern: /^\d{4}$/, patternMessage: "Vnesite 4-mestno poštno številko (samo številke).", label: 'Poštna številka', type: 'tel', maxLength: 4 },
             { id: 'companyCityModal', name: 'city', errorId: 'companyCityModalError', required: true, maxLength: 50, pattern: /^[A-Za-zčćžđšČĆŽĐŠ\s]+$/, patternMessage: "Kraj lahko vsebuje samo črke in presledke.", label: 'Kraj' },
             { id: 'companyTaxNumberModal', name: 'taxNumber', errorId: 'companyTaxNumberModalError', required: true, pattern: /^\d{8}$/, patternMessage: "Vnesite 8-mestno davčno številko.", label: 'Davčna številka', type: 'tel', maxLength: 8 },
-            { id: 'companyRegistrationNumberModal', name: 'registrationNumber', errorId: 'companyRegistrationNumberModalError', required: true, pattern: /^\d{8}$/, patternMessage: "Vnesite 8-mestno matično številko.", label: 'Matična številka', type: 'tel', maxLength: 8 },
+            { id: 'companyRegistrationNumberModal', name: 'registrationNumber', errorId: 'companyRegistrationNumberModalError', required: true, pattern: /^\d{10}$/, patternMessage: "Vnesite 10-mestno matično številko.", label: 'Matična številka', type: 'tel', maxLength: 10 },
             { id: 'companyIbanModal', name: 'iban', errorId: 'companyIbanModalError', required: true, customValidation: validateIban, label: 'IBAN' },
-            { id: 'companyBicModal', name: 'bic', errorId: 'companyBicModalError', required: false, pattern: /^[A-Z]{6}[A-Z0-9]{2}([A-Z0-9]{3})?$/, patternMessage: "Neveljaven BIC/SWIFT format (8 ali 11 znakov).", label: 'BIC/SWIFT' }
+            { id: 'companyBicModal', name: 'bic', errorId: 'companyBicModalError', required: false, pattern: /^[A-Z]{6}[A-Z0-9]{2}([A-Z0-9]{3})?$/, patternMessage: "Neveljaven BIC/SWIFT format (8 ali 11 znakov).", label: 'BIC/SWIFT' },
+            { 
+                id: 'companyIsVatPayerModal', name: 'isVatPayer', errorId: 'companyIsVatPayerModalError', required: false, type: 'select', label: 'Zavezanec za DDV', defaultValue: 'false', 
+                options: [{v: 'false', t: 'Ne'}, {v: 'true', t: 'Da'}],
+                getValue: (itemToEdit, fieldConfig) => {
+                    // Preverimo, ali je itemToEdit definiran in ali ima lastnost z imenom fieldConfig.name
+                    // ter ali je ta lastnost boolean. Če je, jo pretvorimo v string.
+                    // Drugače vrnemo defaultValue.
+                    if (itemToEdit && typeof itemToEdit[fieldConfig.name] === 'boolean') { // Dodana preverba za itemToEdit
+                        return itemToEdit[fieldConfig.name].toString();
+                    }
+                    return fieldConfig.defaultValue;
+                }
+            },
+            { id: 'companyWebsiteModal', name: 'website', errorId: 'companyWebsiteModalError', required: false, type: 'url', label: 'Spletna stran', maxLength: 60, pattern: /^(https?:\/\/)?([\w\.-]+)\.([a-zA-Z\.]{2,6})([\/\w \.-]*)*\/?$/, patternMessage: 'Vnesite veljaven URL (npr. http://example.com).', fullWidth: false },
+            { id: 'companyInvoiceFooterTextModal', name: 'invoiceFooterText', errorId: 'companyInvoiceFooterTextModalError', required: false, type: 'textarea', label: 'Dodatno besedilo za račun (noga)', maxLength: 500, fullWidth: true },
+            { 
+                id: 'companySignatoryNameModal', 
+                name: 'signatoryName', 
+                errorId: 'companySignatoryNameModalError', 
+                required: false, 
+                type: 'text', 
+                label: 'Ime podpisnika računa', 
+                maxLength: 70, 
+                fullWidth: true 
+            }
+            ,
+            { 
+                id: 'companySignatureModal', name: 'signatureImage', errorId: 'companySignatureModalError', required: false, type: 'file', label: 'Podpis (slika)', accept: 'image/png, image/jpeg', fullWidth: true,
+                additionalHTML: (fieldConfig, valueToSet, itemToEdit) => {
+                    const imgSrc = (itemToEdit && itemToEdit.signatureImage) ? itemToEdit.signatureImage : '';
+                    return `
+                        <img id="signaturePreview" src="${imgSrc}" alt="Predogled podpisa" style="max-width: 300px; max-height: 150px; display: ${imgSrc ? 'block' : 'none'}; margin-top: 0.5rem; border: 1px solid #ddd; padding: 2px;">
+                        <button type="button" id="removeSignatureBtn" class="button button-sm button-danger" style="margin-top: 0.5rem; display: ${imgSrc ? 'inline-block' : 'none'};"><i class="fas fa-times"></i> Odstrani podpis</button>
+                        <small style="display: block; margin-top: 0.5rem; color: #666;">Za najboljšo kakovost v PDF priporočamo sliko širine vsaj 300-400px (npr. skeniran podpis). Format: JPG, PNG.</small>
+                    `;
+                },
+                postRenderSetup: (formElement, fieldConfig, itemToEdit) => {
+                    const fileInput = formElement.querySelector(`#${fieldConfig.id}`);
+                    const preview = formElement.querySelector('#signaturePreview');
+                    const removeBtn = formElement.querySelector('#removeSignatureBtn');
+                    
+                    let removeSignatureFlagInput = formElement.querySelector('#removeSignatureFlag');
+                    if (!removeSignatureFlagInput) {
+                        removeSignatureFlagInput = document.createElement('input');
+                        removeSignatureFlagInput.type = 'hidden';
+                        removeSignatureFlagInput.id = 'removeSignatureFlag';
+                        removeSignatureFlagInput.name = 'removeSignature'; // Ime za dostop preko form.elements
+                        removeSignatureFlagInput.value = 'false';
+                        fileInput?.parentNode.appendChild(removeSignatureFlagInput);
+                    }
+
+                    fileInput?.addEventListener('change', function(event) {
+                        const file = event.target.files[0];
+                        if (file && preview) {
+                            const reader = new FileReader();
+                            reader.onload = function(e) {
+                                preview.src = e.target.result;
+                                preview.style.display = 'block';
+                                if (removeBtn) removeBtn.style.display = 'inline-block';
+                                if (removeSignatureFlagInput) removeSignatureFlagInput.value = 'false';
+                            }
+                            reader.readAsDataURL(file);
+                        } else if (preview && (!file || !file.name) && !(itemToEdit && itemToEdit.signatureImage)) {
+                            preview.src = ''; preview.style.display = 'none'; if (removeBtn) removeBtn.style.display = 'none';
+                        }
+                    });
+
+                    removeBtn?.addEventListener('click', () => {
+                        if (fileInput) fileInput.value = ''; 
+                        if (preview) { preview.src = ''; preview.style.display = 'none'; }
+                        if (removeBtn) removeBtn.style.display = 'none';
+                        if (removeSignatureFlagInput) removeSignatureFlagInput.value = 'true';
+                    });
+
+                    if (itemToEdit && itemToEdit.signatureImage && removeBtn && preview && preview.src) {
+                        removeBtn.style.display = 'inline-block';
+                    }
+                }
+            }
         ];
 
         function openCompanyModal(companyToEdit = null) {
-            let formHTML = '<form id="companyFormModal" novalidate>';
-            companyModalFormFields.forEach(f => {
-                const value = companyToEdit && companyToEdit[f.name] !== undefined ? companyToEdit[f.name] : '';
-                formHTML += `<div class="form-group">
-                                <label for="${f.id}">${f.label} ${f.required ? '<span class="required-asterisk">*</span>' : ''}</label>
-                                <input type="${f.type || 'text'}" id="${f.id}" name="${f.name}" value="${value}" 
-                                    ${f.required ? 'required' : ''} ${f.maxLength ? `maxlength="${f.maxLength}"` : ''} 
-                                    ${f.pattern ? `pattern="${f.pattern.source}"` : ''} 
-                                    ${f.pattern && f.patternMessage ? `title="${f.patternMessage}"` : ''}
-                                    aria-describedby="${f.errorId}">
-                                <span class="error-message" id="${f.errorId}"></span>
-                             </div>`;
-            });
-            formHTML += '</form>';
+            const formHTML = _buildFormHTML('companyFormModal', companyModalFormFields, companyToEdit);
             
             const footerHTML = `
                 <button type="button" class="button button-cancel" id="cancelCompanyModalBtn">Prekliči</button>
@@ -1431,11 +1855,14 @@
             openModal(companyToEdit ? 'Uredi podatke o podjetju' : 'Dodaj novo podjetje', formHTML, footerHTML);
             
             const companyFormModal = document.getElementById('companyFormModal');
-            companyModalFormFields.forEach(field => {
-                const inputElement = document.getElementById(field.id);
-                const errorElement = document.getElementById(field.errorId);
+            companyModalFormFields.forEach(f => {
+                const inputElement = document.getElementById(f.id);
+                const errorElement = document.getElementById(f.errorId);
                 if (inputElement && errorElement) {
-                    inputElement.addEventListener('input', () => validateField(inputElement, errorElement, field));
+                    inputElement.addEventListener('input', () => validateField(inputElement, errorElement, f));
+                }
+                if (f.postRenderSetup) {
+                    f.postRenderSetup(companyFormModal, f, companyToEdit);
                 }
             });
 
@@ -1447,33 +1874,66 @@
             event.preventDefault();
             const form = event.target;
             let isFormValid = true;
+
             companyModalFormFields.forEach(field => {
-                if (!validateField(form.elements[field.name], document.getElementById(field.errorId), field)) {
+                // Za polja tipa 'file' ne izvajamo standardne validacije, razen če je obvezno (kar tukaj ni)
+                if (field.type !== 'file' && !validateField(form.elements[field.name], document.getElementById(field.errorId), field)) {
                     isFormValid = false;
                 }
             });
 
             if (isFormValid) {
                 const companyData = {};
-                companyModalFormFields.forEach(f => companyData[f.name] = form.elements[f.name].value);
+                // Zberi vse ne-datotečne podatke
+                companyModalFormFields.forEach(f => {
+                    if (f.type !== 'file') {
+                        if (f.name === 'isVatPayer' && f.type === 'select') {
+                            companyData[f.name] = form.elements[f.name].value === 'true';
+                        } else {
+                            companyData[f.name] = form.elements[f.name]?.value;
+                        }
+                    }
+                });
 
-                if (editingId) {
-                    const index = appData.companies.findIndex(c => c.id === editingId);
-                    if (index > -1) {
-                        appData.companies[index] = { ...appData.companies[index], ...companyData };
-                        showToast('Podatki o podjetju uspešno posodobljeni!');
+                const signatureFileInput = form.elements.signatureImage;
+                const removeSignatureFlag = form.elements.removeSignature?.value === 'true';
+                let signaturePromise;
+
+                if (signatureFileInput && signatureFileInput.files && signatureFileInput.files[0]) {
+                    signaturePromise = new Promise((resolve, reject) => {
+                        const reader = new FileReader();
+                        reader.onload = (e) => resolve(e.target.result);
+                        reader.onerror = (err) => reject(err);
+                        reader.readAsDataURL(signatureFileInput.files[0]);
+                    });
+                } else if (editingId) {
+                    const existingCompany = AppStore.getData().companies.find(c => c.id === editingId);
+                    if (removeSignatureFlag && existingCompany && existingCompany.signatureImage) {
+                        signaturePromise = Promise.resolve(null); // Odstrani obstoječi podpis
+                    } else if (existingCompany && existingCompany.signatureImage) {
+                        signaturePromise = Promise.resolve(existingCompany.signatureImage); // Obdrži obstoječi podpis
+                    } else {
+                        signaturePromise = Promise.resolve(null);
                     }
                 } else {
-                    companyData.id = generateUniqueId('company_');
-                    appData.companies.push(companyData);
-                    showToast('Podjetje uspešno dodano!');
+                    signaturePromise = Promise.resolve(null); // Ni podpisa za novo podjetje
                 }
-                
-                saveDataToLocalStorage();
-                renderCompaniesList();
-                updateDashboardCards(); // Če dashboard prikazuje info o podjetjih
-                checkInitialWarnings(); // Preveri, če so zdaj izpolnjeni pogoji za račune
-                closeModal();
+
+                signaturePromise.then(signatureBase64 => {
+                    companyData.signatureImage = signatureBase64;
+
+                    if (editingId) {
+                        AppStore.updateCompany(editingId, companyData);
+                        showToast('Podatki o podjetju uspešno posodobljeni!');
+                    } else {
+                        AppStore.addCompany(companyData);
+                        showToast('Podjetje uspešno dodano!');
+                    }
+                    closeModal();
+                }).catch(error => {
+                    console.error("Napaka pri obdelavi slike podpisa:", error);
+                    showToast('Napaka pri obdelavi slike podpisa.', 'error');
+                });
             } else {
                 showToast('Prosimo, popravite napake v obrazcu.', 'error');
             }
@@ -1482,170 +1942,136 @@
         function deleteCompany(companyId) {
             // Preveri, če je to zadnje podjetje in ali so od njega odvisni računi (za prihodnjo implementacijo)
             if (confirm(`Ali ste prepričani, da želite izbrisati to podjetje?`)) {
-                appData.companies = appData.companies.filter(c => c.id !== companyId);
-                saveDataToLocalStorage();
-                renderCompaniesList();
-                updateDashboardCards();
-                checkInitialWarnings();
+                // appData.companies = appData.companies.filter(c => c.id !== companyId);
+                AppStore.deleteCompany(companyId);
                 showToast('Podjetje izbrisano.');
             }
         }
 
-        function renderCompaniesList() {
-            // Podobno kot renderServicesList ali renderPartnersList
-            // Prikazuje kartice podjetij v #companiesListContainer
-            // Implementacija te funkcije je potrebna, sledi vzorcu ostalih render*List funkcij
-            const listContainer = document.getElementById('companiesListContainer');
-            const emptyState = document.getElementById('companiesEmptyState');
+        // --- Pomožna funkcija za prikaz seznamov ---
+        function _renderItemsList(containerId, emptyStateId, items, renderCardFn, editFn, deleteFn, itemTypeLabel = 'element', gridDisplay = true) {
+            const listContainer = document.getElementById(containerId);
+            const emptyState = document.getElementById(emptyStateId);
             if (!listContainer || !emptyState) return;
 
-            listContainer.innerHTML = ''; 
-            if (appData.companies.length === 0) {
+            listContainer.innerHTML = '';
+            if (items.length === 0) {
                 emptyState.style.display = 'block';
                 listContainer.style.display = 'none';
             } else {
                 emptyState.style.display = 'none';
-                listContainer.style.display = 'grid';
-                appData.companies.forEach(company => {
-                    const card = document.createElement('div');
-                    card.className = 'item-card';
-                    // Prilagodi prikaz podatkov glede na companyModalFormFields
-                    card.innerHTML = `
-                        <div class="item-card-header">
-                            <span class="item-name">${company.companyName}</span>
-                            <div class="item-card-actions">
-                                <button class="button button-sm button-primary edit-company-btn" data-id="${company.id}"><i class="fas fa-edit"></i> Uredi</button>
-                                <button class="button button-sm button-danger delete-company-btn" data-id="${company.id}"><i class="fas fa-trash"></i> Izbriši</button>
-                            </div>
-                        </div>
-                        <div class="item-card-body">
-                            <p class="item-detail"><strong>Davčna št.:</strong> ${company.taxNumber}</p>
-                            <p class="item-detail"><strong>Naslov:</strong> ${company.address}, ${company.postalCode} ${company.city}</p>
-                            <p class="item-detail"><strong>IBAN:</strong> ${company.iban}</p>
-                        </div>
-                    `;
+                listContainer.style.display = gridDisplay ? 'grid' : 'block'; // Prilagodljiv prikaz
+                items.forEach(item => {
+                    const card = renderCardFn(item, editFn, deleteFn, itemTypeLabel);
                     listContainer.appendChild(card);
                 });
-                listContainer.querySelectorAll('.edit-company-btn').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        const companyId = e.currentTarget.dataset.id;
-                        const company = appData.companies.find(c => c.id === companyId);
-                        if (company) openCompanyModal(company);
-                    });
-                });
-                listContainer.querySelectorAll('.delete-company-btn').forEach(btn => {
-                    btn.addEventListener('click', (e) => deleteCompany(e.currentTarget.dataset.id));
-                });
             }
+        }
+        function renderCompaniesList() {
+            // Podobno kot renderServicesList ali renderPartnersList
+            // Prikazuje kartice podjetij v #companiesListContainer
+            const currentData = AppStore.getData();
+            // Implementacija te funkcije je potrebna, sledi vzorcu ostalih render*List funkcij
+            const listContainer = document.getElementById('companiesListContainer');
+            const emptyState = document.getElementById('companiesEmptyState');
+            if (!listContainer || !emptyState) return;
+            
+            const renderCompanyCard = (company, editFn, deleteFn) => {
+                const card = document.createElement('div');
+                card.className = 'item-card';
+                const signatoryNameHTML = company.signatoryName
+                    ? `<p class="item-detail"><strong>Podpisnik:</strong> ${company.signatoryName}</p>`
+                    : '';
+                const signaturePreviewHTML = company.signatureImage
+                    ? `<p class="item-detail" style="margin-top: 0.5rem;"><strong>Podpis:</strong> <img src="${company.signatureImage}" alt="Podpis" style="max-height: 30px; vertical-align: middle; border: 1px solid #eee;"></p>`
+                    : '';
+                card.innerHTML = `
+                    <div class="item-card-header">
+                        <span class="item-name">${company.companyName}</span>
+                    </div>
+                    <div class="item-card-body"> <!-- Samo en item-card-body -->
+                        <p class="item-detail"><strong>Davčna št.:</strong> ${company.taxNumber}</p>
+                        <p class="item-detail"><strong>Naslov:</strong> ${company.address}, ${company.postalCode} ${company.city}</p>
+                        <p class="item-detail"><strong>IBAN:</strong> ${company.iban}</p>
+                        <p class="item-detail"><strong>Zavezanec za DDV:</strong> ${typeof company.isVatPayer === 'boolean' ? (company.isVatPayer ? 'Da' : 'Ne') : 'Ne'}</p>
+                        ${company.website ? `<p class="item-detail"><strong>Spletna stran:</strong> <a href="${company.website.startsWith('http') ? company.website : 'http://' + company.website}" target="_blank" rel="noopener noreferrer">${company.website}</a></p>` : ''}
+                        ${signatoryNameHTML}
+                        ${signaturePreviewHTML}
+                    </div>
+                    <div class="item-card-actions">
+                        <button class="button button-sm button-primary edit-btn" data-id="${company.id}" title="Uredi podjetje"><i class="fas fa-edit"></i> Uredi</button>
+                        <button class="button button-sm button-danger delete-btn" data-id="${company.id}" title="Izbriši podjetje"><i class="fas fa-trash"></i> Izbriši</button>
+                    </div>
+                `;
+                card.querySelector('.edit-btn').addEventListener('click', (e) => editFn(e.currentTarget.dataset.id, openCompanyModal));
+                card.querySelector('.delete-btn').addEventListener('click', (e) => deleteFn(e.currentTarget.dataset.id));
+                return card;
+            };
+            _renderItemsList('companiesListContainer', 'companiesEmptyState', currentData.companies, renderCompanyCard, 
+                (id, modalOpener) => { const item = AppStore.getData().companies.find(c => c.id === id); if(item) modalOpener(item); }, 
+                deleteCompany, 'podjetje');
         }
 
         // --- Storitve ---
         const serviceFormFields = [
-            { id: 'serviceName', name: 'name', errorId: 'serviceNameError', required: true, maxLength: 100, label: 'Ime storitve' },
-            { id: 'servicePrice', name: 'price', errorId: 'servicePriceError', required: true, type: 'text', inputmode: 'decimal', label: 'Cena (€)', customValidation: validateServicePriceFormat },
-            { id: 'serviceTaxRate', name: 'taxRate', errorId: 'serviceTaxRateError', required: true, type: 'select', options: [{v:22,t:'22%'},{v:9.5,t:'9.5%'},{v:0,t:'0%'}], defaultValue: '22', label: 'Davčna stopnja' },
-            { id: 'serviceUnit', name: 'unit', errorId: 'serviceUnitError', required: true, type: 'select', options: [{v:'kos',t:'kos'},{v:'ura',t:'ura'},{v:'dan',t:'dan'},{v:'mesec',t:'mesec'},{v:'artikel',t:'artikel'},{v:'storitev',t:'storitev'}, {v:'custom', t:'Drugo...'}], defaultValue: 'kos', label: 'Enota' },
+            { id: 'serviceName', name: 'name', errorId: 'serviceNameError', required: true, maxLength: 100, label: 'Ime storitve' }, // OK
+            { 
+                id: 'servicePrice', name: 'price', errorId: 'servicePriceError', required: true, type: 'text', inputmode: 'decimal', label: 'Cena (€)', 
+                customValidation: validateServicePriceFormat,
+                getValue: (itemToEdit, fieldConfig) => {
+                    if (itemToEdit && itemToEdit.price !== undefined) {
+                        return formatPriceForDisplay(itemToEdit.price);
+                    }
+                    return itemToEdit && itemToEdit.price !== undefined ? itemToEdit.price : (fieldConfig.defaultValue !== undefined ? fieldConfig.defaultValue : ''); // Default to empty or 0
+                }
+            },
+            { id: 'serviceTaxRate', name: 'taxRate', errorId: 'serviceTaxRateError', required: true, type: 'select', options: [{v:22,t:'22%'},{v:9.5,t:'9.5%'},{v:0,t:'0%'}], defaultValue: '22', label: 'Davčna stopnja' }, // OK
+            { 
+                id: 'serviceUnit', name: 'unit', errorId: 'serviceUnitError', required: true, type: 'select', 
+                options: [{v:'kos',t:'kos'},{v:'ura',t:'ura'},{v:'dan',t:'dan'},{v:'mesec',t:'mesec'},{v:'artikel',t:'artikel'},{v:'storitev',t:'storitev'}, {v:'custom', t:'Drugo...'}], 
+                defaultValue: 'kos', label: 'Enota',
+                getValue: (itemToEdit, fieldConfig) => {
+                    if (itemToEdit && itemToEdit.unit) {
+                        const standardUnitValues = fieldConfig.options.map(opt => opt.v);
+                        return standardUnitValues.includes(itemToEdit.unit) ? itemToEdit.unit : 'custom';
+                    }
+                    return fieldConfig.defaultValue;
+                },
+                additionalHTML: (fieldConfig, valueToSet, itemToEdit) => {
+                    const customUnitValue = (valueToSet === 'custom' && itemToEdit && itemToEdit.unit && !fieldConfig.options.map(o => o.v).includes(itemToEdit.unit)) ? itemToEdit.unit : '';
+                    return `<input type="text" id="serviceCustomUnit" name="customUnit" class="form-control" value="${customUnitValue}" placeholder="Vnesite enoto po meri" style="margin-top: 0.5rem; ${valueToSet === 'custom' ? '' : 'display:none;'}">`;
+                },
+                postRenderSetup: (formElement, fieldConfig, itemToEdit) => {
+                    const unitSelect = formElement.querySelector(`#${fieldConfig.id}`);
+                    const customUnitInput = formElement.querySelector('#serviceCustomUnit');
+                    unitSelect?.addEventListener('change', function() {
+                        customUnitInput.style.display = (this.value === 'custom') ? 'block' : 'none';
+                        if (this.value === 'custom') customUnitInput.focus(); else customUnitInput.value = '';
+                    });
+                }
+            },
             { id: 'serviceNotes', name: 'notes', errorId: 'serviceNotesError', required: false, maxLength: 500, label: 'Opomba', type: 'textarea' }
         ];
-
-        function normalizeDecimalForStorage(valueStr) {
-            if (typeof valueStr !== 'string') return '';
-            let s = valueStr.trim();
-            if (s === '') return '';
-            s = s.replace(/,/g, '.');
-            const dotCount = (s.match(/\./g) || []).length;
-            if (dotCount > 1) {
-                const lastDotIndex = s.lastIndexOf('.');
-                s = s.substring(0, lastDotIndex).replace(/\./g, '') + s.substring(lastDotIndex);
-            }
-            return s;
-        }
-
+        
         function validateServicePriceFormat(valueStr) {
-            const normalized = normalizeDecimalForStorage(valueStr);
-            if (valueStr.trim() !== '' && normalized === '') return "Neveljaven format cene."; // Catch if normalization results in empty from non-empty
-            if (valueStr.trim() === '') return ''; // If not required and empty, it's fine. Required check is separate.
+            const trimmedValue = valueStr.trim();
+            // Required check is handled by the generic validateField function if fieldConfig.required is true.
+            // This custom validation only runs if the field is not empty or if it's specifically called.
+            if (trimmedValue === '') return ''; // If not required and empty, it's fine.
             
-            if (isNaN(parseFloat(normalized))) {
-                return "Vnesite veljavno število za ceno.";
+            const numericValue = parsePriceFromInput(trimmedValue);
+            
+            if (isNaN(numericValue)) {
+                return "Vnesite veljavno število za ceno (npr. 123,45 ali 1.234,56).";
             }
-            if (parseFloat(normalized) < 0) {
+            if (numericValue < 0) {
                 return "Cena ne sme biti negativna.";
             }
             return ''; // No error
         }
 
         function openServiceModal(serviceToEdit = null) {
-            let formHTML = '<form id="serviceFormModal" novalidate>';
-            let fieldBuffer = [];
-
-            serviceFormFields.forEach(f => {
-                let value = '';
-                let customUnitValue = ''; // Za polje "Enota"
-
-                if (serviceToEdit) {
-                    if (f.name === 'price' && serviceToEdit.price !== undefined) {
-                        value = serviceToEdit.price.toFixed(2); // Prikaži z dvema decimalkama
-                    } else if (f.name === 'unit') {
-                        const standardUnitValues = f.options.map(opt => opt.v);
-                        if (!standardUnitValues.includes(serviceToEdit.unit)) {
-                            value = 'custom';
-                            customUnitValue = serviceToEdit.unit;
-                        } else {
-                            value = serviceToEdit.unit;
-                        }
-                    } else if (f.name === 'notes' && serviceToEdit.description !== undefined) { // Migracija iz starega 'description'
-                        value = serviceToEdit.description;
-                    }
-                     else if (serviceToEdit[f.name] !== undefined) {
-                        value = serviceToEdit[f.name];
-                    }
-                } else { // Za novo storitev
-                    value = f.defaultValue !== undefined ? f.defaultValue : '';
-                    if (f.name === 'price') value = '0.00'; // Privzeta cena za novo storitev
-                }
-
-                let currentFieldHTML = `<div class="form-group">
-                                            <label for="${f.id}">${f.label} ${f.required ? '<span class="required-asterisk">*</span>' : ''}</label>`;
-                if (f.type === 'textarea') {
-                    currentFieldHTML += `<textarea id="${f.id}" name="${f.name}" ${f.maxLength ? `maxlength="${f.maxLength}"` : ''} aria-describedby="${f.errorId}">${value}</textarea>`;
-                } else if (f.type === 'select') {
-                    currentFieldHTML += `<select id="${f.id}" name="${f.name}" aria-describedby="${f.errorId}">`;
-                    f.options.forEach(opt => {
-                        currentFieldHTML += `<option value="${opt.v}" ${value == opt.v ? 'selected' : ''}>${opt.t}</option>`;
-                    });
-                    currentFieldHTML += `</select>`;
-                    if (f.name === 'unit') {
-                        currentFieldHTML += `<input type="text" id="serviceCustomUnit" name="customUnit" class="form-control" value="${customUnitValue}" placeholder="Vnesite enoto po meri" style="margin-top: 0.5rem; ${value === 'custom' ? '' : 'display:none;'}">`;
-                    }
-                } else {
-                    currentFieldHTML += `<input type="${f.type || 'text'}" id="${f.id}" name="${f.name}" value="${value}"
-                                    ${f.inputmode ? `inputmode="${f.inputmode}"` : ''}
-                                    ${f.maxLength ? `maxlength="${f.maxLength}"` : ''} 
-                                    ${f.pattern ? `pattern="${f.pattern.source}"` : ''} 
-                                    ${f.pattern && f.patternMessage ? `title="${f.patternMessage}"` : ''}
-                                    aria-describedby="${f.errorId}">`;
-                }
-                currentFieldHTML += `<span class="error-message" id="${f.errorId}"></span></div>`;
-
-                if (f.type === 'textarea') { // Opomba vedno v svoji vrstici
-                    if (fieldBuffer.length > 0) {
-                        formHTML += `<div class="modal-form-row">${fieldBuffer.join('')}</div>`;
-                        fieldBuffer = [];
-                    }
-                    formHTML += `<div class="modal-form-row"><div class="form-group full-width">${currentFieldHTML.replace('<div class="form-group">','')}</div></div>`; // Odstrani notranji form-group in dodaj full-width
-                } else {
-                    fieldBuffer.push(currentFieldHTML);
-                    if (fieldBuffer.length === 2) {
-                        formHTML += `<div class="modal-form-row">${fieldBuffer.join('')}</div>`;
-                        fieldBuffer = [];
-                    }
-                }
-            });
-            if (fieldBuffer.length > 0) { // Zaostala polja
-                formHTML += `<div class="modal-form-row">${fieldBuffer.join('')}</div>`;
-            }
-            formHTML += `</form>`;
+            const formHTML = _buildFormHTML('serviceFormModal', serviceFormFields, serviceToEdit);
             
             const footerHTML = `
                 <button type="button" class="button button-cancel" id="cancelServiceModalBtn">Prekliči</button>
@@ -1654,27 +2080,20 @@
             openModal(serviceToEdit ? 'Uredi storitev' : 'Dodaj novo storitev', formHTML, footerHTML);
             
             const serviceFormModal = document.getElementById('serviceFormModal');
-            const serviceUnitSelect = document.getElementById('serviceUnit');
-            const serviceCustomUnitInput = document.getElementById('serviceCustomUnit');
-
-            serviceUnitSelect?.addEventListener('change', function() {
-                if (this.value === 'custom') {
-                    serviceCustomUnitInput.style.display = 'block';
-                    serviceCustomUnitInput.focus();
-                } else {
-                    serviceCustomUnitInput.style.display = 'none';
-                    serviceCustomUnitInput.value = ''; // Počisti vrednost, če ni izbrano "Drugo"
-                }
-            });
-
-            serviceFormFields.forEach(field => {
-                const inputElement = document.getElementById(field.id);
-                const errorElement = document.getElementById(field.errorId);
+            
+            serviceFormFields.forEach(f => {
+                const inputElement = document.getElementById(f.id);
+                const errorElement = document.getElementById(f.errorId);
                 if (inputElement && errorElement) {
-                    const eventType = (field.type === 'select') ? 'change' : 'input';
-                    inputElement.addEventListener(eventType, () => validateField(inputElement, errorElement, field));
+                    const eventType = (f.type === 'select') ? 'change' : 'input';
+                    inputElement.addEventListener(eventType, () => validateField(inputElement, errorElement, f));
+                }
+                // Klic postRenderSetup za vsako polje, ki ga ima definiranega
+                if (f.postRenderSetup) {
+                    f.postRenderSetup(serviceFormModal, f, serviceToEdit);
                 }
             });
+
 
             document.getElementById('cancelServiceModalBtn')?.addEventListener('click', closeModal);
             serviceFormModal?.addEventListener('submit', (event) => handleServiceFormSubmit(event, serviceToEdit ? serviceToEdit.id : null));
@@ -1700,30 +2119,31 @@
                         return;
                     }
                 }
+                const parsedPrice = parsePriceFromInput(form.elements.price.value);
+                if (isNaN(parsedPrice)) {
+                    // To bi morala ujeti že validacija, a kot dodatna varnost:
+                    validateField(form.elements.price, document.getElementById('servicePriceError'), serviceFormFields.find(f => f.name === 'price'));
+                    showToast('Vnesena cena ni veljavna. Prosimo, popravite.', 'error');
+                    return;
+                }
                 const serviceData = {
                     name: form.elements.name.value,
-                    price: parseFloat(normalizeDecimalForStorage(form.elements.price.value)),
+                    price: parsedPrice,
                     taxRate: parseFloat(form.elements.taxRate.value),
                     unit: unitValue,
                     notes: form.elements.notes.value // Prej description, zdaj notes
                 };
 
                 if (editingId) {
-                    const index = appData.services.findIndex(s => s.id === editingId);
-                    if (index > -1) {
-                        appData.services[index] = { ...appData.services[index], ...serviceData };
-                        showToast('Storitev uspešno posodobljena!');
-                    }
+                    AppStore.updateService(editingId, serviceData);
+                    showToast('Storitev uspešno posodobljena!');
                 } else {
-                    serviceData.id = generateUniqueId('service_');
-                    appData.services.push(serviceData); // Shranjujemo notes namesto description
+                    // serviceData.id = generateUniqueId('service_'); // ID bo dodeljen v AppStore
+                    AppStore.addService(serviceData);
                     showToast('Storitev uspešno dodana!');
                 }
                 
-                saveDataToLocalStorage();
-                renderServicesList();
-                updateDashboardCards();
-                checkInitialWarnings();
+                // Shranjevanje in osveževanje UI bo izvedel AppStore
                 closeModal();
             } else {
                 showToast('Prosimo, popravite napake v obrazcu.', 'error');
@@ -1732,66 +2152,50 @@
         
         function deleteService(serviceId) {
             if (confirm(`Ali ste prepričani, da želite izbrisati to storitev?`)) {
-                appData.services = appData.services.filter(s => s.id !== serviceId);
-                saveDataToLocalStorage();
-                renderServicesList();
-                updateDashboardCards();
-                checkInitialWarnings();
+                // appData.services = appData.services.filter(s => s.id !== serviceId);
+                AppStore.deleteService(serviceId);
                 showToast('Storitev izbrisana.');
             }
         }
 
         function renderServicesList() {
+            const currentData = AppStore.getData();
             const listContainer = document.getElementById('servicesListContainer');
             const emptyState = document.getElementById('servicesEmptyState');
             if (!listContainer || !emptyState) return;
 
-            listContainer.innerHTML = ''; 
-            if (appData.services.length === 0) {
-                emptyState.style.display = 'block';
-                listContainer.style.display = 'none'; // Skrij grid, če je prazen
-            } else {
-                emptyState.style.display = 'none';
-                listContainer.style.display = 'grid'; // Pokaži grid
-                appData.services.forEach(service => {
-                    const card = document.createElement('div');
-                    card.className = 'item-card';
-                    card.innerHTML = `
-                        <div class="item-card-header">
-                            <span class="item-name">${service.name}</span>
-                            <div class="item-card-actions">
-                                <button class="button button-sm button-primary edit-service-btn" data-id="${service.id}" title="Uredi storitev"><i class="fas fa-edit"></i> Uredi</button>
-                                <button class="button button-sm button-danger delete-service-btn" data-id="${service.id}" title="Izbriši storitev"><i class="fas fa-trash"></i> Izbriši</button>
-                            </div>
-                        </div>
-                        <div class="item-card-body">
-                            ${service.notes ? `<p class="item-detail">${service.notes}</p>` : ''}
-                            <p class="item-detail"><strong>Cena:</strong> ${(service.price || 0).toFixed(2)} €</p>
-                            <p class="item-detail"><strong>Enota:</strong> ${service.unit}</p>
-                            <p class="item-detail"><strong>DDV:</strong> ${service.taxRate}%</p>
-                        </div>
-                    `;
-                    listContainer.appendChild(card);
-                });
-                listContainer.querySelectorAll('.edit-service-btn').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        const serviceId = e.currentTarget.dataset.id;
-                        const service = appData.services.find(s => s.id === serviceId);
-                        if (service) openServiceModal(service);
-                    });
-                });
-                listContainer.querySelectorAll('.delete-service-btn').forEach(btn => {
-                    btn.addEventListener('click', (e) => deleteService(e.currentTarget.dataset.id));
-                });
-            }
+            const renderServiceCard = (service, editFn, deleteFn) => {
+                const card = document.createElement('div');
+                card.className = 'item-card';
+                card.innerHTML = `
+                    <div class="item-card-header">
+                        <span class="item-name">${service.name}</span>
+                    </div>
+                    <div class="item-card-body"> <!-- Samo en item-card-body -->
+                        <p class="item-detail"><strong>Cena:</strong> ${formatPriceForDisplay(service.price || 0)} €</p>
+                        <p class="item-detail"><strong>Enota:</strong> ${service.unit}</p>
+                        <p class="item-detail"><strong>DDV:</strong> ${service.taxRate}%</p>
+                        ${service.notes ? `<p class="item-detail"><strong>Opombe:</strong> ${service.notes}</p>` : ''} <!-- Opombe na koncu -->
+                    </div>
+                    <div class="item-card-actions">
+                        <button class="button button-sm button-primary edit-btn" data-id="${service.id}" title="Uredi storitev"><i class="fas fa-edit"></i> Uredi</button>
+                        <button class="button button-sm button-danger delete-btn" data-id="${service.id}" title="Izbriši storitev"><i class="fas fa-trash"></i> Izbriši</button>
+                    </div>
+                `;
+                card.querySelector('.edit-btn').addEventListener('click', (e) => editFn(e.currentTarget.dataset.id, openServiceModal));
+                card.querySelector('.delete-btn').addEventListener('click', (e) => deleteFn(e.currentTarget.dataset.id));
+                return card;
+            };
+            _renderItemsList('servicesListContainer', 'servicesEmptyState', currentData.services, renderServiceCard,
+                (id, modalOpener) => { const item = AppStore.getData().services.find(s => s.id === id); if(item) modalOpener(item); },
+                deleteService, 'storitev');
         }
 
         // --- Partnerji ---
         const partnerFormFields = [
             { id: 'partnerNameModal', name: 'name', errorId: 'partnerNameModalError', required: true, maxLength: 100, label: 'Ime podjetja*' }, // Obvezno z zvezdico v labeli
-            { id: 'partnerIsTaxPayerModal', name: 'isTaxPayer', errorId: 'partnerIsTaxPayerModalError', required: false, type: 'select', label: 'Davčni zavezanec za DDV', defaultValue: 'false', options: [{v: 'false', t: 'Ne'}, {v: 'true', t: 'Da'}] },
-            { id: 'partnerTaxNumberModal', name: 'taxNumber', errorId: 'partnerTaxNumberModalError', required: false, pattern: /^(SI)?\d{8}$/, patternMessage: "Vnesite (SI) + 8-mestno davčno številko.", label: 'Davčna številka (ID za DDV)', maxLength: 10 },
-            { id: 'partnerAddressModal', name: 'address', errorId: 'partnerAddressModalError', required: false, maxLength: 150, label: 'Naslov' },
+            { id: 'partnerTaxNumberModal', name: 'taxNumber', errorId: 'partnerTaxNumberModalError', required: false, pattern: /^(SI)?\d{8}$/, patternMessage: "Vnesite (SI) + 8-mestno davčno številko.", label: 'Davčna številka', maxLength: 10 },
+            { id: 'partnerAddressModal', name: 'address', errorId: 'partnerAddressModalError', required: false, maxLength: 150, label: 'Ulica in hišna številka' },
             { id: 'partnerPostalCodeModal', name: 'postalCode', errorId: 'partnerPostalCodeModalError', required: false, pattern: /^\d{4}$/, patternMessage: "Vnesite 4-mestno poštno številko (samo številke).", label: 'Poštna številka', maxLength: 4 },
             { id: 'partnerCityModal', name: 'city', errorId: 'partnerCityModalError', required: false, maxLength: 50, pattern: /^[A-Za-zčćžđšČĆŽĐŠ\s]+$/, patternMessage: "Kraj lahko vsebuje samo črke in presledke.", label: 'Kraj' },
             { id: 'partnerCountryModal', name: 'country', errorId: 'partnerCountryModalError', required: false, maxLength: 50, label: 'Država', defaultValue: 'Slovenija' },
@@ -1799,86 +2203,9 @@
         ];
         
         function openPartnerModal(partnerToEdit = null) {
-            let formHTML = '<form id="partnerFormModal" novalidate>';
-            let fieldBuffer = [];
-
-            partnerFormFields.forEach(f => {
-                let valueToSet;
-
-                if (f.type === 'select' && f.name === 'isTaxPayer') {
-                    if (partnerToEdit && typeof partnerToEdit.isTaxPayer === 'boolean') {
-                        valueToSet = partnerToEdit.isTaxPayer.toString(); // "true" ali "false"
-                    } else if (partnerToEdit && partnerToEdit.isTaxPayer !== undefined) {
-                        valueToSet = partnerToEdit.isTaxPayer.toString(); // Če je že shranjeno kot niz
-                    } else {
-                        valueToSet = f.defaultValue; // Privzeto "false"
-                    }
-                } else if (f.type === 'checkbox') { // Za druge morebitne checkboxe
-                    // Logika za checkbox ostane, če bi jo kdaj potrebovali za druga polja
-                    valueToSet = (partnerToEdit && typeof partnerToEdit[f.name] === 'boolean') ? partnerToEdit[f.name] : (f.defaultValue === true);
-                } else { // Za tekstovna/splošna polja
-                    if (partnerToEdit && partnerToEdit[f.name] !== undefined && partnerToEdit[f.name] !== null) {
-                        valueToSet = partnerToEdit[f.name];
-                    } else if (f.defaultValue !== undefined && f.defaultValue !== null) {
-                        valueToSet = f.defaultValue;
-                    }
-                }
-
-                let currentFieldHTML = '';
-                const labelHTML = `<label for="${f.id}">${f.label}${f.required && f.id === 'partnerNameModal' ? '<span class="required-asterisk">*</span>' : ''}</label>`;
-
-                if (f.type === 'textarea') {
-                    currentFieldHTML = `<div class="form-group full-width">
-                                        ${labelHTML}
-                                        <textarea id="${f.id}" name="${f.name}" ${f.maxLength ? `maxlength="${f.maxLength}"` : ''} aria-describedby="${f.errorId}">${valueToSet}</textarea>
-                                        <span class="error-message" id="${f.errorId}"></span>
-                                     </div>`; // valueToSet za textarea je string
-                } else if (f.type === 'select' && f.name === 'isTaxPayer') {
-                    currentFieldHTML = `<div class="form-group"> 
-                                            ${labelHTML}
-                                            <select id="${f.id}" name="${f.name}" aria-describedby="${f.errorId}">`;
-                    f.options.forEach(opt => {
-                        currentFieldHTML += `<option value="${opt.v}" ${valueToSet === opt.v ? 'selected' : ''}>${opt.t}</option>`;
-                    });
-                    currentFieldHTML += `</select><span class="error-message" id="${f.errorId}"></span></div>`;
-                } else if (f.type === 'checkbox') { // Za druge morebitne checkboxe
-                    const isChecked = valueToSet; // valueToSet je že boolean za checkbox
-                    currentFieldHTML = `<div class="form-group full-width">
-                                            <div style="display: flex; align-items: center; margin-top: 0.5rem;">
-                                                <input type="checkbox" id="${f.id}" name="${f.name}" ${isChecked ? 'checked' : ''} style="width: auto; height: auto; margin-right: 0.5rem; margin-bottom: 0;">
-                                                <label for="${f.id}" style="margin-bottom: 0; font-weight: normal; display: inline;">${f.label}</label>
-                                            </div>
-                                            <span class="error-message" id="${f.errorId}"></span>
-                                         </div>`;
-                } else {
-                    currentFieldHTML = `<div class="form-group">
-                                        ${labelHTML}
-                                        <input type="${f.type || 'text'}" id="${f.id}" name="${f.name}" value="${valueToSet}"
-                                            ${f.required && f.id === 'partnerNameModal' ? 'required' : ''} ${f.maxLength ? `maxlength="${f.maxLength}"` : ''}
-                                            ${f.pattern ? `pattern="${f.pattern.source}"` : ''} ${f.pattern && f.patternMessage ? `title="${f.patternMessage}"` : ''}
-                                            aria-describedby="${f.errorId}">
-                                        <span class="error-message" id="${f.errorId}"></span>
-                                     </div>`;
-                }
-                if (f.id === 'partnerNameModal' || f.type === 'textarea' || f.type === 'checkbox') { // Prilagojeno za partnerNameModal in splošno za textarea/checkbox
-                    if (fieldBuffer.length > 0) {
-                        formHTML += `<div class="modal-form-row">${fieldBuffer.join('')}</div>`;
-                        fieldBuffer = [];
-                    }
-                    formHTML += `<div class="modal-form-row">${currentFieldHTML}</div>`;
-                } else {
-                    fieldBuffer.push(currentFieldHTML);
-                    if (fieldBuffer.length === 2) {
-                        formHTML += `<div class="modal-form-row">${fieldBuffer.join('')}</div>`;
-                        fieldBuffer = [];
-                    }
-                }
-            });
-
-            if (fieldBuffer.length > 0) {
-                formHTML += `<div class="modal-form-row">${fieldBuffer.join('')}</div>`;
-            }
-            formHTML += `</form>`;
+            const formHTML = _buildFormHTML('partnerFormModal', partnerFormFields, partnerToEdit);
+            // Opomba: _buildFormHTML ne vključuje zvezdice za obvezna polja v labeli, razen če je to del f.label.
+            // To bi lahko izboljšali v _buildFormHTML ali pustili, kot je. Za zdaj puščam.
 
             const footerHTML = `
                 <button type="button" class="button button-cancel" id="cancelPartnerModalBtn">Prekliči</button>
@@ -1887,12 +2214,15 @@
             openModal(partnerToEdit ? 'Uredi poslovnega partnerja' : 'Dodaj novega poslovnega partnerja', formHTML, footerHTML);
 
             const partnerFormModal = document.getElementById('partnerFormModal');
-            partnerFormFields.forEach(field => {
-                const inputElement = document.getElementById(field.id);
-                const errorElement = document.getElementById(field.errorId);
+            partnerFormFields.forEach(f => {
+                const inputElement = document.getElementById(f.id);
+                const errorElement = document.getElementById(f.errorId);
                 if (inputElement && errorElement) {
-                    const eventType = (field.type === 'checkbox' || field.type === 'select') ? 'change' : 'input';
-                    inputElement.addEventListener(eventType, () => validateField(inputElement, errorElement, field));
+                    const eventType = (f.type === 'checkbox' || f.type === 'select') ? 'change' : 'input';
+                    inputElement.addEventListener(eventType, () => validateField(inputElement, errorElement, f));
+                }
+                if (f.postRenderSetup) {
+                    f.postRenderSetup(partnerFormModal, f, partnerToEdit);
                 }
             });
             
@@ -1914,9 +2244,7 @@
             if (isFormValid) {
                 const partnerData = {};
                 partnerFormFields.forEach(f => {
-                    if (f.name === 'isTaxPayer' && f.type === 'select') {
-                        partnerData[f.name] = form.elements[f.name].value === 'true'; // Pretvori string "true"/"false" v boolean
-                    } else if (f.type === 'checkbox') {
+                    if (f.type === 'checkbox') {
                         partnerData[f.name] = form.elements[f.name].checked;
                     } else {
                         partnerData[f.name] = form.elements[f.name].value;
@@ -1924,21 +2252,15 @@
                 });
 
                 if (editingId) {
-                    const index = appData.partners.findIndex(p => p.id === editingId);
-                    if (index > -1) {
-                        appData.partners[index] = { ...appData.partners[index], ...partnerData };
-                        showToast('Partner uspešno posodobljen!');
-                    }
+                    AppStore.updatePartner(editingId, partnerData);
+                    showToast('Partner uspešno posodobljen!');
                 } else {
-                    partnerData.id = generateUniqueId('partner_');
-                    appData.partners.push(partnerData);
+                    // partnerData.id = generateUniqueId('partner_'); // ID bo dodeljen v AppStore
+                    AppStore.addPartner(partnerData);
                     showToast('Partner uspešno dodan!');
                 }
                 
-                saveDataToLocalStorage();
-                renderPartnersList();
-                updateDashboardCards();
-                checkInitialWarnings();
+                // Shranjevanje in osveževanje UI bo izvedel AppStore
                 closeModal();
             } else {
                 showToast('Prosimo, popravite napake v obrazcu.', 'error');
@@ -1947,58 +2269,42 @@
         
         function deletePartner(partnerId) {
             if (confirm(`Ali ste prepričani, da želite izbrisati tega partnerja? Vsi povezani računi bodo ostali, a ne bodo več kazali na tega partnerja.`)) {
-                appData.partners = appData.partners.filter(p => p.id !== partnerId);
-                saveDataToLocalStorage();
-                renderPartnersList();
-                updateDashboardCards();
-                checkInitialWarnings();
+                // appData.partners = appData.partners.filter(p => p.id !== partnerId);
+                AppStore.deletePartner(partnerId);
                 showToast('Partner izbrisan.');
             }
         }
 
         function renderPartnersList() {
+            const currentData = AppStore.getData();
             const listContainer = document.getElementById('partnersListContainer');
             const emptyState = document.getElementById('partnersEmptyState');
             if (!listContainer || !emptyState) return;
 
-            listContainer.innerHTML = '';
-            if (appData.partners.length === 0) {
-                emptyState.style.display = 'block';
-                listContainer.style.display = 'none';
-            } else {
-                emptyState.style.display = 'none';
-                listContainer.style.display = 'grid';
-                appData.partners.forEach(partner => {
-                    const card = document.createElement('div');
-                    card.className = 'item-card';
-                    card.innerHTML = `
-                        <div class="item-card-header">
-                            <span class="item-name">${partner.name}</span>
-                            <div class="item-card-actions">
-                                <button class="button button-sm button-primary edit-partner-btn" data-id="${partner.id}" title="Uredi partnerja"><i class="fas fa-edit"></i> Uredi</button>
-                                <button class="button button-sm button-danger delete-partner-btn" data-id="${partner.id}" title="Izbriši partnerja"><i class="fas fa-trash"></i> Izbriši</button>
-                            </div>
-                        </div>
-                        <div class="item-card-body">
-                            <p class="item-detail"><strong>Davčna št.:</strong> ${partner.taxNumber || 'N/A'}</p>
-                            <p class="item-detail"><strong>Zavezanec za DDV:</strong> ${partner.isTaxPayer ? 'Da' : 'Ne'}</p>
-                            <p class="item-detail"><strong>Naslov:</strong> ${partner.address ? `${partner.address}, ${partner.postalCode || ''} ${partner.city || ''}, ${partner.country || ''}` : 'N/A'}</p>
-                            ${partner.notes ? `<p class="item-detail"><strong>Opombe:</strong> ${partner.notes}</p>` : ''}
-                        </div>
-                    `;
-                    listContainer.appendChild(card);
-                });
-                listContainer.querySelectorAll('.edit-partner-btn').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        const partnerId = e.currentTarget.dataset.id;
-                        const partner = appData.partners.find(p => p.id === partnerId);
-                        if (partner) openPartnerModal(partner);
-                    });
-                });
-                listContainer.querySelectorAll('.delete-partner-btn').forEach(btn => {
-                    btn.addEventListener('click', (e) => deletePartner(e.currentTarget.dataset.id));
-                });
-            }
+            const renderPartnerCard = (partner, editFn, deleteFn) => {
+                const card = document.createElement('div');
+                card.className = 'item-card';
+                card.innerHTML = `
+                    <div class="item-card-header">
+                        <span class="item-name">${partner.name}</span>
+                    </div>
+                    <div class="item-card-body"> <!-- Samo en item-card-body -->
+                        <p class="item-detail"><strong>Davčna št.:</strong> ${partner.taxNumber || 'N/A'}</p>
+                        <p class="item-detail"><strong>Naslov:</strong> ${partner.address ? `${partner.address}, ${partner.postalCode || ''} ${partner.city || ''}, ${partner.country || ''}` : 'N/A'}</p>
+                        ${partner.notes ? `<p class="item-detail"><strong>Opombe:</strong> ${partner.notes}</p>` : ''}
+                    </div>
+                    <div class="item-card-actions">
+                        <button class="button button-sm button-primary edit-btn" data-id="${partner.id}" title="Uredi partnerja"><i class="fas fa-edit"></i> Uredi</button>
+                        <button class="button button-sm button-danger delete-btn" data-id="${partner.id}" title="Izbriši partnerja"><i class="fas fa-trash"></i> Izbriši</button>
+                    </div>
+                `;
+                card.querySelector('.edit-btn').addEventListener('click', (e) => editFn(e.currentTarget.dataset.id, openPartnerModal));
+                card.querySelector('.delete-btn').addEventListener('click', (e) => deleteFn(e.currentTarget.dataset.id));
+                return card;
+            };
+            _renderItemsList('partnersListContainer', 'partnersEmptyState', currentData.partners, renderPartnerCard,
+                (id, modalOpener) => { const item = AppStore.getData().partners.find(p => p.id === id); if(item) modalOpener(item); },
+                deletePartner, 'partnerja');
         }
 
         // --- Pomožne funkcije za datume ---
@@ -2049,110 +2355,102 @@
             // Odstranjeni invoiceServicePeriodStart in invoiceServicePeriodEnd od tukaj, ker so definirani ročno spodaj z boljšo logiko
         ];
 
+        // --- Pomožne funkcije za gradnjo HTML-ja za openInvoiceModal ---
+        function _buildInvoiceModalMyCompanySelectHTML(invoiceToEdit) {
+            const currentData = AppStore.getData();
+            let optionsHTML = currentData.companies.map(c => `<option value="${c.id}" ${invoiceToEdit && invoiceToEdit.myCompanyId === c.id ? 'selected' : (!invoiceToEdit && currentData.companies.length > 0 && currentData.companies[0].id === c.id ? 'selected' : '')}>${c.companyName}</option>`).join('');
+            if (currentData.companies.length === 0) optionsHTML = '<option value="" disabled>Najprej dodajte svoje podjetje</option>';
+            const field = invoiceFormFields.find(f => f.name === 'myCompanyId');
+            return `<div class="modal-form-row">
+                        <div class="form-group full-width">
+                            <label for="${field.id}">${field.label} ${field.required ? '<span class="required-asterisk">*</span>' : ''}</label>
+                            <select id="${field.id}" name="${field.name}" ${field.required ? 'required' : ''} ${currentData.companies.length === 0 ? 'disabled' : ''} aria-describedby="${field.errorId}">
+                                ${optionsHTML}
+                            </select>
+                            <span class="error-message" id="${field.errorId}"></span>
+                        </div>
+                     </div>`;
+        }
+        function _buildInvoiceModalPartnerSelectHTML(invoiceToEdit) {
+            const currentData = AppStore.getData();
+            let optionsHTML = currentData.partners.map(p => `<option value="${p.id}" ${invoiceToEdit && invoiceToEdit.partnerId === p.id ? 'selected' : ''}>${p.name}</option>`).join('');
+            if (currentData.partners.length === 0) optionsHTML = '<option value="" disabled>Najprej dodajte partnerja</option>';
+            const field = invoiceFormFields.find(f => f.name === 'partnerId');
+            return `<div class="modal-form-row">
+                        <div class="form-group full-width">
+                            <label for="${field.id}">${field.label} ${field.required ? '<span class="required-asterisk">*</span>' : ''}</label>
+                            <select id="${field.id}" name="${field.name}" ${field.required ? 'required' : ''} ${currentData.partners.length === 0 ? 'disabled' : ''} aria-describedby="${field.errorId}">${optionsHTML}</select>
+                            <span class="error-message" id="${field.errorId}"></span>
+                        </div>
+                    </div>`;
+        }
+        function _buildInvoiceModalDateFieldsHTML(invoiceToEdit, defaultDateIssued, defaultDateDue) {
+            let html = '<div class="modal-form-row">';
+            ['dateIssued', 'dateDue'].forEach(fieldName => {
+                const f = invoiceFormFields.find(field => field.name === fieldName);
+                if (f) {
+                    const value = invoiceToEdit && invoiceToEdit[f.name] !== undefined ? invoiceToEdit[f.name] : (f.name === 'dateIssued' ? defaultDateIssued : defaultDateDue);
+                    html += `<div class="form-group" style="flex: 1; min-width: 150px;">
+                                <label for="${f.id}">${f.label} ${f.required ? '<span class="required-asterisk">*</span>' : ''}</label>
+                                <input type="${f.type || 'text'}" id="${f.id}" name="${f.name}" value="${value || ''}" 
+                                    ${f.required ? 'required' : ''} aria-describedby="${f.errorId}">
+                                <span class="error-message" id="${f.errorId}"></span>
+                             </div>`;
+                }
+            });
+            html += '</div>';
+            return html;
+        }
+        function _buildInvoiceModalServicePeriodFieldsHTML(invoiceToEdit, defaultServiceStart, defaultServiceEnd) {
+            const serviceStartValue = invoiceToEdit?.servicePeriodStart || formatDateForInput(defaultServiceStart);
+            const serviceEndValue = invoiceToEdit?.servicePeriodEnd || formatDateForInput(defaultServiceEnd);
+            return `<div class="modal-form-row">
+                        <div class="form-group" style="flex: 1; min-width: 150px;">
+                            <label for="invoiceServicePeriodStart" id="invoiceServicePeriodStartLabel">Obdobje storitve OD datuma</label>
+                            <input type="date" id="invoiceServicePeriodStart" name="servicePeriodStart" value="${serviceStartValue}" aria-describedby="invoiceServicePeriodStartError">
+                            <span class="error-message" id="invoiceServicePeriodStartError"></span>
+                        </div>
+                        <div class="form-group" style="flex: 1; min-width: 150px;" id="invoiceServicePeriodEndGroup">
+                            <label for="invoiceServicePeriodEnd">Obdobje storitve DO datuma</label>
+                            <input type="date" id="invoiceServicePeriodEnd" name="servicePeriodEnd" value="${serviceEndValue}" aria-describedby="invoiceServicePeriodEndError">
+                            <span class="error-message" id="invoiceServicePeriodEndError"></span>
+                        </div>
+                    </div>
+                    <div class="form-group" style="display: flex; align-items: center; margin-top: -0.5rem; margin-bottom: 1rem;">
+                        <input type="checkbox" id="singleDayService" name="singleDayService" style="margin-right: 0.5rem; width:auto; height:auto;" ${invoiceToEdit && invoiceToEdit.singleDayService ? 'checked' : ''}>
+                        <label for="singleDayService" style="display: inline; font-weight: normal; margin-bottom: 0;">Storitev opravljena na en dan</label>
+                    </div>`;
+        }
+        function _buildInvoiceModalItemsSectionHTML() {
+            return `<hr style="margin: 1.5rem 0;">
+                    <h4 style="margin-bottom: 0.75rem;">Postavke računa</h4>
+                    <div class="invoice-items-section">
+                        <div class="invoice-item-header-row">
+                            <div class="invoice-item-col item-service">Storitev</div>
+                            <div class="invoice-item-col item-quantity">Količina</div>
+                            <div class="invoice-item-col item-price">Cena/en. (€)</div>
+                            <div class="invoice-item-col item-total">Skupaj (€)</div>
+                            <div class="invoice-item-col item-actions">Akcija</div>
+                        </div>
+                        <div id="invoiceItemsContainer"></div>
+                    </div>
+                    <button type="button" id="addInvoiceItemBtn" class="button button-primary button-sm" style="margin-top: 1rem;" title="Dodaj novo postavko na račun"><i class="fas fa-plus"></i> Dodaj postavko</button>
+                    <div id="invoiceTotalAmountDisplay" style="text-align: right; font-size: 1.2rem; font-weight: bold; margin-top: 1rem;">Skupaj: ${formatPriceForDisplay(0)}</div>`;
+        }
+
         function openInvoiceModal(invoiceToEdit = null) {
             const today = new Date();
             const defaultDateIssued = formatDateForInput(today);
             const defaultDateDue = formatDateForInput(getNext15th(today));
             const { start: defaultServiceStart, end: defaultServiceEnd } = getServicePeriod(today);
 
-            let myCompanyOptionsHTML = appData.companies.map(c => `<option value="${c.id}" ${invoiceToEdit && invoiceToEdit.myCompanyId === c.id ? 'selected' : (!invoiceToEdit && appData.companies.length > 0 && appData.companies[0].id === c.id ? 'selected' : '')}>${c.companyName}</option>`).join('');
-            if (appData.companies.length === 0) myCompanyOptionsHTML = '<option value="" disabled>Najprej dodajte svoje podjetje</option>';
-
-            let partnerOptionsHTML = appData.partners.map(p => `<option value="${p.id}" ${invoiceToEdit && invoiceToEdit.partnerId === p.id ? 'selected' : ''}>${p.name}</option>`).join('');
-            if (appData.partners.length === 0) partnerOptionsHTML = '<option value="" disabled>Najprej dodajte partnerja</option>';
-            
             let formHTML = '<form id="invoiceFormModal" novalidate>';
-
-            // Polje "Moje podjetje" - v svoji vrstici
-            const myCompanyField = invoiceFormFields.find(f => f.name === 'myCompanyId');
-            if (myCompanyField) {
-                formHTML += `<div class="modal-form-row">
-                                <div class="form-group full-width">
-                                    <label for="${myCompanyField.id}">${myCompanyField.label} ${myCompanyField.required ? '<span class="required-asterisk">*</span>' : ''}</label>
-                                    <select id="${myCompanyField.id}" name="${myCompanyField.name}" ${myCompanyField.required ? 'required' : ''} ${appData.companies.length === 0 ? 'disabled' : ''} aria-describedby="${myCompanyField.errorId}">
-                                        ${myCompanyOptionsHTML}
-                                    </select>
-                                    <span class="error-message" id="${myCompanyField.errorId}"></span>
-                                </div>
-                             </div>`;
-            }
-
-            // Polje Partner - v svoji vrstici (prej je bilo mišljeno, da je zraven št. računa)
-            formHTML += '<div class="modal-form-row">';
-            invoiceFormFields.forEach(f => {
-                if (f.name === 'partnerId') { // Samo še partner ostane v tej logiki
-                    let value = '';
-                    if (invoiceToEdit) {
-                        value = invoiceToEdit[f.name];
-                    }
-
-                    formHTML += `<div class="form-group full-width">
-                                    <label for="${f.id}">${f.label} ${f.required ? '<span class="required-asterisk">*</span>' : ''}</label>`;
-                    if (f.type === 'select' && f.name === 'partnerId') {
-                        formHTML += `<select id="${f.id}" name="${f.name}" ${f.required ? 'required' : ''} ${appData.partners.length === 0 ? 'disabled' : ''} aria-describedby="${f.errorId}">${partnerOptionsHTML}</select>`;
-                    }
-                    formHTML += `<span class="error-message" id="${f.errorId}"></span></div>`;
-                }
-            });
-            formHTML += '</div>'; // Konec flex containerja za partnerja
-            
-            // Dodamo Datum izdaje in Datum zapadlosti v eno vrstico
-            formHTML += '<div class="modal-form-row">';
-            ['dateIssued', 'dateDue'].forEach(fieldName => {
-                const f = invoiceFormFields.find(field => field.name === fieldName);
-                if (f) {
-                    // Preverimo, ali je invoiceToEdit[f.name] definiran, sicer uporabimo privzeto vrednost
-                    const value = invoiceToEdit && invoiceToEdit[f.name] !== undefined ? invoiceToEdit[f.name] : (f.name === 'dateIssued' ? defaultDateIssued : defaultDateDue);
-                    formHTML += `<div class="form-group" style="flex: 1; min-width: 150px;">
-                                    <label for="${f.id}">${f.label} ${f.required ? '<span class="required-asterisk">*</span>' : ''}</label>
-                                    <input type="${f.type || 'text'}" id="${f.id}" name="${f.name}" value="${value || ''}" 
-                                        ${f.required ? 'required' : ''} aria-describedby="${f.errorId}">
-                                    <span class="error-message" id="${f.errorId}"></span>
-                                 </div>`;
-                }
-            });
-            formHTML += '</div>'; // Konec flex containerja za datume izdaje/zapadlosti
-
-            // Obdobje storitve - ta del ostane, ker ima pravilno logiko predizpolnjevanja
-            const serviceStartValue = invoiceToEdit?.servicePeriodStart || formatDateForInput(defaultServiceStart);
-            const serviceEndValue = invoiceToEdit?.servicePeriodEnd || formatDateForInput(defaultServiceEnd);
-            formHTML += `<div class="modal-form-row">
-                <div class="form-group" style="flex: 1; min-width: 150px;">
-                    <label for="invoiceServicePeriodStart" id="invoiceServicePeriodStartLabel">Obdobje storitve OD datuma</label>
-                    <input type="date" id="invoiceServicePeriodStart" name="servicePeriodStart" value="${serviceStartValue}" aria-describedby="invoiceServicePeriodStartError">
-                    <span class="error-message" id="invoiceServicePeriodStartError"></span>
-                </div>
-                <div class="form-group" style="flex: 1; min-width: 150px;" id="invoiceServicePeriodEndGroup">
-                    <label for="invoiceServicePeriodEnd">Obdobje storitve DO datuma</label>
-                    <input type="date" id="invoiceServicePeriodEnd" name="servicePeriodEnd" value="${serviceEndValue}" aria-describedby="invoiceServicePeriodEndError">
-                    <span class="error-message" id="invoiceServicePeriodEndError"></span>
-                </div>
-            </div>
-                <div class="form-group" style="display: flex; align-items: center; margin-top: -0.5rem; margin-bottom: 1rem;">
-                    <input type="checkbox" id="singleDayService" name="singleDayService" style="margin-right: 0.5rem; width:auto; height:auto;" ${invoiceToEdit && invoiceToEdit.singleDayService ? 'checked' : ''}>
-                    <label for="singleDayService" style="display: inline; font-weight: normal; margin-bottom: 0;">Storitev opravljena na en dan</label>
-                </div>
-            `;
-
-            // Placeholder za postavke računa
-            formHTML += `
-                <hr style="margin: 1.5rem 0;">
-                <h4 style="margin-bottom: 0.75rem;">Postavke računa</h4>
-                <div class="invoice-items-section">
-                    <div class="invoice-item-header-row">
-                        <div class="invoice-item-col item-service">Storitev</div>
-                        <div class="invoice-item-col item-quantity">Količina</div>
-                        <div class="invoice-item-col item-price">Cena/en. (€)</div>
-                        <div class="invoice-item-col item-total">Skupaj (€)</div>
-                        <div class="invoice-item-col item-actions">Akcija</div>
-                    </div>
-                    <div id="invoiceItemsContainer">
-                        <!-- Dinamično dodane vrstice postavk -->
-                    </div>
-                </div>
-                <button type="button" id="addInvoiceItemBtn" class="button button-primary button-sm" style="margin-top: 1rem;"><i class="fas fa-plus"></i> Dodaj postavko</button>
-                <div id="invoiceTotalAmountDisplay" style="text-align: right; font-size: 1.2rem; font-weight: bold; margin-top: 1rem;">Skupaj: 0.00 €</div>
-            </form>`; 
+            formHTML += _buildInvoiceModalMyCompanySelectHTML(invoiceToEdit);
+            formHTML += _buildInvoiceModalPartnerSelectHTML(invoiceToEdit);
+            formHTML += _buildInvoiceModalDateFieldsHTML(invoiceToEdit, defaultDateIssued, defaultDateDue);
+            formHTML += _buildInvoiceModalServicePeriodFieldsHTML(invoiceToEdit, defaultServiceStart, defaultServiceEnd);
+            formHTML += _buildInvoiceModalItemsSectionHTML();
+            formHTML += '</form>'; 
 
             const footerHTML = `
                 <button type="button" class="button button-cancel" id="cancelInvoiceModalBtn">Prekliči</button>
@@ -2179,6 +2477,17 @@
             const periodEndGroupEl = document.getElementById('invoiceServicePeriodEndGroup');
 
             function toggleServicePeriodFields() {
+                if (!singleDayServiceCheckbox || !periodEndGroupEl || !periodEndInputEl || !periodStartLabelEl) {
+                    // Če kateri od elementov manjka, prekini izvajanje, da preprečiš napake
+                    // To se lahko zgodi, če se modal zapre, preden se asinhroni deli izvedejo
+                    // ali če HTML struktura ni pravilna.
+                    console.warn("Eden od elementov za obdobje storitve manjka v toggleServicePeriodFields.");
+                    return;
+                }
+                // Preveri, ali so elementi še vedno del DOM-a
+                if (!document.body.contains(singleDayServiceCheckbox)) {
+                    return; // Element ni več v DOM-u
+                }
                 if (singleDayServiceCheckbox.checked) {
                     periodEndGroupEl.style.display = 'none';
                     periodEndInputEl.value = ''; 
@@ -2188,10 +2497,64 @@
                     periodStartLabelEl.textContent = 'Obdobje storitve OD datuma';
                 }
             }
-            singleDayServiceCheckbox.addEventListener('change', toggleServicePeriodFields);
-            toggleServicePeriodFields(); // Začetno stanje ob odprtju modala
+            if (singleDayServiceCheckbox) {
+                singleDayServiceCheckbox.addEventListener('change', toggleServicePeriodFields);
+                toggleServicePeriodFields(); // Začetno stanje ob odprtju modala
+            }
 
             document.getElementById('cancelInvoiceModalBtn')?.addEventListener('click', closeModal);
+
+            // Funkcija za validacijo obdobja storitve
+            function validateInvoiceServicePeriod() {
+                const startDateInput = document.getElementById('invoiceServicePeriodStart');
+                const endDateInput = document.getElementById('invoiceServicePeriodEnd');
+                const singleDayCheckbox = document.getElementById('singleDayService');
+                const startDateError = document.getElementById('invoiceServicePeriodStartError');
+                const endDateError = document.getElementById('invoiceServicePeriodEndError');
+
+                // Počisti prejšnje napake
+                if (startDateError) startDateError.textContent = '';
+                if (endDateError) endDateError.textContent = '';
+                startDateInput.classList.remove('invalid');
+                endDateInput.classList.remove('invalid');
+
+                if (!singleDayCheckbox.checked && startDateInput.value && endDateInput.value) {
+                    const startDate = new Date(startDateInput.value);
+                    const endDate = new Date(endDateInput.value);
+                    if (startDate > endDate) {
+                        if (endDateError) endDateError.textContent = 'Datum OD mora biti pred datumom DO ali enak.';
+                        startDateInput.classList.add('invalid');
+                        endDateInput.classList.add('invalid');
+                        return false; // Neveljavno
+                    }
+                }
+                return true; // Veljavno ali ni pogojev za preverjanje
+            }
+
+            // Dodaj event listenerje za živo validacijo obdobja
+            periodStartInputEl?.addEventListener('change', validateInvoiceServicePeriod);
+            periodEndInputEl?.addEventListener('change', validateInvoiceServicePeriod);
+            singleDayServiceCheckbox?.addEventListener('change', () => {
+                toggleServicePeriodFields(); 
+                validateInvoiceServicePeriod(); // Nato validiraj
+            });
+
+            // Poslušalec za spremembo "Mojega podjetja" za osvežitev davčnih stopenj postavk
+            const myCompanySelectEl = document.getElementById('invoiceMyCompany');
+            if (myCompanySelectEl) {
+                myCompanySelectEl.addEventListener('change', () => {
+                    currentInvoiceItems.forEach(item => {
+                        const itemRow = document.querySelector(`.invoice-item-row[data-item-id="${item.itemId}"]`);
+                        if (itemRow) {
+                            const serviceSelectInRow = itemRow.querySelector('select[name="item_service"]');
+                            if (serviceSelectInRow) {
+                                handleItemChange(item.itemId, serviceSelectInRow); // Ponovno sproži logiko za postavko
+                            }
+                        }
+                    });
+                    // updateInvoiceTotalDisplay(); // handleItemChange že kliče to funkcijo
+                });
+            }
             invoiceFormModal?.addEventListener('submit', (event) => handleInvoiceFormSubmit(event, invoiceToEdit ? invoiceToEdit.id : null));
             
             // Inicializacija postavk (to bo kasneje razširjeno)
@@ -2209,14 +2572,30 @@
                 }
             });
 
-            // Dodatna validacija za ročno dodana polja za obdobje storitve, če je potrebno
-            // Zaenkrat jih puščamo neobvezna, kot je bilo prvotno
-            // const servicePeriodStartInput = document.getElementById('invoiceServicePeriodStart');
-            // const servicePeriodStartError = document.getElementById('invoiceServicePeriodStartError');
-            // if (servicePeriodStartInput) servicePeriodStartInput.addEventListener('input', () => validateField(servicePeriodStartInput, servicePeriodStartError, {label: 'Obdobje storitve OD', required: false, type: 'date'}));
-            // const servicePeriodEndInput = document.getElementById('invoiceServicePeriodEnd');
-            // const servicePeriodEndError = document.getElementById('invoiceServicePeriodEndError');
-            // if (servicePeriodEndInput) servicePeriodEndInput.addEventListener('input', () => validateField(servicePeriodEndInput, servicePeriodEndError, {label: 'Obdobje storitve DO', required: false, type: 'date'}));
+            // Dodatna validacija za obdobje storitve pred shranjevanjem
+            const servicePeriodStartInput = form.elements.servicePeriodStart;
+            const servicePeriodEndInput = form.elements.servicePeriodEnd;
+            const singleDayServiceCheckbox = form.elements.singleDayService;
+            const servicePeriodStartError = document.getElementById('invoiceServicePeriodStartError');
+            const servicePeriodEndError = document.getElementById('invoiceServicePeriodEndError');
+
+            // Počisti prejšnje napake za obdobje
+            if(servicePeriodStartError) servicePeriodStartError.textContent = '';
+            if(servicePeriodEndError) servicePeriodEndError.textContent = '';
+            servicePeriodStartInput.classList.remove('invalid');
+            servicePeriodEndInput.classList.remove('invalid');
+
+            if (!singleDayServiceCheckbox.checked && servicePeriodStartInput.value && servicePeriodEndInput.value) {
+                const startDate = new Date(servicePeriodStartInput.value);
+                const endDate = new Date(servicePeriodEndInput.value);
+                if (startDate > endDate) {
+                    if(servicePeriodEndError) servicePeriodEndError.textContent = 'Datum OD mora biti pred datumom DO ali enak.';
+                    servicePeriodStartInput.classList.add('invalid');
+                    servicePeriodEndInput.classList.add('invalid');
+                    isFormValid = false;
+                }
+            }
+
             if (isFormValid) {
                 const invoiceData = {
                     // Polje 'number' se bo generiralo spodaj, če gre za nov račun
@@ -2232,24 +2611,17 @@
                 };
 
                 if (editingId) {
-                    const index = appData.invoices.findIndex(inv => inv.id === editingId);
-                    if (index > -1) { // Pri urejanju ohranimo obstoječo številko računa
-                        const existingInvoiceNumber = appData.invoices[index].number;
-                        appData.invoices[index] = { ...appData.invoices[index], ...invoiceData, number: existingInvoiceNumber };
-                        showToast('Račun uspešno posodobljen!');
-                    }
+                    AppStore.updateInvoice(editingId, invoiceData);
+                    showToast('Račun uspešno posodobljen!');
                 } else {
                     // Generiraj številko računa za nov račun
-                    invoiceData.number = generateInvoiceNumber(invoiceData.dateIssued, appData.invoices);
-                    invoiceData.id = generateUniqueId('invoice_');
-                    appData.invoices.push(invoiceData);
+                    // invoiceData.number = generateInvoiceNumber(invoiceData.dateIssued, AppStore.getData().invoices); // To bo naredil AppStore.addInvoice
+                    // invoiceData.id = generateUniqueId('invoice_'); // ID bo dodelil AppStore
+                    AppStore.addInvoice(invoiceData);
                     showToast('Račun uspešno dodan!');
                 }
                 
-                saveDataToLocalStorage();
-                renderInvoicesTable();
-                renderAllInvoicesTable();
-                updateDashboardCards();
+                // Shranjevanje in osveževanje UI bo izvedel AppStore
                 closeModal();
             } else {
                 showToast('Prosimo, popravite napake v obrazcu.', 'error');
@@ -2257,12 +2629,38 @@
         }
         
         function generateInvoiceNumber(dateIssuedStr, existingInvoices) {
-            const issueDate = new Date(dateIssuedStr);
-            const yearOfIssue = issueDate.getFullYear();
-            const monthOfIssue = String(issueDate.getMonth() + 1).padStart(2, '0');
-            const dayOfIssue = String(issueDate.getDate()).padStart(2, '0');
-            const datePrefix = `${yearOfIssue}-${monthOfIssue}-${dayOfIssue}`;
+            let yearOfIssue, monthOfIssue, dayOfIssue;
+            let validDateUsed = false;
 
+            if (dateIssuedStr && typeof dateIssuedStr === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(dateIssuedStr)) {
+                const parts = dateIssuedStr.split('-');
+                const year = parseInt(parts[0], 10);
+                const month = parseInt(parts[1], 10); // 1-osnova mesec
+                const day = parseInt(parts[2], 10);
+
+                // Preveri, ali je datum veljaven (npr. ne 2023-02-30)
+                // Ustvari datumski objekt iz teh delov. Opomba: mesec je 0-osnova za konstruktor Date
+                const testDate = new Date(year, month - 1, day);
+                if (testDate.getFullYear() === year && testDate.getMonth() === (month - 1) && testDate.getDate() === day) {
+                    yearOfIssue = year;
+                    monthOfIssue = String(month).padStart(2, '0');
+                    dayOfIssue = String(day).padStart(2, '0');
+                    validDateUsed = true;
+                }
+            }
+
+            if (!validDateUsed) {
+                const originalDateStr = dateIssuedStr || "ni podan";
+                console.warn(`Neveljaven datum izdaje ('${originalDateStr}') pri generiranju številke računa. Uporabljam trenutni datum kot nadomestek.`);
+                showToast(`Datum izdaje '${originalDateStr}' je neveljaven ali ni v formatu YYYY-MM-DD. Za številko računa je uporabljen trenutni datum.`, 'warning', 5000);
+                
+                const fallbackDate = new Date();
+                yearOfIssue = fallbackDate.getFullYear();
+                monthOfIssue = String(fallbackDate.getMonth() + 1).padStart(2, '0');
+                dayOfIssue = String(fallbackDate.getDate()).padStart(2, '0');
+            }
+
+            const datePrefix = `${yearOfIssue}-${monthOfIssue}-${dayOfIssue}`;
             let maxSeqThisYear = 0;
             for (const inv of existingInvoices) {
                 if (inv.number && typeof inv.number === 'string') {
@@ -2306,34 +2704,57 @@
             const container = document.getElementById('invoiceItemsContainer');
             if (!container) return;
 
-            const itemId = itemData ? itemData.itemId : generateUniqueId('item_');
-            if (!itemData) { // Če dodajamo novo prazno vrstico, jo dodajmo tudi v currentInvoiceItems
-                itemData = { itemId, serviceId: '', quantity: 1, unitPrice: 0, taxRate: 22, itemTotal: 0, description: '' };
+            const itemId = itemData?.itemId || generateUniqueId('item_');
+            
+            if (!itemData) { 
+                let defaultTaxRateForNewItem = 22; // Privzeto, če je podjetje DDV zavezanec
+                const myCompanySelect = document.getElementById('invoiceMyCompany');
+                const selectedMyCompanyId = myCompanySelect ? myCompanySelect.value : null;
+                if (selectedMyCompanyId) {
+                    const appData = AppStore.getData();
+                    const issuingCompany = appData.companies.find(c => c.id === selectedMyCompanyId);
+                    if (issuingCompany && issuingCompany.isVatPayer === false) {
+                        defaultTaxRateForNewItem = 0; // Podjetje ni DDV zavezanec
+                    }
+                }
+
+                itemData = { 
+                    itemId, 
+                    serviceId: '', 
+                    quantity: 1, 
+                    unitPrice: 0, // Neto cena
+                    taxRate: defaultTaxRateForNewItem, // Davčna stopnja glede na podjetje
+                    itemTotal: 0, // Neto skupaj za postavko
+                    description: '',
+                    unit: ''
+                };
                 currentInvoiceItems.push(itemData);
             }
             
+            // HTML struktura postavke ostane enaka
             const itemDiv = document.createElement('div');
             itemDiv.className = 'invoice-item-row';
             itemDiv.dataset.itemId = itemId;
 
             // Spustni seznam za storitve
             let serviceOptions = '<option value="">Izberi storitev...</option>';
-            appData.services.forEach(s => {
-                serviceOptions += `<option value="${s.id}" ${itemData && s.id === itemData.serviceId ? 'selected' : ''}>${s.name}</option>`;
-            });
+            const currentData = AppStore.getData();
+            currentData.services.forEach(s => { // Uporabi currentData namesto appDataGlobal
+                serviceOptions += `<option value="${s.id}" ${itemData.serviceId === s.id ? 'selected' : ''}>${s.name}</option>`;
+            }); // itemData tukaj vedno obstaja
 
             itemDiv.innerHTML = `
                 <div class="invoice-item-col item-service">
                     <select name="item_service" class="form-control">${serviceOptions}</select>
                 </div>
                 <div class="invoice-item-col item-quantity">
-                    <input type="number" name="item_quantity" value="${itemData ? itemData.quantity : 1}" min="1" class="form-control" placeholder="Vnesi količino">
+                    <input type="number" name="item_quantity" value="${itemData && itemData.quantity ? itemData.quantity : 1}" min="1" step="any" class="form-control" placeholder="Vnesi količino">
                 </div>
                 <div class="invoice-item-col item-price">
-                    <input type="text" name="item_unit_price" value="${itemData ? itemData.unitPrice.toFixed(2) : '0.00'}" class="form-control" readonly title="Cena na enoto">
+                    <input type="text" name="item_unit_price" value="${formatPriceForDisplay(itemData.unitPrice || 0)}" class="form-control" readonly title="Cena na enoto">
                 </div>
                 <div class="invoice-item-col item-total">
-                    <input type="text" name="item_total" value="${itemData ? itemData.itemTotal.toFixed(2) : '0.00'}" class="form-control" readonly title="Skupaj postavka">
+                    <input type="text" name="item_total" value="${formatPriceForDisplay(itemData.itemTotal || 0)}" class="form-control" readonly title="Skupaj postavka">
                 </div>
                 <div class="invoice-item-col item-actions">
                     <button type="button" class="button button-danger button-sm delete-item-btn icon-only" title="Odstrani postavko"><i class="fas fa-trash"></i></button>
@@ -2354,48 +2775,64 @@
                 updateInvoiceTotalDisplay();
             });
             
-            // Če je itemData že imel serviceId, sproži začetni izračun
-            if (itemData && itemData.serviceId) {
-                handleItemChange(itemId, serviceSelect); // Da se izračunajo cene ob nalaganju
-            }
+            // Po dodajanju vrstice in njenih poslušalcev, pokliči handleItemChange,
+            // da se pravilno nastavijo začetne vrednosti (cena, davek) glede na
+            // (morebiti prazno) izbrano storitev in status DDV trenutnega podjetja.
+            handleItemChange(itemId, serviceSelect);
         }
 
         function handleItemChange(itemId, changedElement) {
             const itemRow = document.querySelector(`.invoice-item-row[data-item-id="${itemId}"]`);
             if (!itemRow) return;
 
+            // Pridobi ID trenutno izbranega "Mojega podjetja" iz obrazca računa
+            const myCompanySelect = document.getElementById('invoiceMyCompany');
+            const selectedMyCompanyId = myCompanySelect ? myCompanySelect.value : null;
+            
+            const appData = AppStore.getData(); // Vedno pridobi sveže podatke
+            const issuingCompany = selectedMyCompanyId ? appData.companies.find(c => c.id === selectedMyCompanyId) : null;
+
             const serviceSelect = itemRow.querySelector('select[name="item_service"]');
             const quantityInput = itemRow.querySelector('input[name="item_quantity"]');
-            const unitPriceInput = itemRow.querySelector('input[name="item_unit_price"]');
-            const itemTotalInput = itemRow.querySelector('input[name="item_total"]');
+            const unitPriceInput = itemRow.querySelector('input[name="item_unit_price"]'); // Neto cena/enoto
+            const itemTotalInput = itemRow.querySelector('input[name="item_total"]'); // Neto skupaj za postavko
 
             const selectedServiceId = serviceSelect.value;
-            const quantity = parseInt(quantityInput.value) || 0;
+            const quantity = parseFloat(quantityInput.value) || 0;
             
-            const service = appData.services.find(s => s.id === selectedServiceId);
-            let unitPrice = 0;
-            let taxRate = 22; // Privzeto, če storitev ni najdena
+            const service = selectedServiceId ? appData.services.find(s => s.id === selectedServiceId) : null;
+            
+            let unitPrice = 0; // Neto cena na enoto
+            let actualTaxRateForItem = 0; // Dejanska davčna stopnja za to postavko na tem računu
 
             if (service) {
-                unitPrice = service.price;
-                taxRate = service.taxRate;
-                unitPriceInput.value = unitPrice.toFixed(2);
+                unitPrice = service.price || 0; // Cena storitve je vedno neto
+                
+                if (issuingCompany && issuingCompany.isVatPayer === false) {
+                    actualTaxRateForItem = 0; // Če podjetje ni zavezanec za DDV, je DDV za postavko 0%
+                } else {
+                    actualTaxRateForItem = service.taxRate || 0; // Sicer uporabi DDV stopnjo storitve
+                }
+                unitPriceInput.value = formatPriceForDisplay(unitPrice);
             } else {
-                unitPriceInput.value = '0.00';
+                unitPriceInput.value = formatPriceForDisplay(0);
+                // Če storitev ni izbrana, je DDV stopnja 0 (ali privzeta, če bi želeli drugače)
+                // actualTaxRateForItem ostane 0, kar je smiselno
             }
             
-            const itemTotal = quantity * unitPrice;
-            itemTotalInput.value = itemTotal.toFixed(2);
+            const itemNetTotal = quantity * unitPrice; // Skupna neto vrednost postavke
+            itemTotalInput.value = formatPriceForDisplay(itemNetTotal);
 
             // Posodobi currentInvoiceItems
             const currentItem = currentInvoiceItems.find(it => it.itemId === itemId);
             if (currentItem) {
                 currentItem.serviceId = selectedServiceId;
                 currentItem.quantity = quantity;
-                currentItem.unitPrice = unitPrice;
-                currentItem.taxRate = taxRate;
-                currentItem.itemTotal = itemTotal;
-                currentItem.description = service ? service.name : ''; // Ali drug opis
+                currentItem.unitPrice = unitPrice; // Shrani neto ceno na enoto
+                currentItem.taxRate = actualTaxRateForItem; // Shrani dejansko davčno stopnjo za to postavko
+                currentItem.itemTotal = itemNetTotal; // Shrani skupno neto vrednost postavke
+                currentItem.description = service ? service.name : '';
+                currentItem.unit = service ? service.unit : ''; // Dodano za shranjevanje enote
             }
             updateInvoiceTotalDisplay();
         }
@@ -2404,7 +2841,7 @@
             const total = calculateTotalAmountFromItems(currentInvoiceItems);
             const displayEl = document.getElementById('invoiceTotalAmountDisplay');
             if (displayEl) {
-                displayEl.textContent = `Skupaj: ${total.toFixed(2)} €`;
+                displayEl.textContent = `Skupaj: ${formatPriceForDisplay(total)} €`;
             }
         }
 
@@ -2414,65 +2851,162 @@
         }
 
         function calculateTotalAmountFromItems(items) {
-            return items.reduce((sum, item) => sum + (item.itemTotal || 0), 0);
+            return items.reduce((sum, item) => {
+                // item.itemTotal je neto vrednost postavke (količina * neto cena na enoto)
+                const itemNetSubtotal = item.itemTotal || 0;
+                const itemVatAmount = itemNetSubtotal * ((item.taxRate || 0) / 100);
+                const itemGrossSubtotal = itemNetSubtotal + itemVatAmount;
+                return sum + itemGrossSubtotal;
+            }, 0);
         }
 
         function deleteInvoice(invoiceId) {
             if (confirm(`Ali ste prepričani, da želite izbrisati ta račun?`)) {
-                appData.invoices = appData.invoices.filter(inv => inv.id !== invoiceId);
-                saveDataToLocalStorage();
-                renderInvoicesTable();
-                renderAllInvoicesTable();
-                updateDashboardCards();
+                // appData.invoices = appData.invoices.filter(inv => inv.id !== invoiceId);
+                AppStore.deleteInvoice(invoiceId);
                 showToast('Račun izbrisan.');
             }
         }
 
         function renderInvoicesTable() { 
+            const currentData = AppStore.getData();
             const tableBody = document.getElementById('recentInvoicesTableBody');
             if (!tableBody) return;
             tableBody.innerHTML = '';
-            const recentInvoices = appData.invoices.slice(-5).reverse(); 
+            // const recentInvoices = appData.invoices.slice(-5).reverse(); // Stara, manj natančna logika
 
+            // Nova logika: sortiraj vse račune enako kot v renderAllInvoicesTable, nato vzemi prvih 5
+            const sortedInvoices = [...currentData.invoices].sort((a, b) => {
+                const dateAObj = a.dateIssued ? new Date(a.dateIssued) : null;
+                const dateBObj = b.dateIssued ? new Date(b.dateIssued) : null;
+
+                const timeA = dateAObj ? dateAObj.getTime() : NaN;
+                const timeB = dateBObj ? dateBObj.getTime() : NaN;
+
+                const aDateInvalid = isNaN(timeA);
+                const bDateInvalid = isNaN(timeB);
+
+                if (aDateInvalid && bDateInvalid) {
+                    const numA = a.number || "";
+                    const numB = b.number || "";
+                    return numB.localeCompare(numA);
+                }
+                if (aDateInvalid) return 1;
+                if (bDateInvalid) return -1;
+
+                if (timeB !== timeA) {
+                    return timeB - timeA;
+                }
+                const numA = a.number || "";
+                const numB = b.number || "";
+                return numB.localeCompare(numA);
+            });
+            const recentInvoices = sortedInvoices.slice(0, 5);
             if (recentInvoices.length === 0) {
-                tableBody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 2rem;">Ni nedavnih računov.</td></tr>';
+                tableBody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 2rem;">Ni nedavnih računov.</td></tr>'; // Colspan updated to 7 (Št, Plačnik, Datum, Neto, Bruto, Status, Akcije)
             } else {
                 recentInvoices.forEach(invoice => {
-                    const myCompany = appData.companies.find(c => c.id === invoice.myCompanyId);
-                    const partner = appData.partners.find(p => p.id === invoice.partnerId);
+                    const myCompany = currentData.companies.find(c => c.id === invoice.myCompanyId);
+                    const partner = currentData.partners.find(p => p.id === invoice.partnerId);
+                    const netAmount = (invoice.items || []).reduce((sum, item) => sum + (item.itemTotal || 0), 0);
                     const tr = document.createElement('tr');
                     tr.innerHTML = `
                         <td>${invoice.number || 'N/A'} <small style="display:block; color: #666;">(${myCompany ? myCompany.companyName : 'Neznano podjetje'})</small></td>
                         <td>${partner ? partner.name : 'Neznan partner'}</td>
                         <td>${invoice.dateIssued ? new Date(invoice.dateIssued).toLocaleDateString('sl-SI') : 'N/A'}</td>
-                        <td>${invoice.dateDue ? new Date(invoice.dateDue).toLocaleDateString('sl-SI') : 'N/A'}</td>
-                        <td>${(invoice.totalAmount || 0).toFixed(2)}</td>
-                        <td>Plačano</td> <!-- TODO: Status -->
+                        <td>${formatPriceForDisplay(netAmount)}</td>
+                        <td>${formatPriceForDisplay(invoice.totalAmount || 0)}</td>
+                        <td class="invoice-status-cell">
+                            <span class="status-badge status-${invoice.status === 'paid' ? 'paid' : 'unpaid'}" data-invoice-id="${invoice.id}" title="Klikni za spremembo statusa" role="button" tabindex="0">
+                                <i class="fas ${invoice.status === 'paid' ? 'fa-check-circle' : 'fa-times-circle'} status-icon"></i>
+                                <span class="status-text">${invoice.status === 'paid' ? 'Plačano' : 'Neplačano'}</span>
+                            </span>
+                        </td>
+                        <td class="actions-cell">
+                            <button class="button button-sm button-primary open-recent-invoice-pdf-btn" data-id="${invoice.id}" title="Odpri PDF"><i class="fas fa-file-pdf"></i> PDF</button>
+                        </td>
                     `;
                     tableBody.appendChild(tr);
                 });
+                // Listenerji za gumbe PDF v tabeli nedavnih računov
+                tableBody.querySelectorAll('.open-recent-invoice-pdf-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const invoiceId = e.currentTarget.dataset.id;
+                        generateInvoicePDF(invoiceId);
+                    });
+                });
+                // Listenerji za spremembo statusa v tabeli nedavnih računov
+                tableBody.querySelectorAll('.status-badge').forEach(badge => {
+                    badge.addEventListener('click', (e) => {
+                        toggleInvoiceStatus(e.currentTarget.dataset.invoiceId);
+                    });
+                });
             }
         }
-        function renderAllInvoicesTable() { 
+        function renderAllInvoicesTable(invoicesToRender) { 
+            const currentData = AppStore.getData();
+            const invoices = invoicesToRender || currentData.invoices; // Uporabi posredovane račune ali vse
+
             const tableBody = document.getElementById('allInvoicesTableBody');
             const emptyState = document.getElementById('invoicesEmptyState');
             if (!tableBody || !emptyState) return;
             
             tableBody.innerHTML = '';
-            if (appData.invoices.length === 0) {
+            if (invoices.length === 0) {
                 emptyState.style.display = 'block';
                 tableBody.closest('.table-container').style.display = 'none';
             } else {
                 emptyState.style.display = 'none';
                 tableBody.closest('.table-container').style.display = '';
-                appData.invoices.forEach(invoice => {
-                    const myCompany = appData.companies.find(c => c.id === invoice.myCompanyId);
-                    const partner = appData.partners.find(p => p.id === invoice.partnerId);
+                // Ustvarimo kopijo in jo sortiramo: najnovejši računi najprej
+                const sortedInvoices = [...invoices].sort((a, b) => {
+                    const dateAObj = a.dateIssued ? new Date(a.dateIssued) : null;
+                    const dateBObj = b.dateIssued ? new Date(b.dateIssued) : null;
+
+                    // getTime() vrne NaN za neveljavne datume
+                    const timeA = dateAObj ? dateAObj.getTime() : NaN;
+                    const timeB = dateBObj ? dateBObj.getTime() : NaN;
+
+                    const aDateInvalid = isNaN(timeA);
+                    const bDateInvalid = isNaN(timeB);
+
+                    // Obravnava primerov z neveljavnimi datumi
+                    if (aDateInvalid && bDateInvalid) {
+                        // Oba datuma sta neveljavna, sortiraj po številki računa padajoče
+                        const numA = a.number || "";
+                        const numB = b.number || "";
+                        return numB.localeCompare(numA);
+                    }
+                    if (aDateInvalid) return 1; // Datum A je neveljaven, B je veljaven. A pride za B (B je novejši).
+                    if (bDateInvalid) return -1; // Datum B je neveljaven, A je veljaven. B pride za A (A je novejši).
+
+                    // Oba datuma sta veljavna. Primarno sortiranje: po datumu padajoče.
+                    if (timeB !== timeA) {
+                        return timeB - timeA;
+                    }
+
+                    // Datuma sta enaka. Sekundarno sortiranje: po številki računa padajoče.
+                    const numA = a.number || "";
+                    const numB = b.number || "";
+                    return numB.localeCompare(numA); // Če je numB > numA, vrne >0, torej B pred A.
+                });
+                sortedInvoices.forEach(invoice => {
+                    const myCompany = currentData.companies.find(c => c.id === invoice.myCompanyId);
+                    const partner = currentData.partners.find(p => p.id === invoice.partnerId);
+                    const netAmount = (invoice.items || []).reduce((sum, item) => sum + (item.itemTotal || 0), 0);
                     const tr = document.createElement('tr');
                     tr.innerHTML = `
-                        <td>${invoice.number || 'N/A'} ${myCompany ? `<small style="display:block; color: #666;">(Izdajatelj: ${myCompany.companyName})</small>` : ''}</td>
+                        <td>${invoice.number || 'N/A'} ${myCompany ? `<small style="display:block; color: #666;">(${myCompany.companyName})</small>` : ''}</td>
                         <td>${partner ? partner.name : 'Neznan partner'}</td>
-                        <td>${(invoice.totalAmount || 0).toFixed(2)}</td>
+                        <td>${invoice.dateIssued ? new Date(invoice.dateIssued).toLocaleDateString('sl-SI') : 'N/A'}</td>
+                        <td>${formatPriceForDisplay(netAmount)}</td>
+                        <td>${formatPriceForDisplay(invoice.totalAmount || 0)}</td>
+                        <td class="invoice-status-cell">
+                            <span class="status-badge status-${invoice.status === 'paid' ? 'paid' : 'unpaid'}" data-invoice-id="${invoice.id}" title="Klikni za spremembo statusa" role="button" tabindex="0">
+                                <i class="fas ${invoice.status === 'paid' ? 'fa-check-circle' : 'fa-times-circle'} status-icon"></i>
+                                <span class="status-text">${invoice.status === 'paid' ? 'Plačano' : 'Neplačano'}</span>
+                            </span>
+                        </td>
                         <td class="actions-cell">
                             <button class="button button-sm button-primary open-pdf-btn" data-id="${invoice.id}" title="Odpri PDF"><i class="fas fa-file-pdf"></i> PDF</button>
                             <button class="button button-sm button-primary edit-invoice-btn" data-id="${invoice.id}" title="Uredi račun"><i class="fas fa-edit"></i> Uredi</button>
@@ -2484,7 +3018,7 @@
                 tableBody.querySelectorAll('.edit-invoice-btn').forEach(btn => {
                     btn.addEventListener('click', (e) => {
                         const invoiceId = e.currentTarget.dataset.id;
-                        const invoice = appData.invoices.find(inv => inv.id === invoiceId);
+                        const invoice = AppStore.getData().invoices.find(inv => inv.id === invoiceId); // Uporabi AppStore.getData()
                         if (invoice) openInvoiceModal(invoice);
                     });
                 });
@@ -2493,12 +3027,308 @@
                 });
                 tableBody.querySelectorAll('.open-pdf-btn').forEach(btn => {
                     btn.addEventListener('click', (e) => {
-                        showToast(`Funkcija PDF za račun ${e.currentTarget.dataset.id} še ni implementirana.`, 'info');
+                        const invoiceId = e.currentTarget.dataset.id;
+                        generateInvoicePDF(invoiceId);
+                    });
+                });
+                // Listenerji za spremembo statusa v tabeli vseh računov
+                tableBody.querySelectorAll('.status-badge').forEach(badge => {
+                    badge.addEventListener('click', (e) => {
+                        toggleInvoiceStatus(e.currentTarget.dataset.invoiceId);
                     });
                 });
             }
         }
 
+        function toggleInvoiceStatus(invoiceId) {
+            const currentData = AppStore.getData();
+            const invoice = currentData.invoices.find(inv => inv.id === invoiceId);
+            if (invoice) {
+                const newStatus = invoice.status === 'paid' ? 'unpaid' : 'paid';
+                AppStore.updateInvoice(invoiceId, { status: newStatus }); // AppStore bo poskrbel za shranjevanje in osvežitev
+                showToast(`Status računa ${invoice.number || ''} spremenjen v '${newStatus === 'paid' ? 'Plačano' : 'Neplačano'}'.`);
+            } else {
+                showToast('Napaka: Račun ni najden.', 'error');
+            }
+        }
+
+        // --- Filtriranje Računov ---
+
+        function populatePartnerFilterDropdown() {
+            const filterPartnerSelect = document.getElementById('filterPartner');
+            if (!filterPartnerSelect) return;
+
+            const currentData = AppStore.getData();
+            const partners = currentData.partners.sort((a, b) => a.name.localeCompare(b.name));
+
+            const selectedValue = filterPartnerSelect.value;
+
+            filterPartnerSelect.innerHTML = '<option value="">Vsi partnerji</option>';
+            partners.forEach(partner => {
+                const option = document.createElement('option');
+                option.value = partner.id;
+                option.textContent = partner.name;
+                filterPartnerSelect.appendChild(option);
+            });
+
+            filterPartnerSelect.value = selectedValue;
+        }
+
+        function applyInvoiceFilters() {
+            const filters = {
+                number: document.getElementById('filterInvoiceNumber').value.toLowerCase().trim(),
+                partnerId: document.getElementById('filterPartner').value,
+                status: document.getElementById('filterStatus').value,
+                dateFrom: document.getElementById('filterDateFrom').value,
+                dateTo: document.getElementById('filterDateTo').value,
+                netFrom: parseFloat(document.getElementById('filterNetFrom').value),
+                netTo: parseFloat(document.getElementById('filterNetTo').value),
+                grossFrom: parseFloat(document.getElementById('filterGrossFrom').value),
+                grossTo: parseFloat(document.getElementById('filterGrossTo').value)
+            };
+
+            const allInvoices = AppStore.getData().invoices;
+
+            const filteredInvoices = allInvoices.filter(invoice => {
+                // Filter po številki računa
+                if (filters.number && !invoice.number?.toLowerCase().includes(filters.number)) return false;
+                // Filter po partnerju
+                if (filters.partnerId && invoice.partnerId !== filters.partnerId) return false;
+                // Filter po statusu (nedefiniran status obravnava kot 'neplačano')
+                if (filters.status && (invoice.status || 'unpaid') !== filters.status) return false;
+                // Filter po datumu
+                if (filters.dateFrom && invoice.dateIssued < filters.dateFrom) return false;
+                if (filters.dateTo && invoice.dateIssued > filters.dateTo) return false;
+
+                // Filter po neto znesku
+                const netAmount = (invoice.items || []).reduce((sum, item) => sum + (item.itemTotal || 0), 0);
+                if (!isNaN(filters.netFrom) && netAmount < filters.netFrom) return false;
+                if (!isNaN(filters.netTo) && netAmount > filters.netTo) return false;
+
+                // Filter po bruto znesku
+                const grossAmount = invoice.totalAmount || 0;
+                if (!isNaN(filters.grossFrom) && grossAmount < filters.grossFrom) return false;
+                if (!isNaN(filters.grossTo) && grossAmount > filters.grossTo) return false;
+
+                return true; // Če vsi pogoji ustrezajo, obdrži račun
+            });
+
+            renderAllInvoicesTable(filteredInvoices);
+            showToast(`${filteredInvoices.length} račun(ov) ustreza filtrom.`);
+        }
+
+        function resetInvoiceFilters() {
+            const filterContainer = document.querySelector('.invoice-filters-container');
+            if (!filterContainer) return;
+            
+            filterContainer.querySelectorAll('input, select').forEach(el => {
+                el.value = '';
+            });
+
+            renderAllInvoicesTable(AppStore.getData().invoices);
+            showToast('Filtri ponastavljeni.');
+        }
+
+        function setupInvoiceFilters() {
+            document.getElementById('applyFiltersBtn')?.addEventListener('click', applyInvoiceFilters);
+            document.getElementById('resetFiltersBtn')?.addEventListener('click', resetInvoiceFilters);
+        }
+
+        // --- Graf zaslužkov po mesecih ---
+        function renderEarningsChart() {
+            const currentData = AppStore.getData();
+            const ctx = document.getElementById('earningsChartCanvas')?.getContext('2d');
+            if (!ctx) {
+                console.warn("Canvas za graf zaslužkov ni najden.");
+                return;
+            }
+
+            const primaryColor = getCssVariable('--barva-gumba-primarni') || 'rgba(54, 162, 235, 1)';
+            const primaryColorBg = primaryColor.replace(')', ', 0.6)').replace('rgb', 'rgba'); // Dodaj alfa za ozadje
+
+            const currentYear = new Date().getFullYear();
+            const monthlyEarnings = Array(12).fill(0);
+            const monthLabels = ["Jan", "Feb", "Mar", "Apr", "Maj", "Jun", "Jul", "Avg", "Sep", "Okt", "Nov", "Dec"];
+
+            currentData.invoices.forEach(invoice => {
+                if (invoice.dateIssued && invoice.totalAmount) {
+                    const invoiceDate = new Date(invoice.dateIssued);
+                    if (invoiceDate.getFullYear() === currentYear) {
+                        const month = invoiceDate.getMonth(); // 0-11
+                        monthlyEarnings[month] += invoice.totalAmount;
+                    }
+                }
+            });
+
+            if (earningsChartInstance) {
+                earningsChartInstance.destroy();
+            }
+
+            earningsChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: monthLabels,
+                    datasets: [{
+                        label: `Zaslužek ${currentYear} (€)`,
+                        data: monthlyEarnings,
+                        backgroundColor: primaryColorBg,
+                        borderColor: primaryColor,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { 
+                            beginAtZero: true, 
+                            ticks: { callback: value => formatPriceForDisplay(value) + ' €' }
+                        }
+                    }
+                }
+            });
+        }
+
+        // --- Graf Top Partnerji ---
+        function renderTopPartnersChart() {
+            const currentData = AppStore.getData();
+            const canvas = document.getElementById('topPartnersChartCanvas');
+            const chartContainer = canvas?.parentElement;
+
+            if (!chartContainer) {
+                console.warn("Canvas za graf top partnerjev ali njegov ovoj ni najden.");
+                return;
+            }
+            // Odstrani morebitno obstoječe sporočilo "ni podatkov"
+            const existingNoDataMsg = chartContainer.querySelector('.chart-no-data-message, .chart-placeholder');
+            if (existingNoDataMsg) {
+                existingNoDataMsg.remove();
+            }
+
+            if (typeof Chart === 'undefined') {
+                console.error("Chart.js ni naložen. Graf top partnerjev ne more biti prikazan.");
+                if (canvas) canvas.style.display = 'none'; // Skrij originalni canvas, če obstaja
+                const errorMsg = document.createElement('p');
+                errorMsg.textContent = "Graf ni na voljo (napaka pri nalaganju knjižnice).";
+                errorMsg.className = 'chart-placeholder'; // Uporabi obstoječ ali nov stil
+                errorMsg.style.textAlign = 'center';
+                errorMsg.style.padding = '20px';
+                errorMsg.style.color = 'var(--barva-besedila-zavihka)';
+                errorMsg.style.height = '100%'; // Naj zavzame višino containerja
+                errorMsg.style.display = 'flex';
+                errorMsg.style.alignItems = 'center';
+                errorMsg.style.justifyContent = 'center';
+                chartContainer.appendChild(errorMsg);
+                return;
+            }
+
+            if (!canvas) { // Če canvas element sam ni bil najden
+                console.warn("Canvas element za graf top partnerjev ni najden.");
+                chartContainer.innerHTML = '<div class="chart-placeholder" style="height: 250px; display: flex; align-items: center; justify-content: center;">Element za graf (canvas) manjka.</div>';
+                return;
+            }
+
+            canvas.style.display = 'block'; // Zagotovi, da je canvas viden
+            const ctx = canvas.getContext('2d');
+
+            const partnerEarnings = {};
+            currentData.invoices.forEach(invoice => {
+                if (invoice.partnerId && typeof invoice.totalAmount === 'number') {
+                    partnerEarnings[invoice.partnerId] = (partnerEarnings[invoice.partnerId] || 0) + invoice.totalAmount;
+                }
+            });
+
+            const sortedPartners = Object.entries(partnerEarnings)
+                .map(([partnerId, total]) => ({ // currentData.partners namesto appData.partners
+                    partnerId,
+                    total,
+                    name: currentData.partners.find(p => p.id === partnerId)?.name || `Partner ID: ${partnerId.substring(0,8)}...`
+                }))
+                .sort((a, b) => b.total - a.total);
+
+            const topN = 5;
+            const topPartnersData = sortedPartners.slice(0, topN).filter(p => p.total > 0); // Pokaži samo partnerje z dejanskim prometom
+
+            if (topPartnersChartInstance) {
+                topPartnersChartInstance.destroy();
+                topPartnersChartInstance = null; 
+            }
+
+            if (topPartnersData.length === 0) {
+                canvas.style.display = 'none'; // Skrij canvas
+                const noDataMsg = document.createElement('p');
+                noDataMsg.textContent = "Ni podatkov za prikaz grafa top partnerjev (ni računov ali prometa).";
+                noDataMsg.className = 'chart-no-data-message';
+                noDataMsg.style.textAlign = 'center';
+                noDataMsg.style.padding = '20px';
+                noDataMsg.style.color = 'var(--barva-besedila-zavihka)';
+                noDataMsg.style.height = '100%';
+                noDataMsg.style.display = 'flex';
+                noDataMsg.style.alignItems = 'center';
+                noDataMsg.style.justifyContent = 'center';
+                chartContainer.appendChild(noDataMsg);
+                return;
+            }
+
+            const labels = topPartnersData.map(p => p.name);
+            const data = topPartnersData.map(p => p.total);
+
+            // Uporaba barv iz CSS spremenljivk za boljši videz
+            const themeColors = [
+                getCssVariable('--barva-kartice-modra-zacetek') || 'rgba(54, 162, 235, 1)',
+                getCssVariable('--barva-kartice-zelena-zacetek') || 'rgba(34, 197, 94, 1)',
+                getCssVariable('--barva-kartice-vijolicna-zacetek') || 'rgba(168, 85, 247, 1)',
+                getCssVariable('--barva-kartice-oranzna-zacetek') || 'rgba(249, 115, 22, 1)',
+                getCssVariable('--barva-fab-rumena') || 'rgba(234, 179, 8, 1)'
+            ];
+
+            const backgroundColors = themeColors; // Uporabi polne barve iz teme
+            const borderColors = themeColors;
+
+            topPartnersChartInstance = new Chart(ctx, {
+                type: 'bar', // Tip grafa ostane 'bar'
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Skupni promet (€)',
+                        data: data,
+                        backgroundColor: backgroundColors.slice(0, topPartnersData.length),
+                        borderColor: borderColors.slice(0, topPartnersData.length),
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    indexAxis: 'x', // Spremenjeno v 'x' za vertikalni stolpčni graf
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: { 
+                        x: { // X-os bo zdaj prikazovala imena partnerjev (kategorije)
+                            beginAtZero: true, 
+                            ticks: {
+                                callback: function(value, index, ticks) {
+                                    const originalLabel = labels[index]; // Dostop do originalnega imena iz arraya 'labels'
+                                    const maxLength = 25; // Omejitev na 25 znakov
+                                    if (originalLabel.length > maxLength) {
+                                        return originalLabel.substring(0, maxLength) + '...';
+                                    }
+                                    return originalLabel;
+                                }
+                            }
+                        },
+                        y: { // Y-os bo zdaj prikazovala zneske (vrednosti)
+                            beginAtZero: true, 
+                            ticks: { callback: value => formatPriceForDisplay(value) + ' €' } 
+                        }
+                    },
+                    plugins: { 
+                        legend: { 
+                            display: false 
+                        }, 
+                        title: { display: true, text: `Partnerji z največ prometa`, font: { size: 16 } } // Spremenjen naslov
+                    }
+                }
+            });
+        }
 
         // --- FAB Gumbi ---
         function setupFabButtons() {
@@ -2508,7 +3338,7 @@
             const fabDelete = document.getElementById('fabDelete');
 
             fabDownload?.addEventListener('click', () => {
-                const dataStr = JSON.stringify(appData, null, 2);
+                const dataStr = JSON.stringify(AppStore.getData(), null, 2); // Uporabi AppStore.getData()
                 const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
                 const exportFileDefaultName = `racunovodstvo_podatki_${new Date().toISOString().slice(0,10)}.json`;
                 
@@ -2529,12 +3359,8 @@
                         try {
                             const importedData = JSON.parse(e.target.result);
                             if (confirm("Ali ste prepričani, da želite naložiti te podatke? Obstoječi podatki bodo prepisani.")) {
-                                appData = importedData;
-                                appData.companyInfo = appData.companyInfo || {};
-                                appData.services = appData.services || [];
-                                appData.partners = appData.partners || [];
-                                appData.invoices = appData.invoices || [];
-                                saveDataToLocalStorage(); // Shrani preden osvežiš
+                                // appData = importedData; // To bo zdaj urejal AppStore
+                                AppStore.replaceAllData(importedData);
                                 window.location.reload(true); 
                             }
                         } catch (error) {
@@ -2551,8 +3377,8 @@
             fabDelete?.addEventListener('click', () => {
                 if (confirm("Ali ste prepričani, da želite izbrisati VSE podatke aplikacije? Tega dejanja ni mogoče razveljaviti.")) {
                     if (confirm("ZADNJE OPOZORILO: Res želite izbrisati vse podatke? Vsi računi, partnerji, storitve in nastavitve bodo trajno odstranjeni.")) {
-                        appData = { companies: [], services: [], partners: [], invoices: [] };
-                        saveDataToLocalStorage();
+                        // appData = { companies: [], services: [], partners: [], invoices: [] }; // To bo zdaj urejal AppStore
+                        AppStore.deleteAllData();
                         window.location.reload(true); 
                     }
                 }
@@ -2561,34 +3387,36 @@
 
         // --- Pomožne UI funkcije ---
         function updateDashboardCards() {
-            document.getElementById('dashboardInvoiceCount').textContent = appData.invoices.length;
-            const totalEarnings = appData.invoices.reduce((sum, inv) => sum + (inv.totalAmount || 0), 0);
-            document.getElementById('dashboardTotalEarnings').textContent = totalEarnings.toFixed(2) + ' €';
-            const avgInvoiceValue = appData.invoices.length > 0 ? (totalEarnings / appData.invoices.length) : 0;
-            document.getElementById('dashboardAverageInvoiceValue').textContent = `Povp. vrednost: ${avgInvoiceValue.toFixed(2)} €`;
+            const currentData = AppStore.getData();
+            document.getElementById('dashboardInvoiceCount').textContent = currentData.invoices.length;
+            const totalEarnings = currentData.invoices.reduce((sum, inv) => sum + (inv.totalAmount || 0), 0);
+            document.getElementById('dashboardTotalEarnings').textContent = formatPriceForDisplay(totalEarnings) + ' €';
+            const avgInvoiceValue = currentData.invoices.length > 0 ? (totalEarnings / currentData.invoices.length) : 0;
+            document.getElementById('dashboardAverageInvoiceValue').textContent = `Povp. vrednost: ${formatPriceForDisplay(avgInvoiceValue)} €`;
             
-            document.getElementById('dashboardPartnerCount').textContent = appData.partners.length;
-            document.getElementById('dashboardServiceCount').textContent = appData.services.length;
+            document.getElementById('dashboardPartnerCount').textContent = currentData.partners.length;
+            document.getElementById('dashboardServiceCount').textContent = currentData.services.length;
             
-            const lastInvoice = appData.invoices.length > 0 ? appData.invoices.sort((a,b) => new Date(b.dateIssued) - new Date(a.dateIssued))[0] : null;
+            const lastInvoice = currentData.invoices.length > 0 ? currentData.invoices.sort((a,b) => new Date(b.dateIssued) - new Date(a.dateIssued))[0] : null;
             document.getElementById('dashboardLastInvoiceDate').textContent = lastInvoice ? `Zadnji: ${new Date(lastInvoice.dateIssued).toLocaleDateString('sl-SI')}` : 'Ni izdanih računov';
         }
 
         function checkInitialWarnings() {
+            const currentData = AppStore.getData();
             const warningsContainer = document.getElementById('invoiceWarningsContainer');
             if (!warningsContainer) return;
             warningsContainer.innerHTML = ''; 
 
             let needsSetup = false;
-            if (appData.companies.length === 0 || !appData.companies[0]?.companyName) {
+            if (currentData.companies.length === 0 || !currentData.companies[0]?.companyName) {
                 addWarning(warningsContainer, 'Pred ustvarjanjem računov morate vnesti podatke vsaj enega vašega podjetja v zavihku "Moja podjetja".');
                 needsSetup = true;
             }
-            if (appData.partners.length === 0) {
+            if (currentData.partners.length === 0) {
                 addWarning(warningsContainer, 'Pred ustvarjanjem računov morate dodati vsaj eno partnersko podjetje.');
                 needsSetup = true;
             }
-            if (appData.services.length === 0) {
+            if (currentData.services.length === 0) {
                 addWarning(warningsContainer, 'Pred ustvarjanjem računov morate dodati vsaj eno storitev.');
                 needsSetup = true;
             }
@@ -2602,6 +3430,319 @@
             container.appendChild(warningDiv);
         }
 
+        // --- Pomožne funkcije za PDF ---
+        function formatDateForPdf(dateStr) {
+            if (!dateStr) return 'N/A';
+            const date = new Date(dateStr);
+            if (isNaN(date.getTime())) return 'N/A';
+            return `${date.getDate().toString().padStart(2, '0')}.${(date.getMonth() + 1).toString().padStart(2, '0')}.${date.getFullYear()}`;
+        }
+
+        // --- Pomožne funkcije za generiranje delov PDF vsebine ---
+        function _getPdfHeaderContent(myCompany, invoice) {
+            return {
+                columns: [
+                    {
+                        width: '*',
+                        stack: [
+                            { text: 'Izvajalec storitev:', style: 'subheader'},
+                            { text: myCompany.companyName || '', style: 'companyName'},
+                            myCompany.address || '',
+                            `${myCompany.postalCode || ''} ${myCompany.city || ''}`,
+                            `Davčna št.: ${myCompany.taxNumber || ''}`,
+                            `Matična št.: ${myCompany.registrationNumber || ''}`,
+                            `TRR: ${myCompany.iban || ''}`,
+                            myCompany.bic ? `BIC/SWIFT: ${myCompany.bic}` : '',
+                        ],
+                    },
+                    {
+                        width: 'auto',
+                        stack: [
+                            { text: 'RAČUN', style: 'invoiceTitle', alignment: 'right' },
+                            { text: `Številka računa: ${invoice.number || 'N/A'}`, alignment: 'right' },
+                            { text: `Datum izdaje: ${formatDateForPdf(invoice.dateIssued)}`, alignment: 'right' },
+                            (invoice.singleDayService && invoice.servicePeriodStart)
+                                ? { text: `Datum opr. storitve: ${formatDateForPdf(invoice.servicePeriodStart)}`, alignment: 'right' }
+                                : (invoice.servicePeriodStart && invoice.servicePeriodEnd)
+                                    ? { text: `Datum opr. storitve: ${formatDateForPdf(invoice.servicePeriodStart)} - ${formatDateForPdf(invoice.servicePeriodEnd)}`, alignment: 'right' }
+                                    : invoice.servicePeriodStart
+                                        ? { text: `Datum opr. storitve: ${formatDateForPdf(invoice.servicePeriodStart)}`, alignment: 'right' }
+                                        : { text: '', alignment: 'right'},
+                            { text: `Datum zapadlosti: ${formatDateForPdf(invoice.dateDue)}`, alignment: 'right' },
+                        ],
+                    }
+                ],
+                marginBottom: 20
+            };
+        }
+        function _getPdfPartnerContent(partner) {
+            return {
+                stack: [ { text: 'Plačnik:', style: 'subheader' }, partner.name || '', partner.address || '', `${partner.postalCode || ''} ${partner.city || ''}, ${partner.country || ''}`, partner.taxNumber ? `Davčna številka: ${partner.taxNumber}` : '' ],
+                marginBottom: 10
+            };
+        }
+        function _getPdfItemsTable(invoiceItems, services) {
+            return {
+                style: 'itemsTable',
+                table: {
+                    headerRows: 1,
+                    widths: ['auto', '*', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
+                    body: [
+                        [ { text: '#', style: 'tableHeader' }, { text: 'Opis', style: 'tableHeader' }, { text: 'Kol.', style: 'tableHeader', alignment: 'right' }, { text: 'Enota', style: 'tableHeader' }, { text: 'Cena/en. (€)', style: 'tableHeader', alignment: 'right' }, { text: 'DDV (%)', style: 'tableHeader', alignment: 'right' }, { text: 'Neto (€)', style: 'tableHeader', alignment: 'right' }, { text: 'DDV (€)', style: 'tableHeader', alignment: 'right' }, { text: 'Bruto (€)', style: 'tableHeader', alignment: 'right' } ],
+                        ...(invoiceItems || []).map((item, index) => {
+                            const service = services.find(s => s.id === item.serviceId);
+                            const neto = (item.quantity || 0) * (item.unitPrice || 0);
+                            const ddvAmount = neto * ((item.taxRate || 0) / 100);
+                            const bruto = neto + ddvAmount;
+                            return [ index + 1, item.description || (service ? service.name : ''), { text: item.quantity || 0, alignment: 'right' }, item.unit || (service ? service.unit : ''), { text: formatPriceForPdfTable(item.unitPrice || 0), alignment: 'right' }, { text: formatPriceForPdfTable(item.taxRate || 0), alignment: 'right' }, { text: formatPriceForPdfTable(neto), alignment: 'right' }, { text: formatPriceForPdfTable(ddvAmount), alignment: 'right' }, { text: formatPriceForPdfTable(bruto), alignment: 'right' } ];
+                        })
+                    ]
+                },
+                layout: { hLineWidth: function (i, node) { return (i === 0 || i === node.table.body.length || i === 1) ? 1 : 0.5; }, vLineWidth: function (i, node) { return 0; } }
+            };
+        }
+        function _getPdfSummaryContent(invoiceItems) {
+            if (!invoiceItems || invoiceItems.length === 0) return { text: '' };
+            let totalNet = 0;
+            let totalVatAmount = 0;
+            let vatSummary = {};
+            invoiceItems.forEach(item => {
+                const neto = (item.quantity || 0) * (item.unitPrice || 0);
+                const taxRate = item.taxRate || 0;
+                const ddvAmount = neto * (taxRate / 100);
+                totalNet += neto;
+                totalVatAmount += ddvAmount;
+                if (taxRate > 0) {
+                    if (!vatSummary[taxRate]) vatSummary[taxRate] = { base: 0, amount: 0 };
+                    vatSummary[taxRate].base += neto;
+                    vatSummary[taxRate].amount += ddvAmount;
+                }
+            });
+            const summaryTableBody = [
+                [ { text: 'Skupaj brez DDV:', style: 'summaryLabel', border: [false, false, false, false] }, { text: `${formatPriceForPdfTable(totalNet)} EUR`, style: 'summaryValue', alignment: 'right', border: [false, false, false, false] } ]
+            ];
+            Object.keys(vatSummary).sort((a,b) => a - b).forEach(rate => {
+                summaryTableBody.push([ { text: `DDV (${formatPriceForPdfTable(parseFloat(rate))}%):`, style: 'summaryLabel', border: [false, false, false, false] }, { text: `${formatPriceForPdfTable(vatSummary[rate].amount)} EUR`, style: 'summaryValue', alignment: 'right', border: [false, false, false, false] } ]);
+            });
+            if (Object.keys(vatSummary).length === 0 && totalVatAmount === 0 && totalNet > 0) {
+                 summaryTableBody.push([ { text: `DDV (0%):`, style: 'summaryLabel', border: [false, false, false, false] }, { text: `${formatPriceForPdfTable(0)} EUR`, style: 'summaryValue', alignment: 'right', border: [false, false, false, false] } ]);
+            }
+            summaryTableBody.push([ { text: 'Skupaj za plačilo:', style: 'summaryLabelTotal', bold: true, border: [false, true, false, false], paddingTop: 5 }, { text: `${formatPriceForPdfTable(totalNet + totalVatAmount)} EUR`, style: 'summaryValueTotal', bold: true, alignment: 'right', border: [false, true, false, false], paddingTop: 5 } ]);
+            return {
+                table: { body: summaryTableBody, widths: ['*', 'auto'] },
+                margin: [0, 20, 0, 10]
+            };
+        }
+        function _getPdfFooterContent(myCompany, invoice, qrCodeDataUrl) {
+            let signatureStack = [];
+            if (myCompany.signatoryName) {
+                signatureStack.push({ text: myCompany.signatoryName, alignment: 'center', style: 'signatoryNameStyle', margin: [0, (myCompany.invoiceFooterText ? 5 : 15), 0, 2] }); // Dodan odmik zgoraj, manjši če je opomba
+            }
+            if (myCompany.signatureImage) {
+                signatureStack.push({
+                    image: myCompany.signatureImage,
+                    fit: [120, 60], // Malo povečano za boljši prikaz
+                    alignment: 'center'
+                    // margin: [0, 2, 0, 0] // Odmik nad sliko, če je ime podpisnika zgoraj
+                });
+            }
+            let vatClause = '';
+            if (myCompany.isVatPayer === false) { // Preveri, ali podjetje (izdajatelj) NI zavezanec za DDV
+                vatClause = 'DDV ni obračunan v skladu s 1. odstavkom 94. člena ZDDV-1 (nismo zavezanci za DDV).'; // Klavzula za ne-zavezance
+            }
+
+            return {
+                stack: [
+                    (qrCodeDataUrl ? { image: qrCodeDataUrl, width: 100, alignment: 'center', margin: [0, 15, 0, 15] } : {text: ''}), // Povečano, centrirano, večji margin
+                    vatClause,
+                    { text: `Pri plačilu se sklicujte na številko: SI00 ${invoice.number ? invoice.number.replace(/-/g, '').replace(/^(\d{4})(\d{2})(\d{2})(\d+)/, '$1$2$3-$4') : 'N/A'}.`},
+                    { text: 'Prosimo, da račun poravnate do roka plačila.', marginTop: 5, marginBottom: (myCompany.invoiceFooterText || myCompany.signatoryName || myCompany.signatureImage) ? 5 : 0 }, // Dodan marginBottom, če sledi še kaj
+                    (myCompany.invoiceFooterText ? { text: myCompany.invoiceFooterText, style: 'customFooterText', marginTop: 5, marginBottom: (myCompany.signatoryName || myCompany.signatureImage) ? 5 : 0 } : {text: ''}), // Prilagojen margin
+                    ...signatureStack // Podpis je zdaj na koncu, pod opombami
+                ],
+                fontSize: 10,
+                margin: [0, 20, 0, 0]
+            };
+        }
+        function _getPdfStyles() {
+            return {
+                companyName: { fontSize: 10, marginBottom: 0 },
+                invoiceTitle: { fontSize: 20, bold: true, marginBottom: 5 },
+                subheader: { fontSize: 10, bold: true, marginBottom: 2 },
+                itemsTable: { margin: [0, 5, 0, 15], fontSize: 9 },
+                tableHeader: { bold: true, fontSize: 10, fillColor: '#eeeeee' },
+                summaryLabel: { fontSize: 10, margin: [0, 2, 0, 2] },
+                summaryValue: { fontSize: 10, margin: [0, 2, 0, 2] },
+                summaryLabelTotal: { fontSize: 11, bold: true, margin: [0, 5, 0, 2] },
+                summaryValueTotal: { fontSize: 11, bold: true, margin: [0, 5, 0, 2] },
+                customFooterText: { fontSize: 9, italics: true, alignment: 'center', color: '#555555' },
+                footer: { fontSize: 8, italics: true },
+                signatoryNameStyle: { fontSize: 10, alignment: 'center' } // Nov stil za ime podpisnika
+            };
+        }
+        function _getPdfDefaultStyle() {
+            return { font: 'Roboto', fontSize: 10, lineHeight: 1.2 };
+        }
+        function _getPdfPageFooter() {
+            return function(currentPage, pageCount) {
+                return { text: `Stran ${currentPage.toString()} od ${pageCount}`, alignment: 'center', fontSize: 8, margin: [0, 10, 0, 0] };
+            };
+        }
+
+        function formatPriceForPdfTable(number) { // Za uporabo v tabeli, kjer želimo vejico
+            if (typeof number !== 'number' || isNaN(number)) {
+                return '0,00';
+            }
+            return number.toFixed(2).replace('.', ',');
+        }
+
+        // --- Pomožne funkcije za UPN QR kodo ---
+        function sanitizeUpnString(str, maxLength) {
+            if (typeof str !== 'string') str = String(str || '');
+            str = str.replace(/(\r\n|\n|\r)/gm, " "); // Odstrani nove vrstice
+            if (str.length > maxLength) {
+                return str.substring(0, maxLength);
+            }
+            return str;
+        }
+
+        function generateQrCodeDataURL(textToEncode, size = 128, errorCorrectionLevel = 'M') { // Za kjua: L, M, Q, H
+            return new Promise((resolve, reject) => {
+                try {
+                    const el = kjua({
+                        text: textToEncode,
+                        render: 'canvas',
+                        size: size,
+                        crisp: true,
+                        ecLevel: errorCorrectionLevel,
+                        fill: '#000000',
+                        back: '#ffffff',
+                        quiet: 1 // Tiha cona okoli QR kode (1 modul)
+                    });
+                    // kjua vrne DOM element (v tem primeru canvas)
+                    if (el && el.tagName === 'CANVAS') {
+                        resolve(el.toDataURL('image/png'));
+                    } else {
+                        reject(new Error('kjua ni vrnil canvas elementa.'));
+                    }
+                } catch (error) {
+                    reject(error);
+                }
+            });
+        }
+
+        // --- Generiranje PDF Računa ---
+        // Zamenjaj celotno obstoječo funkcijo generateInvoicePDF s to novo:
+        async function generateInvoicePDF(invoiceId) { // Funkcija je zdaj asinhrona
+            const currentData = AppStore.getData();
+            const invoice = currentData.invoices.find(inv => inv.id === invoiceId);
+            console.log('Začenjam generiranje PDF za račun ID:', invoiceId, 'Podatki računa:', invoice);
+
+            if (!invoice) {
+                showToast('Račun ni najden.', 'error');
+                return;
+            }
+            // Uporabi currentData za iskanje podjetja in partnerja
+            const myCompany = currentData.companies.find(c => c.id === invoice.myCompanyId);
+            const partner = currentData.partners.find(p => p.id === invoice.partnerId);
+            console.log('Podatki podjetja:', myCompany, 'Podatki partnerja:', partner);
+
+            if (!myCompany) {
+                showToast('Podatki o vašem podjetju za ta račun niso najdeni.', 'error');
+                return;
+            }
+            if (!partner) {
+                showToast('Podatki o partnerju za ta račun niso najdeni.', 'error');
+                return;
+            }
+
+            // --- Priprava podatkov za UPN QR kodo ---
+            let qrCodeDataUrl = null;
+            try {
+                // Standardna UPN QR koda zahteva specifičen vrstni red in predpono.
+                // Polja za plačnika so opcijska v QR kodi, saj jih izpolni aplikacija plačnika.
+                const upnData = [
+                    // Vrstica 1: IBAN plačnika (opcijsko)
+                    sanitizeUpnString(partner?.iban?.replace(/\s/g, '') || '', 34),
+                    // Vrstica 2: Polog (opcijsko)
+                    '',
+                    // Vrstica 3: Dvig (opcijsko)
+                    '',
+                    // Vrstica 4: Referenca plačnika (opcijsko)
+                    sanitizeUpnString('', 26), // Prilagodite, če imate referenco plačnika
+                    // Vrstica 5: Naziv plačnika (opcijsko)
+                    sanitizeUpnString(partner?.name || '', 33),
+                    // Vrstica 6: Naslov plačnika (opcijsko)
+                    sanitizeUpnString(partner?.address || '', 33),
+                    // Vrstica 7: Kraj plačnika (opcijsko)
+                    sanitizeUpnString(partner?.city ? `${partner.postalCode || ''} ${partner.city}`.trim() : '', 33), // Ta popravek je bil že predlagan in je dober
+                    // Vrstica 8: Znesek (OBVEZNO, format #.##)
+                    String(Math.round((invoice.totalAmount || 0) * 100)).padStart(11, '0').slice(-11), // Znesek v centih, dopolnjen z ničlami in omejen na 11 znakov
+                    // Vrstica 9: Datum plačila (opcijsko, DD.MM.LLLL)
+                    '', // Lahko tudi formatDateForPdf(invoice.dateDue)
+                    // Vrstica 10: Nujno (opcijsko, "DA" če nujno)
+                    '',
+                    // Vrstica 11: Koda namena (OBVEZNO)
+                    sanitizeUpnString('COST', 4), // Ali druga ustrezna koda, npr. GDSV
+                    // Vrstica 12: Namen plačila (OBVEZNO)
+                    sanitizeUpnString(`Plačilo računa št. ${invoice.number || 'N/A'}`, 42),
+                    // Vrstica 13: Rok plačila (OBVEZNO, DD.MM.LLLL)
+                    formatDateForPdf(invoice.dateDue),
+                    // Vrstica 14: IBAN prejemnika (OBVEZNO)
+                    myCompany.iban.replace(/\s/g, ''),
+                    // Vrstica 15: Referenca prejemnika (OBVEZNO)
+                    sanitizeUpnString(`SI00${(invoice.number || '').replace(/-/g, '')}`, 26),
+                    // Vrstica 16: Naziv prejemnika (OBVEZNO)
+                    sanitizeUpnString(myCompany.companyName, 33),
+                    // Vrstica 17: Naslov prejemnika (OBVEZNO)
+                    sanitizeUpnString(myCompany.address, 33),
+                    // Vrstica 18: Kraj prejemnika (OBVEZNO)
+                    sanitizeUpnString(`${myCompany.postalCode || ''} ${myCompany.city || ''}`, 33)
+                ];
+                // QR koda se mora začeti z "UPNQR\n"
+                const upnStringForQr = "UPNQR\n" + upnData.join('\n');
+                console.log("UPN niz za QR kodo:\n", upnStringForQr);
+
+                // Povečana velikost za boljšo resolucijo generirane slike in eksplicitna nastavitev errorCorrectionLevel
+                qrCodeDataUrl = await generateQrCodeDataURL(upnStringForQr, 600, 'H'); // Za kjua: 'L', 'M', 'Q', 'H'. Začnimo z 'M'.
+                console.log("QR koda data URL generiran.");
+            } catch (e) {
+                console.error("Napaka pri generiranju QR kode za PDF:", e);
+                showToast("Napaka pri pripravi QR kode. PDF bo generiran brez nje.", "error");
+            }
+
+            // --- Pomožne funkcije za formatiranje (če še niso definirane globalno) ---
+            // function formatDateForPdf(dateStr) { ... }
+            // function formatPriceForPdfTable(number) { ... }
+            // Te so že definirane globalno v vaši kodi, zato jih tukaj ne ponavljam.
+
+
+            // Definicija dokumenta za PDFMake
+            const docDefinition = {
+                content: [
+                    _getPdfHeaderContent(myCompany, invoice),
+                    _getPdfPartnerContent(partner),
+                    _getPdfItemsTable(invoice.items, currentData.services), // Uporabi currentData.services
+                    _getPdfSummaryContent(invoice.items),
+                    _getPdfFooterContent(myCompany, invoice, qrCodeDataUrl)
+                ],
+                styles: _getPdfStyles(),
+                defaultStyle: _getPdfDefaultStyle(),
+                footer: _getPdfPageFooter()
+            };
+
+            console.log('Definicija dokumenta za PDFMake:', JSON.stringify(docDefinition, null, 2));
+
+            // Generiranje in odpiranje PDF-ja
+            try {
+                // pdfMake.createPdf(docDefinition).open(); // Lahko blokirajo popup blockerji
+                pdfMake.createPdf(docDefinition).download(`racun-${invoice.number || 'NOGET'}.pdf`); // Alternativa: neposreden prenos
+                showToast('PDF račun generiran z PDFMake!');
+            } catch (e) {
+                console.error('Napaka pri generiranju PDF z PDFMake:', e);
+                showToast('Napaka pri generiranju PDF: ' + e.message, 'error');
+            }
+        }
     </script>
 
 </body>
