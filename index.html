@@ -903,11 +903,47 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 1rem;
-            padding: 1.5rem;
-            background-color: #f9fafb; /* Svetlo sivo ozadje */
-            border: 1px solid #e5e7eb; /* Svetla obroba */
-            border-radius: 6px;
+            padding: 1.5rem; /* Padding ostane znotraj */
+            /* Ostale lastnosti so premaknjene na .collapsible-section */
+        }
+
+        /* Collapsible Sections (za filtre) */
+        .collapsible-section {
             margin-bottom: 1.5rem;
+            border: 1px solid var(--barva-tabele-obroba-vrstice);
+            border-radius: 6px;
+            background-color: var(--barva-tabele-glava-ozadje);
+            overflow: hidden; /* Da se border-radius pravilno prikaže */
+        }
+
+        .collapsible-trigger {
+            width: 100%;
+            background-color: transparent;
+            border: none;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--barva-besedila-zavihka);
+            transition: background-color 0.2s;
+        }
+
+        .collapsible-trigger:hover {
+            background-color: #f3f4f6;
+        }
+
+        .collapsible-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+            border-top: 1px solid transparent;
         }
 
         .invoice-filters-container .form-group {
@@ -919,12 +955,29 @@
             font-weight: 500;
         }
 
+        .collapsible-section.expanded .collapsible-icon {
+            transform: rotate(180deg);
+        }
+
+        .collapsible-section.expanded .collapsible-content {
+            max-height: 1000px; /* Dovolj velika vrednost */
+            transition: max-height 0.5s ease-in;
+            border-top-color: var(--barva-tabele-obroba-vrstice);
+        }
+
         .invoice-filter-actions {
             grid-column: 1 / -1; /* Gumbi naj se raztezajo čez celotno širino */
             display: flex;
             justify-content: flex-end;
             gap: 0.75rem;
             margin-top: 0.5rem;
+        }
+
+        .invoice-filter-row {
+            grid-column: 1 / -1; /* Raztegni čez vse stolpce */
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Dva enaka stolpca znotraj vrstice */
+            gap: 1rem; /* Enak razmak kot v glavnem kontejnerju */
         }
 
         .status-badge:hover {
@@ -1120,52 +1173,66 @@
                         </button>
                     </div>
                     
-                    <!-- Sekcija za filtriranje -->
-                    <div class="invoice-filters-container">
-                        <div class="form-group">
-                            <label for="filterSearchTerm">Išči (št. računa, plačnik...)</label>
-                            <input type="text" id="filterSearchTerm" placeholder="Vnesi iskalni niz...">
-                        </div>
-                        <div class="form-group">
-                            <label for="filterPartner">Plačnik</label>
-                            <select id="filterPartner">
-                                <!-- Dinamično polnjeno -->
-                            </select>
-                        </div>
-                         <div class="form-group">
-                            <label for="filterStatus">Status</label>
-                            <select id="filterStatus">
-                                <option value="">Vsi statusi</option>
-                                <option value="paid">Plačano</option>
-                                <option value="unpaid">Neplačano</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="filterDateFrom">Datum izdaje od</label>
-                            <input type="date" id="filterDateFrom">
-                        </div>
-                        <div class="form-group">
-                            <label for="filterDateTo">Datum izdaje do</label>
-                            <input type="date" id="filterDateTo">
-                        </div>
-                        <div class="form-group">
-                            <label for="filterNetFrom">Neto od (€)</label>
-                            <input type="number" id="filterNetFrom" placeholder="0.00" step="0.01" min="0">
-                        </div>
-                        <div class="form-group">
-                            <label for="filterNetTo">Neto do (€)</label>
-                            <input type="number" id="filterNetTo" placeholder="1000.00" step="0.01" min="0">
-                        </div>
-                        <div class="form-group">
-                            <label for="filterGrossFrom">Bruto od (€)</label>
-                            <input type="number" id="filterGrossFrom" placeholder="0.00" step="0.01" min="0">
-                        </div>
-                        <div class="form-group">
-                            <label for="filterGrossTo">Bruto do (€)</label>
-                            <input type="number" id="filterGrossTo" placeholder="1220.00" step="0.01" min="0">
-                        </div>
-                        <div class="invoice-filter-actions">
-                            <button id="resetFiltersBtn" class="button button-cancel"><i class="fas fa-undo"></i> Počisti filtre</button>
+                    <!-- Collapsible Filter Section -->
+                    <div class="collapsible-section" id="invoiceFilterCollapsible">
+                        <button class="collapsible-trigger" aria-expanded="false" aria-controls="invoiceFiltersContent">
+                            <span>Filtriranje računov</span>
+                            <i class="fas fa-chevron-down collapsible-icon"></i>
+                        </button>
+                        <div class="collapsible-content" id="invoiceFiltersContent" aria-hidden="true">
+                            <div class="invoice-filters-container">
+                                <div class="form-group">
+                                    <label for="filterSearchTerm">Išči (št. računa, plačnik...)</label>
+                                    <input type="text" id="filterSearchTerm" placeholder="Vnesi iskalni niz...">
+                                </div>
+                                <div class="form-group">
+                                    <label for="filterPartner">Plačnik</label>
+                                    <select id="filterPartner">
+                                        <!-- Dinamično polnjeno -->
+                                    </select>
+                                </div>
+                                 <div class="form-group">
+                                    <label for="filterStatus">Status</label>
+                                    <select id="filterStatus">
+                                        <option value="">Vsi statusi</option>
+                                        <option value="paid">Plačano</option>
+                                        <option value="unpaid">Neplačano</option>
+                                    </select>
+                                </div>
+                                <div class="invoice-filter-row">
+                                    <div class="form-group">
+                                        <label for="filterDateFrom">Datum izdaje od</label>
+                                        <input type="date" id="filterDateFrom">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="filterDateTo">Datum izdaje do</label>
+                                        <input type="date" id="filterDateTo">
+                                    </div>
+                                </div>
+                                <div class="invoice-filter-row">
+                                    <div class="form-group">
+                                        <label for="filterNetFrom">Neto od (€)</label>
+                                        <input type="number" id="filterNetFrom" placeholder="0.00" step="0.01" min="0">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="filterNetTo">Neto do (€)</label>
+                                        <input type="number" id="filterNetTo" placeholder="1000.00" step="0.01" min="0">
+                                    </div>
+                                </div>
+                                <div class="invoice-filter-row">
+                                    <div class="form-group">
+                                        <label for="filterGrossFrom">Bruto od (€)</label>
+                                        <input type="number" id="filterGrossFrom" placeholder="0.00" step="0.01" min="0">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="filterGrossTo">Bruto do (€)</label>
+                                        <input type="number" id="filterGrossTo" placeholder="1000.00" step="0.01" min="0">
+                                    </div>
+                                </div>
+                                <div class="invoice-filter-actions">
+                                    <button id="resetFiltersBtn" class="button button-cancel"><i class="fas fa-undo"></i> Počisti filtre</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -1418,8 +1485,13 @@
                 deletePartner: function(id) { _appData.partners = _appData.partners.filter(p => p.id !== id); _saveAndRefresh(); },
                 // Metode za upravljanje z računi
                 addInvoice: function(invoiceData) {
-                    invoiceData.number = InvoiceManager.generateInvoiceNumber(invoiceData.dateIssued, _appData.invoices); // Uporabi InvoiceManager
-                    _appData.invoices.push({ ...invoiceData, id: Utils.generateUniqueId('invoice_') });
+                    const newInvoice = {
+                        ...invoiceData,
+                        id: Utils.generateUniqueId('invoice_'),
+                        number: InvoiceManager.generateInvoiceNumber(invoiceData.dateIssued, _appData.invoices),
+                        status: 'unpaid' // Eksplicitno nastavi status na 'unpaid'
+                    };
+                    _appData.invoices.push(newInvoice);
                     _saveAndRefresh(); 
                 },
                 updateInvoice: function(id, updatedData) { const index = _appData.invoices.findIndex(i => i.id === id); if (index > -1) { const oldNum = _appData.invoices[index].number; _appData.invoices[index] = { ..._appData.invoices[index], ...updatedData, number: oldNum }; } _saveAndRefresh(); },
@@ -1836,7 +1908,7 @@
                 });
                 return form;
             }
-            return { buildForm };
+            return { buildForm, createField };
         })();
 
         // --- Upravljanje Toast sporočil (ToastManager) ---
@@ -2388,16 +2460,17 @@
                 // 2. Handle the special case for "custom unit"
                 const unitSelect = formElement.querySelector('#serviceUnit');
                 const customUnitConfig = { id: 'serviceCustomUnit', name: 'customUnit', errorId: 'serviceCustomUnitError', required: true, label: 'Enota po meri' };
-                const customUnitField = FormBuilder.createField(customUnitConfig, null);
-                const customUnitInput = customUnitField.querySelector('input');
+                const customUnitFragment = FormBuilder.createField(customUnitConfig, null);
+                const customUnitGroup = customUnitFragment.querySelector('.form-group'); // Get the actual div
+                const customUnitInput = customUnitGroup.querySelector('input'); // Get the input from the div
                 
                 // Hide it initially and insert it after the unit select's form-group
-                customUnitField.style.display = 'none';
-                unitSelect.closest('.form-group').after(customUnitField);
+                customUnitGroup.style.display = 'none';
+                unitSelect.closest('.form-group').after(customUnitGroup);
 
                 // Add logic to show/hide the custom field
                 unitSelect.addEventListener('change', () => {
-                    customUnitField.style.display = unitSelect.value === 'custom' ? 'block' : 'none';
+                    customUnitGroup.style.display = unitSelect.value === 'custom' ? 'block' : 'none';
                 });
 
                 // Set initial state if editing
@@ -2406,7 +2479,7 @@
                     if (!isStandardUnit) {
                         unitSelect.value = 'custom';
                         customUnitInput.value = serviceToEdit.unit;
-                        customUnitField.style.display = 'block';
+                        customUnitGroup.style.display = 'block';
                     } else {
                         unitSelect.value = serviceToEdit.unit;
                     }
@@ -2438,16 +2511,22 @@
                         isFormValid = false;
                     }
                 });
-        
+
+                // Dodatna, bolj integrirana validacija za polje "Enota po meri"
+                const unitSelect = form.elements.unit;
+                if (unitSelect && unitSelect.value === 'custom') {
+                    const customUnitInput = form.elements.customUnit;
+                    const customUnitErrorEl = document.getElementById('serviceCustomUnitError');
+                    const customUnitConfig = { id: 'serviceCustomUnit', name: 'customUnit', errorId: 'serviceCustomUnitError', required: true, label: 'Enota po meri' };
+                    if (!ValidationUtils.validateField(customUnitInput, customUnitErrorEl, customUnitConfig)) {
+                        isFormValid = false;
+                    }
+                }
+
                 if (isFormValid) {
                     let unitValue = form.elements.unit.value;
                     if (unitValue === 'custom') {
                         unitValue = form.elements.customUnit.value.trim();
-                        if (unitValue === '') {
-                            ValidationUtils.validateField(form.elements.customUnit, form.querySelector('#serviceCustomUnitError'), {label: 'Enota po meri', required: true});
-                            ToastManager.showToast('Vnesite enoto po meri ali izberite standardno.', 'error');
-                            return;
-                        }
                     }
                     const parsedPrice = Utils.parsePriceFromInput(form.elements.price.value);
                     if (isNaN(parsedPrice)) {
@@ -3780,7 +3859,7 @@
             summaryTableBody.push([ { text: 'Skupaj za plačilo:', style: 'summaryLabelTotal', bold: true, border: [false, true, false, false], paddingTop: 5 }, { text: `${formatPriceForPdfTable(totalNet + totalVatAmount)} EUR`, style: 'summaryValueTotal', bold: true, alignment: 'right', border: [false, true, false, false], paddingTop: 5 } ]);
             return {
                 table: { body: summaryTableBody, widths: ['*', 'auto'] },
-                margin: [0, 20, 0, 10]
+                margin: [0, 10, 0, 0]
             };
             }
             function _getPdfFooterContent(myCompany, invoice, qrCodeDataUrl) {
@@ -3791,7 +3870,7 @@
             if (myCompany.signatureImage) {
                 signatureStack.push({
                     image: myCompany.signatureImage,
-                    fit: [120, 60], // Malo povečano za boljši prikaz
+                    fit: [80, 40], // Malo povečano za boljši prikaz
                     alignment: 'center'
                     // margin: [0, 2, 0, 0] // Odmik nad sliko, če je ime podpisnika zgoraj
                 });
@@ -3803,7 +3882,7 @@
 
             return {
                 stack: [
-                    (qrCodeDataUrl ? { image: qrCodeDataUrl, width: 100, alignment: 'center', margin: [0, 15, 0, 15] } : {text: ''}), // Povečano, centrirano, večji margin
+                    (qrCodeDataUrl ? { image: qrCodeDataUrl, width: 120, alignment: 'center', margin: [0, 5, 0, 5] } : {text: ''}), // Povečano, centrirano, večji margin
                     vatClause,
                     { text: `Pri plačilu se sklicujte na številko: SI00 ${invoice.number ? invoice.number.replace(/-/g, '').replace(/^(\d{4})(\d{2})(\d{2})(\d+)/, '$1$2$3-$4') : 'N/A'}.`},
                     { text: 'Prosimo, da račun poravnate do roka plačila.', marginTop: 5, marginBottom: (myCompany.invoiceFooterText || myCompany.signatoryName || myCompany.signatureImage) ? 5 : 0 }, // Dodan marginBottom, če sledi še kaj
@@ -3811,7 +3890,7 @@
                     ...signatureStack // Podpis je zdaj na koncu, pod opombami
                 ],
                 fontSize: 10,
-                margin: [0, 20, 0, 0]
+                margin: [0, 5, 0, 5]
             };
             }
             function _getPdfStyles() {
@@ -4010,6 +4089,21 @@
                 });
             }
 
+            function setupCollapsibles() {
+                const collapsibleTriggers = document.querySelectorAll('.collapsible-trigger');
+                collapsibleTriggers.forEach(trigger => {
+                    trigger.addEventListener('click', function() {
+                        const section = this.closest('.collapsible-section');
+                        const content = this.nextElementSibling; // Predpostavka, da je vsebina takoj za sprožilcem
+                        const isExpanded = this.getAttribute('aria-expanded') === 'true';
+
+                        this.setAttribute('aria-expanded', !isExpanded);
+                        content.setAttribute('aria-hidden', isExpanded);
+                        section.classList.toggle('expanded');
+                    });
+                });
+            }
+
             setupTabs();
             
             AppStore.loadInitialData(); 
@@ -4020,6 +4114,7 @@
             InvoiceManager.setupInvoiceFilters();
             DashboardManager.setupFabButtons();
             DashboardManager.setupDashboardActions();
+            setupCollapsibles();
             
             refreshAllUI();
         });
