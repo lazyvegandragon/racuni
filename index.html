@@ -956,6 +956,29 @@
             white-space: nowrap; /* Prepreči prelom vrstic, nujno za ellipsis */
         }
 
+        /* Stili za paginacijo */
+        .pagination-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            margin-top: 1rem;
+            border-top: 1px solid var(--barva-tabele-obroba-vrstice);
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .pagination-info {
+            font-size: 0.9rem;
+            color: var(--barva-besedila-zavihka);
+        }
+        .pagination-buttons {
+            display: flex;
+            gap: 0.25rem;
+        }
+        .pagination-buttons .button.active {
+            background-color: var(--barva-gumba-primarni-hover);
+        }
+
     </style>
 </head>
 <body>
@@ -1100,8 +1123,8 @@
                     <!-- Sekcija za filtriranje -->
                     <div class="invoice-filters-container">
                         <div class="form-group">
-                            <label for="filterInvoiceNumber">Št. računa</label>
-                            <input type="text" id="filterInvoiceNumber" placeholder="Išči po številki...">
+                            <label for="filterSearchTerm">Išči (št. računa, plačnik...)</label>
+                            <input type="text" id="filterSearchTerm" placeholder="Vnesi iskalni niz...">
                         </div>
                         <div class="form-group">
                             <label for="filterPartner">Plačnik</label>
@@ -1142,8 +1165,7 @@
                             <input type="number" id="filterGrossTo" placeholder="1220.00" step="0.01" min="0">
                         </div>
                         <div class="invoice-filter-actions">
-                            <button id="applyFiltersBtn" class="button button-primary"><i class="fas fa-filter"></i> Filtriraj</button>
-                            <button id="resetFiltersBtn" class="button button-cancel"><i class="fas fa-undo"></i> Ponastavi</button>
+                            <button id="resetFiltersBtn" class="button button-cancel"><i class="fas fa-undo"></i> Počisti filtre</button>
                         </div>
                     </div>
 
@@ -1174,6 +1196,9 @@
                             <i class="fas fa-file-invoice-dollar"></i>
                             <h3>Ni izdanih računov</h3>
                             <p>Začnite z ustvarjanjem prvega računa s klikom na gumb "Ustvari račun".</p>
+                        </div>
+                        <div id="invoicesPaginationContainer" class="pagination-container">
+                            <!-- Gumbi za paginacijo bodo vstavljeni tukaj -->
                         </div>
                     </div>
                 </div>
@@ -1522,6 +1547,18 @@
                 }
             }
 
+            function debounce(func, wait) {
+                let timeout;
+                return function executedFunction(...args) {
+                    const later = () => {
+                        clearTimeout(timeout);
+                        func(...args);
+                    };
+                    clearTimeout(timeout);
+                    timeout = setTimeout(later, wait);
+                };
+            }
+
             return {
                 getCssVariable,
                 formatPriceForDisplay,
@@ -1530,7 +1567,8 @@
                 formatDateForInput,
                 getNext15th,
                 getServicePeriod, // formatPriceForPdfTable is now in PdfGenerator
-                renderItemsList
+                renderItemsList,
+                debounce
             };
         })();
 
@@ -2603,6 +2641,9 @@
                 { id: 'invoiceDateDue', name: 'dateDue', errorId: 'invoiceDateDueError', required: true, type: 'date', label: 'Datum zapadlosti plačila računa' } // Internal helper for InvoiceManager
             ];
         
+            let currentPage = 1;
+            const ITEMS_PER_PAGE = 20; // Število računov na stran. Lahko spremenite na 50.
+
             let currentInvoiceItems = [];
         
             // Pomožne funkcije za gradnjo HTML-ja za openInvoiceModal
@@ -2842,7 +2883,7 @@
                     servicePeriodEnd: form.elements.servicePeriodEnd.value,
                     singleDayService: form.elements.singleDayService.checked, // Internal helper for InvoiceManager
                     items: _collectInvoiceItems(),
-                    totalAmount: calculateTotalAmountFromItems(collectInvoiceItems())
+                    totalAmount: _calculateTotalAmountFromItems(_collectInvoiceItems())
                 };
         
                 if (editingId) {
@@ -2930,7 +2971,7 @@
             } else {
                 currentInvoiceItems.forEach(item => _addInvoiceItemRow(item));
             }
-            updateInvoiceTotalDisplay();
+            _updateInvoiceTotalDisplay();
         
             document.getElementById('addInvoiceItemBtn')?.addEventListener('click', () => _addInvoiceItemRow());
             }
@@ -3007,7 +3048,7 @@
             itemDiv.querySelector('.delete-item-btn').addEventListener('click', () => {
                 currentInvoiceItems = currentInvoiceItems.filter(it => it.itemId !== itemId);
                 itemDiv.remove();
-                updateInvoiceTotalDisplay();
+                _updateInvoiceTotalDisplay();
             });
             // Internal helper for InvoiceManager
             // Po dodajanju vrstice in njenih poslušalcev, pokliči handleItemChange,
@@ -3181,6 +3222,74 @@
                 }); // Internal helper for InvoiceManager
             }
             }
+
+            function _changePage(page) {
+                currentPage = page;
+                applyInvoiceFilters(); // Ponovno uporabi filtre za novo stran
+            }
+
+            function _renderPaginationControls(totalItems, totalPages) {
+                const paginationContainer = document.getElementById('invoicesPaginationContainer');
+                if (!paginationContainer) return;
+                paginationContainer.innerHTML = '';
+
+                if (totalPages <= 1) {
+                    return; // Ne prikaži paginacije, če je samo ena stran
+                }
+
+                const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+                const endIndex = Math.min(startIndex + ITEMS_PER_PAGE, totalItems);
+
+                const infoEl = document.createElement('div');
+                infoEl.className = 'pagination-info';
+                infoEl.textContent = `Prikazujem ${startIndex + 1} - ${endIndex} od ${totalItems} računov`;
+
+                const buttonsEl = document.createElement('div');
+                buttonsEl.className = 'pagination-buttons';
+
+                // Gumb "Prejšnja"
+                const prevBtn = document.createElement('button');
+                prevBtn.innerHTML = `<i class="fas fa-chevron-left"></i>`;
+                prevBtn.className = 'button button-sm button-primary';
+                prevBtn.disabled = currentPage === 1;
+                prevBtn.addEventListener('click', () => _changePage(currentPage - 1));
+                buttonsEl.appendChild(prevBtn);
+
+                // Gumbi s številkami strani
+                // Logika za prikaz omejenega števila gumbov (npr. 1 ... 4 5 6 ... 10)
+                const maxPageButtons = 5;
+                let startPage, endPage;
+                if (totalPages <= maxPageButtons) {
+                    startPage = 1; endPage = totalPages;
+                } else {
+                    if (currentPage <= 3) { startPage = 1; endPage = maxPageButtons; } 
+                    else if (currentPage + 2 >= totalPages) { startPage = totalPages - maxPageButtons + 1; endPage = totalPages; } 
+                    else { startPage = currentPage - 2; endPage = currentPage + 2; }
+                }
+
+                if (startPage > 1) { buttonsEl.insertAdjacentHTML('beforeend', `<span style="align-self: center; padding: 0 0.5rem;">...</span>`); }
+                for (let i = startPage; i <= endPage; i++) {
+                    const pageBtn = document.createElement('button');
+                    pageBtn.textContent = i;
+                    pageBtn.className = 'button button-sm button-primary';
+                    if (i === currentPage) pageBtn.classList.add('active');
+                    pageBtn.addEventListener('click', () => _changePage(i));
+                    buttonsEl.appendChild(pageBtn);
+                }
+                if (endPage < totalPages) { buttonsEl.insertAdjacentHTML('beforeend', `<span style="align-self: center; padding: 0 0.5rem;">...</span>`); }
+
+                // Gumb "Naslednja"
+                const nextBtn = document.createElement('button');
+                nextBtn.innerHTML = `<i class="fas fa-chevron-right"></i>`;
+                nextBtn.className = 'button button-sm button-primary';
+                nextBtn.disabled = currentPage === totalPages;
+                nextBtn.addEventListener('click', () => _changePage(currentPage + 1));
+                buttonsEl.appendChild(nextBtn);
+
+                paginationContainer.appendChild(infoEl);
+                paginationContainer.appendChild(buttonsEl);
+            }
+
             function renderAllInvoicesTable(invoicesToRender) {
             const currentData = AppStore.getData();
             const invoices = invoicesToRender || currentData.invoices; // Uporabi posredovane račune ali vse
@@ -3188,18 +3297,26 @@
             const tableBody = document.getElementById('allInvoicesTableBody');
             const emptyState = document.getElementById('invoicesEmptyState');
             if (!tableBody || !emptyState) return;
-            
+
+            const sortedInvoices = _sortInvoices(invoices);
+            const totalPages = Math.ceil(sortedInvoices.length / ITEMS_PER_PAGE);
+            const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+            const endIndex = startIndex + ITEMS_PER_PAGE;
+            const paginatedInvoices = sortedInvoices.slice(startIndex, endIndex);
+
             tableBody.innerHTML = '';
-            if (invoices.length === 0) {
+            if (paginatedInvoices.length === 0) {
                 emptyState.style.display = 'block';
                 tableBody.closest('.table-container').style.display = 'none';
+                // Če ni nobenih računov (niti po filtriranju), skrij tudi paginacijo
+                if (invoices.length === 0) {
+                    document.getElementById('invoicesPaginationContainer').innerHTML = '';
+                }
             } else {
                 emptyState.style.display = 'none';
                 tableBody.closest('.table-container').style.display = '';
-                // Ustvarimo kopijo in jo sortiramo: najnovejši računi najprej
-                const sortedInvoices = _sortInvoices(invoices);
 
-                sortedInvoices.forEach(invoice => {
+                paginatedInvoices.forEach(invoice => {
                     const myCompany = currentData.companies.find(c => c.id === invoice.myCompanyId);
                     const partner = currentData.partners.find(p => p.id === invoice.partnerId);
                     const netAmount = (invoice.items || []).reduce((sum, item) => sum + (item.itemTotal || 0), 0);
@@ -3247,6 +3364,8 @@
                     }); // Internal helper for InvoiceManager
                 }); // Internal helper for InvoiceManager
             }
+
+            _renderPaginationControls(sortedInvoices.length, totalPages);
             }
         
             function toggleInvoiceStatus(invoiceId) {
@@ -3283,7 +3402,7 @@
         
             function applyInvoiceFilters() {
             const filters = {
-                number: document.getElementById('filterInvoiceNumber').value.toLowerCase().trim(),
+                searchTerm: document.getElementById('filterSearchTerm').value.toLowerCase().trim(),
                 partnerId: document.getElementById('filterPartner').value,
                 status: document.getElementById('filterStatus').value,
                 dateFrom: document.getElementById('filterDateFrom').value,
@@ -3294,11 +3413,18 @@
                 grossTo: parseFloat(document.getElementById('filterGrossTo').value)
             };
         
-            const allInvoices = AppStore.getData().invoices;
+            const { invoices: allInvoices, partners } = AppStore.getData();
         
             const filteredInvoices = allInvoices.filter(invoice => {
-                // Filter po številki računa
-                if (filters.number && !invoice.number?.toLowerCase().includes(filters.number)) return false;
+                // Razširjen filter za iskalni niz (išče po št. računa in imenu partnerja)
+                if (filters.searchTerm) {
+                    const partner = partners.find(p => p.id === invoice.partnerId);
+                    const partnerName = partner ? partner.name.toLowerCase() : '';
+                    const invoiceNumber = invoice.number ? invoice.number.toLowerCase() : '';
+                    if (!invoiceNumber.includes(filters.searchTerm) && !partnerName.includes(filters.searchTerm)) {
+                        return false;
+                    }
+                }
                 // Filter po partnerju
                 if (filters.partnerId && invoice.partnerId !== filters.partnerId) return false;
                 // Filter po statusu (nedefiniran status obravnava kot 'neplačano')
@@ -3321,23 +3447,35 @@
             });
         
             renderAllInvoicesTable(filteredInvoices);
-            ToastManager.showToast(`${filteredInvoices.length} račun(ov) ustreza filtrom.`);
+            // Toast sporočilo ni več potrebno tukaj, ker se filtri izvajajo sproti
             }
         
             function resetInvoiceFilters() {
-            const filterContainer = document.querySelector('.invoice-filters-container');
-            if (!filterContainer) return;
-            
-            filterContainer.querySelectorAll('input, select').forEach(el => {
-                el.value = '';
-            });
-            renderAllInvoicesTable(AppStore.getData().invoices);
-            ToastManager.showToast('Filtri ponastavljeni.');
+                const filterContainer = document.querySelector('.invoice-filters-container');
+                if (!filterContainer) return;
+                
+                filterContainer.querySelectorAll('input, select').forEach(el => {
+                    el.value = '';
+                });
+                currentPage = 1; // Ponastavi na prvo stran
+                applyInvoiceFilters(); // Ponovno uporabi (prazne) filtre
+                ToastManager.showToast('Filtri ponastavljeni.');
             } // Internal helper for InvoiceManager
         
             function setupInvoiceFilters() { // Internal helper for InvoiceManager
-            document.getElementById('applyFiltersBtn')?.addEventListener('click', applyInvoiceFilters);
-            document.getElementById('resetFiltersBtn')?.addEventListener('click', resetInvoiceFilters);
+                const debouncedFilter = Utils.debounce(applyInvoiceFilters, 300);
+                const filterContainer = document.querySelector('.invoice-filters-container');
+                if (!filterContainer) return;
+
+                // Ob spremembi filtra, najprej ponastavi stran na 1, nato filtriraj
+                filterContainer.querySelectorAll('input, select').forEach(el => {
+                    el.addEventListener('input', () => {
+                        currentPage = 1;
+                        debouncedFilter();
+                    });
+                });
+
+                document.getElementById('resetFiltersBtn')?.addEventListener('click', resetInvoiceFilters);
             } // Internal helper for InvoiceManager
         
             return {
@@ -3367,6 +3505,71 @@
                 warningDiv.className = 'warning-message';
                 warningDiv.innerHTML = `<i class="fas fa-exclamation-triangle"></i><p>${message}</p>`;
                 container.appendChild(warningDiv);
+            }
+
+            function _exportInvoicesToCsv() {
+                const { invoices, partners, companies } = AppStore.getData();
+
+                if (invoices.length === 0) {
+                    ToastManager.showToast('Ni računov za izvoz.', 'error');
+                    return;
+                }
+
+                const escapeCsvCell = (cell) => {
+                    if (cell === null || cell === undefined) {
+                        return '';
+                    }
+                    let cellStr = String(cell);
+                    // Če celica vsebuje vejico, narekovaj ali novo vrstico, jo ovijemo v narekovaje.
+                    if (cellStr.search(/("|,|\n)/g) >= 0) {
+                        // Notranje narekovaje podvojimo.
+                        cellStr = `"${cellStr.replace(/"/g, '""')}"`;
+                    }
+                    return cellStr;
+                };
+
+                const headers = [
+                    'Št. računa', 'Datum izdaje', 'Datum zapadlosti', 'Plačnik (Ime)', 'Plačnik (Davčna št.)',
+                    'Izdajatelj (Ime)', 'Neto znesek (€)', 'DDV znesek (€)', 'Bruto znesek (€)', 'Status'
+                ].join(',');
+
+                const sortedInvoices = [...invoices].sort((a, b) => new Date(b.dateIssued) - new Date(a.dateIssued));
+
+                const csvRows = sortedInvoices.map(invoice => {
+                    const partner = partners.find(p => p.id === invoice.partnerId) || {};
+                    const company = companies.find(c => c.id === invoice.myCompanyId) || {};
+
+                    const netAmount = (invoice.items || []).reduce((sum, item) => sum + (item.itemTotal || 0), 0);
+                    const grossAmount = invoice.totalAmount || 0;
+                    const vatAmount = grossAmount - netAmount;
+                    const status = invoice.status === 'paid' ? 'Plačano' : 'Neplačano';
+
+                    const row = [
+                        invoice.number || '',
+                        invoice.dateIssued ? new Date(invoice.dateIssued).toLocaleDateString('sl-SI') : '',
+                        invoice.dateDue ? new Date(invoice.dateDue).toLocaleDateString('sl-SI') : '',
+                        partner.name || '',
+                        partner.taxNumber || '',
+                        company.companyName || '',
+                        Utils.formatPriceForDisplay(netAmount),
+                        Utils.formatPriceForDisplay(vatAmount),
+                        Utils.formatPriceForDisplay(grossAmount),
+                        status
+                    ];
+                    return row.map(escapeCsvCell).join(',');
+                });
+
+                const csvString = [headers, ...csvRows].join('\n');
+                const blob = new Blob(['\uFEFF' + csvString], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement("a");
+                const url = URL.createObjectURL(blob);
+                link.setAttribute("href", url);
+                link.setAttribute("download", `izvoz_racunov_${new Date().toISOString().slice(0,10)}.csv`);
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+                ToastManager.showToast('Izvoz v CSV uspešno zaključen!', 'success');
             }
 
             function setupFabButtons() {
@@ -3458,10 +3661,15 @@
                 document.getElementById('createInvoiceBtn').disabled = needsSetup;
             }
 
+            function _setupDashboardActions() {
+                document.getElementById('exportCsvButton')?.addEventListener('click', _exportInvoicesToCsv);
+            }
+
             return {
                 setupFabButtons,
                 updateDashboardCards,
-                checkInitialWarnings
+                checkInitialWarnings,
+                setupDashboardActions: _setupDashboardActions
             };
         })();
 
@@ -3811,6 +4019,7 @@
             ModalManager.setupEventListeners();
             InvoiceManager.setupInvoiceFilters();
             DashboardManager.setupFabButtons();
+            DashboardManager.setupDashboardActions();
             
             refreshAllUI();
         });
