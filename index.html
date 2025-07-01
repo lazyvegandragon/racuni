@@ -1988,9 +1988,9 @@
                 const currentYear = new Date().getFullYear();
                 const monthlyEarnings = Array(12).fill(0);
                 const monthLabels = ["Jan", "Feb", "Mar", "Apr", "Maj", "Jun", "Jul", "Avg", "Sep", "Okt", "Nov", "Dec"];
-        
+
                 currentData.invoices.forEach(invoice => {
-                    if (invoice.dateIssued && invoice.totalAmount) {
+                    if (invoice.status === 'paid' && invoice.dateIssued && invoice.totalAmount) {
                         const invoiceDate = new Date(invoice.dateIssued);
                         if (invoiceDate.getFullYear() === currentYear) {
                             const month = invoiceDate.getMonth();
@@ -2070,7 +2070,7 @@
         
                 const partnerEarnings = {};
                 currentData.invoices.forEach(invoice => {
-                    if (invoice.partnerId && typeof invoice.totalAmount === 'number') {
+                    if (invoice.status === 'paid' && invoice.partnerId && typeof invoice.totalAmount === 'number') {
                         partnerEarnings[invoice.partnerId] = (partnerEarnings[invoice.partnerId] || 0) + invoice.totalAmount;
                     }
                 });
@@ -3705,10 +3705,14 @@
         
             function updateDashboardCards() {
                 const currentData = AppStore.getData();
-                document.getElementById('dashboardInvoiceCount').textContent = currentData.invoices.length;
-                const totalEarnings = currentData.invoices.reduce((sum, inv) => sum + (inv.totalAmount || 0), 0);
+                const paidInvoices = currentData.invoices.filter(inv => inv.status === 'paid');
+
+                document.getElementById('dashboardInvoiceCount').textContent = currentData.invoices.length; // Še vedno kaže vse račune
+                
+                const totalEarnings = paidInvoices.reduce((sum, inv) => sum + (inv.totalAmount || 0), 0);
                 document.getElementById('dashboardTotalEarnings').textContent = Utils.formatPriceForDisplay(totalEarnings) + ' €';
-                const avgInvoiceValue = currentData.invoices.length > 0 ? (totalEarnings / currentData.invoices.length) : 0;
+                
+                const avgInvoiceValue = paidInvoices.length > 0 ? (totalEarnings / paidInvoices.length) : 0;
                 document.getElementById('dashboardAverageInvoiceValue').textContent = `Povp. vrednost: ${Utils.formatPriceForDisplay(avgInvoiceValue)} €`;
                 
                 document.getElementById('dashboardPartnerCount').textContent = currentData.partners.length;
