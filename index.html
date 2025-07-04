@@ -46,6 +46,8 @@
             --barva-kartice-vijolicna-konec: #9333ea;
             --barva-kartice-oranzna-zacetek: #f97316;
             --barva-kartice-oranzna-konec: #ea580c;
+            --barva-kartice-teal-zacetek: #14b8a6;
+            --barva-kartice-teal-konec: #0d9488;
 
             --barva-opozorila-ozadje: #fffbeb;
             --barva-opozorila-obroba: #facc15;
@@ -257,6 +259,13 @@
         .button-danger:hover {
             background-color: var(--barva-gumba-nevarno-hover);
         }
+        .button-warning {
+            background-color: var(--barva-fab-rumena);
+            color: white;
+        }
+        .button-warning:hover {
+            background-color: var(--barva-fab-rumena-hover);
+        }
         .button-sm {
             padding: 0.4rem 0.8rem;
             font-size: 0.8rem;
@@ -424,6 +433,7 @@
         .dashboard-card.green { background: linear-gradient(135deg, var(--barva-kartice-zelena-zacetek), var(--barva-kartice-zelena-konec)); }
         .dashboard-card.purple { background: linear-gradient(135deg, var(--barva-kartice-vijolicna-zacetek), var(--barva-kartice-vijolicna-konec)); }
         .dashboard-card.orange { background: linear-gradient(135deg, var(--barva-kartice-oranzna-zacetek), var(--barva-kartice-oranzna-konec)); }
+        .dashboard-card.teal { background: linear-gradient(135deg, var(--barva-kartice-teal-zacetek), var(--barva-kartice-teal-konec)); }
 
         .card-header {
             display: flex;
@@ -570,66 +580,6 @@
             margin-top: auto; /* Potisni ta element na dno flex kontejnerja */
         }
 
-
-        /* Lebdeči akcijski gumbi (FAB) */
-        .fab-container {
-            position: fixed;
-            right: 1.5rem;
-            bottom: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-            z-index: 900;
-        }
-        .fab-button {
-            width: 3.5rem;
-            height: 3.5rem;
-            border-radius: 50%;
-            background-color: var(--barva-gumba-shrani);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            transition: background-color 0.2s, transform 0.1s;
-            position: relative;
-        }
-        .fab-button:hover {
-            transform: translateY(-2px);
-        }
-        .fab-button:active {
-            transform: translateY(0);
-        }
-        .fab-button i { font-size: 1.25rem; }
-
-        .fab-button.yellow { background-color: var(--barva-fab-rumena); }
-        .fab-button.yellow:hover { background-color: var(--barva-fab-rumena-hover); }
-        .fab-button.red { background-color: var(--barva-fab-rdeca); }
-        .fab-button.red:hover { background-color: var(--barva-fab-rdeca-hover); }
-
-        .fab-button::after {
-            content: attr(data-tooltip);
-            position: absolute;
-            right: 100%;
-            top: 50%;
-            transform: translateY(-50%) translateX(-0.5rem);
-            background-color: var(--barva-fab-tooltip-ozadje);
-            color: white;
-            padding: 0.3rem 0.6rem;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            white-space: nowrap;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.2s, visibility 0.2s;
-            pointer-events: none;
-        }
-        .fab-button:hover::after {
-            opacity: 1;
-            visibility: visible;
-        }
         #uploadInput { display: none; }
 
         /* Modalna okna */
@@ -1032,6 +982,99 @@
             background-color: var(--barva-gumba-primarni-hover);
         }
 
+        /* Stili za sortiranje tabel */
+        th.sortable-header {
+            cursor: pointer;
+            user-select: none;
+            position: relative; /* Za pozicioniranje ikone */
+            padding-right: 2rem; /* Naredi prostor za ikono */
+        }
+
+        th.sortable-header:hover {
+            background-color: #f3f4f6; /* Podobno kot hover na vrsticah */
+        }
+
+        .sort-icon {
+            position: absolute;
+            right: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af; /* Nevtralna barva za ikono */
+            font-size: 0.8em;
+            transition: color 0.2s, transform 0.2s;
+        }
+
+        /* Ko je stolpec aktiven, je ikona bolj vidna */
+        th.sortable-header[aria-sort] .sort-icon {
+            color: var(--barva-besedila-zavihka);
+        }
+
+        /* Ikona za naraščajoče sortiranje */
+        th.sortable-header[aria-sort="ascending"] .sort-icon::before { content: "\f0de"; /* FontAwesome koda za sort-up */ }
+
+        /* Ikona za padajoče sortiranje */
+        th.sortable-header[aria-sort="descending"] .sort-icon::before { content: "\f0dd"; /* FontAwesome koda za sort-down */ }
+
+        /* Privzeta ikona (gor/dol puščici) - ko ni aktivno, a je možno sortirati */
+        th.sortable-header:not([aria-sort]) .sort-icon::before { content: "\f0dc"; /* FontAwesome koda za sort */ }
+        
+        /* Stili za zavihek Nastavitve */
+        .settings-container {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        .settings-action-item {
+            padding: 1.5rem;
+            border: 1px solid var(--barva-tabele-obroba-vrstice);
+            border-radius: 8px;
+            background-color: #fdfdfd;
+        }
+        .settings-action-item h4 {
+            font-size: 1.2rem;
+            color: #111827;
+            margin-bottom: 0.5rem;
+        }
+        .settings-action-item .description {
+            font-size: 0.9rem;
+            color: #4b5563;
+            margin-bottom: 1rem;
+            max-width: 80ch;
+            line-height: 1.5;
+        }
+        .settings-action-item.danger-zone {
+            border-color: var(--barva-napake);
+            background-color: #fff1f2; /* red-50 */
+        }
+        .settings-action-item.danger-zone h4 {
+            color: #991b1b; /* red-800 */
+        }
+
+        /* Novi stili za filter in grupiranje na nadzorni plošči */
+        .dashboard-filter-container {
+            padding: 1rem 1.5rem;
+            margin-bottom: 1.5rem;
+            max-width: 350px;
+        }
+        .dashboard-filter-container .form-group {
+            margin-bottom: 0;
+        }
+        .dashboard-group {
+            margin-bottom: 2rem;
+        }
+        .dashboard-group h4 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .dashboard-group h4 .dashboard-period-label {
+            font-weight: 500;
+            color: #6b7280;
+            font-size: 1rem;
+        }
     </style>
 </head>
 <body>
@@ -1047,6 +1090,10 @@
                     <i class="fas fa-file-invoice"></i>
                     <span>Računi</span>
                 </button>
+                <button class="nav-tab-button" data-tab="stroski" title="Stroški">
+                    <i class="fas fa-receipt"></i>
+                    <span>Stroški</span>
+                </button>
                 <button class="nav-tab-button" data-tab="partnerji" title="Poslovni partnerji">
                     <i class="fas fa-building"></i>
                     <span>Poslovni partnerji</span>
@@ -1059,6 +1106,10 @@
                     <i class="fas fa-industry"></i>
                     <span>Moja podjetja</span>
                 </button>
+                <button class="nav-tab-button" data-tab="nastavitve" title="Nastavitve">
+                    <i class="fas fa-cog"></i>
+                    <span>Nastavitve</span>
+                </button>
             </div>
         </div>
     </nav>
@@ -1067,75 +1118,167 @@
         <div class="container">
             <!-- ZAVIHEK: PREGLED -->
             <section id="pregled" class="tab-pane active">
-                <div class="dashboard-grid">
-                    <div class="dashboard-card blue">
-                        <div class="card-header">
-                            <div>
-                                <p>Število računov</p>
-                                <h3 id="dashboardInvoiceCount">0</h3>
+                <div class="content-section dashboard-filter-container">
+                    <div class="form-group">
+                        <label for="dashboardYearFilter">Prikaži podatke za obdobje:</label>
+                        <select id="dashboardYearFilter" class="form-control">
+                            <!-- Možnosti se bodo dodale dinamično -->
+                        </select>
+                    </div>
+                </div>
+
+                <div class="dashboard-group">
+                    <h4 id="financialOverviewTitle">Finančni pregled <span class="dashboard-period-label"></span></h4>
+                    <div class="dashboard-grid">
+                        <div class="dashboard-card green">
+                            <div class="card-header">
+                                <div>
+                                    <p>Realizirani prihodki</p>
+                                    <h3 id="dashboardRealizedRevenue">0,00 €</h3>
+                                </div>
+                                <div class="icon"><i class="fas fa-euro-sign"></i></div>
                             </div>
-                            <div class="icon"><i class="fas fa-file-alt"></i></div>
+                            <div class="card-footer">Plačani računi</div>
                         </div>
-                        <div class="card-footer">
-                            <span id="dashboardLastInvoiceDate">Ni izdanih računov</span>
+                        <div class="dashboard-card orange">
+                            <div class="card-header">
+                                <div>
+                                    <p>Vsi odhodki</p>
+                                    <h3 id="dashboardTotalExpenses">0,00 €</h3>
+                                </div>
+                                <div class="icon"><i class="fas fa-shopping-cart"></i></div>
+                            </div>
+                            <div class="card-footer">Vsi zabeleženi stroški</div>
+                        </div>
+                        <div class="dashboard-card blue">
+                            <div class="card-header">
+                                <div>
+                                    <p>Dobiček</p>
+                                    <h3 id="dashboardProfit">0,00 €</h3>
+                                </div>
+                                <div class="icon"><i class="fas fa-chart-pie"></i></div>
+                            </div>
+                            <div class="card-footer" id="dashboardProfitMargin">Marža: 0,00%</div>
+                        </div>
+                        <div class="dashboard-card green" id="dashboardUnrealizedRevenueCard" style="display: none;">
+                            <div class="card-header">
+                                <div>
+                                    <p>Nerealizirani prihodki</p>
+                                    <h3 id="dashboardUnrealizedRevenue">0,00 €</h3>
+                                </div>
+                                <div class="icon"><i class="fas fa-hourglass-half"></i></div>
+                            </div>
+                            <div class="card-footer">Vsota neplačanih računov</div>
                         </div>
                     </div>
-                    <div class="dashboard-card green">
-                        <div class="card-header">
-                            <div>
-                                <p>Skupni zaslužek</p>
-                                <h3 id="dashboardTotalEarnings">0,00 €</h3>
+                </div>
+
+                <div class="dashboard-group">
+                    <h4 id="invoiceStatusTitle">Stanje računov <span class="dashboard-period-label"></span></h4>
+                    <div class="dashboard-grid">
+                        <div class="dashboard-card green">
+                            <div class="card-header">
+                                <div>
+                                    <p>Vsi računi</p>
+                                    <h3 id="dashboardTotalInvoices">0</h3>
+                                </div>
+                                <div class="icon"><i class="fas fa-file-alt"></i></div>
                             </div>
-                            <div class="icon"><i class="fas fa-euro-sign"></i></div>
+                            <div class="card-footer">Število vseh izdanih računov</div>
                         </div>
-                        <div class="card-footer">
-                            <span id="dashboardAverageInvoiceValue">Povp. vrednost: 0,00 €</span>
+                        <div class="dashboard-card orange">
+                            <div class="card-header">
+                                <div>
+                                    <p>Plačani računi</p>
+                                    <h3 id="dashboardPaidInvoices">0</h3>
+                                </div>
+                                <div class="icon"><i class="fas fa-check-circle"></i></div>
+                            </div>
+                            <div class="card-footer">Število plačanih računov</div>
+                        </div>
+                        <div class="dashboard-card blue" id="dashboardUnpaidInvoicesCard" style="display: none;">
+                            <div class="card-header">
+                                <div>
+                                    <p>Neplačani računi</p>
+                                    <h3 id="dashboardUnpaidInvoices">0</h3>
+                                </div>
+                                <div class="icon"><i class="fas fa-exclamation-circle"></i></div>
+                            </div>
+                            <div class="card-footer">Število neplačanih računov</div>
+                        </div>
+                        <div class="dashboard-card blue">
+                            <div class="card-header">
+                                <div>
+                                    <p>Stopnja plačil</p>
+                                    <h3 id="dashboardPaymentRate">0%</h3>
+                                </div>
+                                <div class="icon"><i class="fas fa-percent"></i></div>
+                            </div>
+                            <div class="card-footer">Odstotek plačanih računov</div>
                         </div>
                     </div>
-                    <div class="dashboard-card purple">
-                        <div class="card-header">
-                            <div>
-                                <p>Poslovni partnerji</p>
-                                <h3 id="dashboardPartnerCount">0</h3>
+                </div>
+
+                <div class="dashboard-group">
+                    <h4 id="generalStatsTitle">Splošna statistika <span class="dashboard-period-label"></span></h4>
+                    <div class="dashboard-grid">
+                        <div class="dashboard-card green">
+                            <div class="card-header">
+                                <div>
+                                    <p>Povpr. vrednost računa</p>
+                                    <h3 id="dashboardAverageInvoiceValue">0,00 €</h3>
+                                </div>
+                                <div class="icon"><i class="fas fa-balance-scale-right"></i></div>
                             </div>
-                            <div class="icon"><i class="fas fa-handshake"></i></div>
+                            <div class="card-footer">Povprečje plačanih računov</div>
                         </div>
-                        <div class="card-footer">
-                            <!-- <span id="dashboardActivePartnersCount">Aktivnih: 0</span> -->
-                        </div>
-                    </div>
-                    <div class="dashboard-card orange">
-                        <div class="card-header">
-                            <div>
-                                <p>Število storitev</p>
-                                <h3 id="dashboardServiceCount">0</h3>
+                        <div class="dashboard-card orange">
+                            <div class="card-header">
+                                <div>
+                                    <p>Število partnerjev</p>
+                                    <h3 id="dashboardPartnerCount">0</h3>
+                                </div>
+                                <div class="icon"><i class="fas fa-handshake"></i></div>
                             </div>
-                            <div class="icon"><i class="fas fa-cogs"></i></div>
+                            <div class="card-footer">Vsi vneseni partnerji</div>
                         </div>
-                        <div class="card-footer">
-                            <!-- <span id="dashboardActiveServicesCount">Aktivnih: 0</span> -->
+                        <div class="dashboard-card blue">
+                            <div class="card-header">
+                                <div>
+                                    <p>Število storitev</p>
+                                    <h3 id="dashboardServiceCount">0</h3>
+                                </div>
+                                <div class="icon"><i class="fas fa-cogs"></i></div>
+                            </div>
+                            <div class="card-footer">Vse vnesene storitve</div>
                         </div>
                     </div>
                 </div>
 
                 <div class="charts-grid">
                     <div class="chart-container content-section">
-                        <h3>Zaslužek po mesecih</h3>
+                        <h3 id="earningsChartTitle"></h3>
                         <div style="height: 250px; position: relative;">
                             <canvas id="earningsChartCanvas"></canvas>
                         </div>
                     </div>
                     <div class="chart-container content-section">
-                        <h3>Top partnerji</h3>
+                        <h3 id="topPartnersChartTitle"></h3>
                         <div style="height: 250px; position: relative;">
                             <canvas id="topPartnersChartCanvas"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-container content-section">
+                        <h3 id="expensesChartTitle"></h3>
+                        <div style="height: 250px; position: relative;">
+                            <canvas id="expensesChartCanvas"></canvas>
                         </div>
                     </div>
                 </div>
 
                 <div class="content-section table-section">
                     <div class="content-section-header">
-                        <h3>Nedavni računi</h3>
+                        <h3 id="recentInvoicesTitle"></h3>
                         <button id="exportCsvButton" class="button button-primary">
                             <i class="fas fa-download"></i>
                             <span>Izvozi CSV</span>
@@ -1145,12 +1288,12 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th>Št. računa</th>
-                                    <th>Plačnik</th>
-                                    <th>Datum izdaje</th>
-                                    <th>Neto (€)</th>
-                                    <th>Bruto (€)</th>
-                                    <th>Status</th>
+                                    <th class="sortable-header" data-sort-key="number" role="button" tabindex="0">Št. računa<i class="sort-icon fas"></i></th>
+                                    <th class="sortable-header" data-sort-key="partnerName" role="button" tabindex="0">Plačnik<i class="sort-icon fas"></i></th>
+                                    <th class="sortable-header" data-sort-key="dateIssued" role="button" tabindex="0">Datum izdaje<i class="sort-icon fas"></i></th>
+                                    <th class="sortable-header" data-sort-key="netAmount" role="button" tabindex="0">Neto (€)<i class="sort-icon fas"></i></th>
+                                    <th class="sortable-header" data-sort-key="grossAmount" role="button" tabindex="0">Bruto (€)<i class="sort-icon fas"></i></th>
+                                    <th class="sortable-header" data-sort-key="status" role="button" tabindex="0">Status<i class="sort-icon fas"></i></th>
                                     <th>Akcije</th>
                                 </tr>
                             </thead>
@@ -1158,6 +1301,9 @@
                                 <!-- Dinamično dodane vrstice -->
                             </tbody>
                         </table>
+                    </div>
+                    <div id="dashboardPaginationContainer" class="pagination-container">
+                        <!-- Paginacija za nedavne račune bo tukaj -->
                     </div>
                 </div>
             </section>
@@ -1245,12 +1391,12 @@
                              <table>
                                 <thead>
                                     <tr>
-                                        <th>Št. računa</th>
-                                        <th>Plačnik</th>
-                                        <th>Datum izdaje</th>
-                                        <th>Neto (€)</th>
-                                        <th>Bruto (€)</th>
-                                        <th>Status</th>
+                                        <th class="sortable-header" data-sort-key="number" role="button" tabindex="0">Št. računa<i class="sort-icon fas"></i></th>
+                                        <th class="sortable-header" data-sort-key="partnerName" role="button" tabindex="0">Plačnik<i class="sort-icon fas"></i></th>
+                                        <th class="sortable-header" data-sort-key="dateIssued" role="button" tabindex="0">Datum izdaje<i class="sort-icon fas"></i></th>
+                                        <th class="sortable-header" data-sort-key="netAmount" role="button" tabindex="0">Neto (€)<i class="sort-icon fas"></i></th>
+                                        <th class="sortable-header" data-sort-key="grossAmount" role="button" tabindex="0">Bruto (€)<i class="sort-icon fas"></i></th>
+                                        <th class="sortable-header" data-sort-key="status" role="button" tabindex="0">Status<i class="sort-icon fas"></i></th>
                                         <th>Akcije</th>
                                     </tr>
                                 </thead>
@@ -1267,6 +1413,27 @@
                         <div id="invoicesPaginationContainer" class="pagination-container">
                             <!-- Gumbi za paginacijo bodo vstavljeni tukaj -->
                         </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ZAVIHEK: STROŠKI -->
+            <section id="stroski" class="tab-pane">
+                <div class="content-section">
+                    <div class="content-section-header">
+                        <h2>Stroški</h2>
+                        <button id="addExpenseBtn" class="button button-primary">
+                            <i class="fas fa-plus"></i>
+                            <span>Dodaj strošek</span>
+                        </button>
+                    </div>
+                    <div id="expensesListContainer" class="item-grid">
+                        <!-- Dinamično dodane kartice stroškov -->
+                    </div>
+                    <div class="empty-state" id="expensesEmptyState" style="display: none;">
+                        <i class="fas fa-wallet"></i>
+                        <h3>Ni zabeleženih stroškov</h3>
+                        <p>Začnite z dodajanjem prvega poslovnega stroška.</p>
                     </div>
                 </div>
             </section>
@@ -1333,22 +1500,38 @@
                     </div>
                 </div>
             </section>
+
+            <!-- ZAVIHEK: NASTAVITVE -->
+            <section id="nastavitve" class="tab-pane">
+                <div class="content-section">
+                    <div class="content-section-header">
+                        <h2 id="settings-heading">Nastavitve</h2>
+                    </div>
+                    <div class="settings-container" role="group" aria-labelledby="settings-heading">
+                        <div class="settings-action-item">
+                            <h4>Prenos varnostne kopije</h4>
+                            <p class="description">Shranite vse svoje podatke (podjetja, partnerje, račune itd.) v eno .json datoteko na vaš računalnik. To je priporočljivo narediti redno.</p>
+                            <button id="settingsDownloadBtn" class="button button-success"><i class="fas fa-download"></i> Prenesi podatke</button>
+                        </div>
+                        <div class="settings-action-item">
+                            <h4>Nalaganje varnostne kopije</h4>
+                            <p class="description">Naložite predhodno shranjeno .json datoteko. Pozor: vsi trenutni podatki v aplikaciji bodo prepisani s podatki iz datoteke.</p>
+                            <button id="settingsUploadBtn" class="button button-warning"><i class="fas fa-upload"></i> Naloži podatke</button>
+                        </div>
+                        <div class="settings-action-item danger-zone">
+                            <h4>Izbris vseh podatkov</h4>
+                            <p class="description">Trajno izbrišite vse podatke iz aplikacije. Tega dejanja ni mogoče razveljaviti. Uporabite previdno!</p>
+                            <button id="settingsDeleteBtn" class="button button-danger"><i class="fas fa-trash-alt"></i> Izbriši vse podatke</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
         </div>
     </main>
 
-    <!-- Lebdeči akcijski gumbi (FAB) -->
-    <div class="fab-container">
-        <button class="fab-button" id="fabDownload" data-tooltip="Prenesi podatke" aria-label="Prenesi podatke">
-            <i class="fas fa-download"></i>
-        </button>
-        <button class="fab-button yellow" id="fabUpload" data-tooltip="Naloži podatke" aria-label="Naloži podatke">
-            <i class="fas fa-upload"></i>
-        </button>
-        <input type="file" id="uploadInput" accept=".json">
-        <button class="fab-button red" id="fabDelete" data-tooltip="Izbriši vse podatke" aria-label="Izbriši vse podatke">
-            <i class="fas fa-trash-alt"></i>
-        </button>
-    </div>
+    <!-- Skriti input za nalaganje datotek, ki ga uporablja SettingsManager -->
+    <input type="file" id="uploadInput" accept=".json" style="display: none;">
 
     <!-- Modalno okno -->
     <div id="genericModal" class="modal">
@@ -1403,130 +1586,180 @@
 
 
     <script>
-        // --- Strukturirano upravljanje stanja (AppStore) ---
+        // === MODUL: AppStore (Upravljanje stanja aplikacije) ===
+        // Ta modul deluje kot centralno skladišče za vse podatke aplikacije (podjetja, storitve, itd.).
+        // Uporablja singleton vzorec (IIFE), da zagotovi eno samo instanco stanja v celotni aplikaciji.
         const AppStore = (function() {
-            let _appData = {
+            // Privatno stanje, ki hrani vse podatke aplikacije. Dostop do njega je mogoč samo preko javnih metod modula.
+            let _appData = { 
                 companies: [],
                 services: [],
                 partners: [],
-                invoices: []
+                invoices: [],
+                expenses: []
             };
-            let _lastFocusedElement = null;
+            // Privatna spremenljivka za shranjevanje zadnjega fokusiranega elementa pred odprtjem modala (za izboljšanje dostopnosti).
+            let _lastFocusedElement = null; 
 
-            // --- Interni metodi za shranjevanje in osveževanje ---
+            // --- Privatne (interne) metode modula ---
+
+            // Shrani celotno stanje (_appData) v brskalnikov localStorage.
             function _saveToLocalStorageInternal() {
                 localStorage.setItem('racunovodstvoAppData', JSON.stringify(_appData));
                 console.log("Podatki shranjeni v localStorage (preko AppStore):", _appData);
             }
 
+            // Združi shranjevanje v localStorage in osveževanje celotnega uporabniškega vmesnika.
             function _saveAndRefresh() {
                 _saveToLocalStorageInternal();
-                refreshAllUI(); // refreshAllUI bo klical AppStore.getData()
+                refreshAllUI(); // Globalna funkcija, ki poskrbi za ponovno izrisovanje vseh komponent.
             }
             
-            const ensureIdsInternal = (items, prefix) => {
+            // Zagotovi, da ima vsak element v seznamu unikaten ID. Če ga nima, mu ga dodeli.
+            // To je pomembno za ohranjanje integritete podatkov, še posebej pri uvozu ali starejših podatkih.
+            function _ensureIdsInternal(items, prefix) {
                 return items.map(item => {
                     if (!item.id) {
                         console.warn(`Elementu v '${prefix}' manjka ID, dodeljujem novega:`, item);
-                        item.id = generateUniqueId(prefix);
+                        item.id = Utils.generateUniqueId(prefix);
                     }
                     return item;
                 });
             };
 
+            // --- Javni (public) API modula ---
             return {
+                /**
+                 * Naloži podatke iz localStorage ob zagonu aplikacije.
+                 * Vključuje logiko za migracijo iz starejšega formata podatkov (če obstaja `companyInfo`).
+                 * Zagotovi, da imajo vsi naloženi elementi unikatne ID-je.
+                 */
                 loadInitialData: function() {
                     const data = localStorage.getItem('racunovodstvoAppData');
                     if (data) {
                         try {
                             let tempData = JSON.parse(data);
+                            // Migracijska logika: če obstaja staro polje 'companyInfo', ga pretvori v novo strukturo 'companies'.
                             if (tempData.companyInfo && (!tempData.companies || tempData.companies.length === 0)) {
                                 if (Object.keys(tempData.companyInfo).length > 0) {
-                                    _appData.companies = [{ ...tempData.companyInfo, id: generateUniqueId('mig_comp_') }];
+                                    _appData.companies = [{ ...tempData.companyInfo, id: Utils.generateUniqueId('mig_comp_') }];
                                 } else {
                                     _appData.companies = [];
                                 }
                             } else {
                                 _appData.companies = tempData.companies || [];
                             }
+                            // Naloži ostale podatke ali inicializiraj prazne arraye, če ne obstajajo.
                             _appData.services = tempData.services || [];
                             _appData.partners = tempData.partners || [];
                             _appData.invoices = tempData.invoices || [];
+                            _appData.expenses = tempData.expenses || [];
 
-                            _appData.companies = ensureIdsInternal(_appData.companies, 'comp_');
-                            _appData.services = ensureIdsInternal(_appData.services, 'serv_');
-                            _appData.partners = ensureIdsInternal(_appData.partners, 'part_');
-                            _appData.invoices = ensureIdsInternal(_appData.invoices, 'inv_');
+                            // Počisti podatke in zagotovi ID-je.
+                            _appData.companies = _ensureIdsInternal(_appData.companies, 'comp_');
+                            _appData.services = _ensureIdsInternal(_appData.services, 'serv_');
+                            _appData.partners = _ensureIdsInternal(_appData.partners, 'part_');
+                            _appData.invoices = _ensureIdsInternal(_appData.invoices, 'inv_');
+                            _appData.expenses = _ensureIdsInternal(_appData.expenses, 'exp_');
                             console.log("Podatki naloženi iz localStorage (preko AppStore):", _appData);
                         } catch (e) {
                             console.error("Napaka pri razčlenjevanju podatkov iz localStorage (AppStore):", e);
                             ToastManager.showToast('Napaka pri nalaganju shranjenih podatkov. Podatki so morda ponastavljeni.', 'error', 5000);
-                            _appData = { companies: [], services: [], partners: [], invoices: [] };
+                            _appData = { companies: [], services: [], partners: [], invoices: [], expenses: [] }; // Ponastavi na prazno stanje ob napaki.
                         }
                     } else {
-                        _appData = { companies: [], services: [], partners: [], invoices: [] };
+                        _appData = { companies: [], services: [], partners: [], invoices: [] , expenses: []}; // Če ni podatkov, začni s praznim stanjem.
                     }
                 },
+                /**
+                 * Vrne globoko kopijo (deep copy) trenutnega stanja aplikacije.
+                 * S tem se prepreči neposredna modifikacija stanja izven tega modula, kar ohranja predvidljivost.
+                 */
                 getData: function() {
-                    // Vračamo globoko kopijo, da preprečimo neposredne modifikacije od zunaj
                     return JSON.parse(JSON.stringify(_appData));
                 },
-                // Metode za upravljanje s podjetji
+
+                // --- Metode za upravljanje s PODJETJI ---
                 addCompany: function(companyData) { _appData.companies.push({ ...companyData, id: Utils.generateUniqueId('company_') }); _saveAndRefresh(); },
                 updateCompany: function(id, updatedData) { const index = _appData.companies.findIndex(c => c.id === id); if (index > -1) _appData.companies[index] = { ..._appData.companies[index], ...updatedData }; _saveAndRefresh(); },
                 deleteCompany: function(id) { _appData.companies = _appData.companies.filter(c => c.id !== id); _saveAndRefresh(); },
-                // Metode za upravljanje s storitvami
+
+                // --- Metode za upravljanje s STORITVAMI ---
                 addService: function(serviceData) { _appData.services.push({ ...serviceData, id: Utils.generateUniqueId('service_') }); _saveAndRefresh(); },
                 updateService: function(id, updatedData) { const index = _appData.services.findIndex(s => s.id === id); if (index > -1) _appData.services[index] = { ..._appData.services[index], ...updatedData }; _saveAndRefresh(); },
                 deleteService: function(id) { _appData.services = _appData.services.filter(s => s.id !== id); _saveAndRefresh(); },
-                // Metode za upravljanje s partnerji
+
+                // --- Metode za upravljanje s PARTNERJI ---
                 addPartner: function(partnerData) { _appData.partners.push({ ...partnerData, id: Utils.generateUniqueId('partner_') }); _saveAndRefresh(); },
-                updatePartner: function(id, updatedData) { const index = _appData.partners.findIndex(p => p.id === id); if (index > -1) _appData.partners[index] = { ..._appData.partners[index], ...updatedData }; _saveAndRefresh(); }, // Uporabi Utils.generateUniqueId
+                updatePartner: function(id, updatedData) { const index = _appData.partners.findIndex(p => p.id === id); if (index > -1) _appData.partners[index] = { ..._appData.partners[index], ...updatedData }; _saveAndRefresh(); },
                 deletePartner: function(id) { _appData.partners = _appData.partners.filter(p => p.id !== id); _saveAndRefresh(); },
-                // Metode za upravljanje z računi
+
+                // --- Metode za upravljanje z RAČUNI ---
                 addInvoice: function(invoiceData) {
                     const newInvoice = {
                         ...invoiceData,
                         id: Utils.generateUniqueId('invoice_'),
-                        number: InvoiceManager.generateInvoiceNumber(invoiceData.dateIssued, _appData.invoices),
-                        status: 'unpaid' // Eksplicitno nastavi status na 'unpaid'
+                        number: InvoiceManager.generateInvoiceNumber(invoiceData.dateIssued, _appData.invoices), // Generiraj številko računa.
+                        status: 'unpaid' // Nov račun je vedno neplačan.
                     };
                     _appData.invoices.push(newInvoice);
                     _saveAndRefresh(); 
                 },
-                updateInvoice: function(id, updatedData) { const index = _appData.invoices.findIndex(i => i.id === id); if (index > -1) { const oldNum = _appData.invoices[index].number; _appData.invoices[index] = { ..._appData.invoices[index], ...updatedData, number: oldNum }; } _saveAndRefresh(); },
+                updateInvoice: function(id, updatedData) { 
+                    const index = _appData.invoices.findIndex(i => i.id === id); 
+                    if (index > -1) { 
+                        const oldNum = _appData.invoices[index].number; // Ohrani staro številko računa ob posodobitvi.
+                        _appData.invoices[index] = { ..._appData.invoices[index], ...updatedData, number: oldNum }; 
+                    } 
+                    _saveAndRefresh(); 
+                },
                 deleteInvoice: function(id) { _appData.invoices = _appData.invoices.filter(i => i.id !== id); _saveAndRefresh(); },
-                // Za FAB gumbe
-                replaceAllData: function(importedData) { _appData = importedData; _saveToLocalStorageInternal(); /* Osvežitev bo po reloadu */},
-                deleteAllData: function() { _appData = { companies: [], services: [], partners: [], invoices: [] }; _saveToLocalStorageInternal(); /* Osvežitev bo po reloadu */},
-                // Upravljanje fokusa
+
+                // --- Metode za upravljanje s STROŠKI ---
+                addExpense: function(expenseData) { _appData.expenses.push({ ...expenseData, id: Utils.generateUniqueId('expense_') }); _saveAndRefresh(); },
+                updateExpense: function(id, updatedData) { const index = _appData.expenses.findIndex(e => e.id === id); if (index > -1) _appData.expenses[index] = { ..._appData.expenses[index], ...updatedData }; _saveAndRefresh(); },
+                deleteExpense: function(id) { _appData.expenses = _appData.expenses.filter(e => e.id !== id); _saveAndRefresh(); },
+
+
+                // --- Metode za globalne akcije (FAB gumbi) ---
+                replaceAllData: function(importedData) { _appData = importedData; _saveToLocalStorageInternal(); /* Osvežitev UI bo po ponovnem nalaganju strani. */},
+                deleteAllData: function() { _appData = { companies: [], services: [], partners: [], invoices: [], expenses: [] }; _saveToLocalStorageInternal(); /* Osvežitev UI bo po ponovnem nalaganju strani. */},
+
+                // --- Metode za upravljanje fokusa (dostopnost) ---
                 setLastFocusedElement: function(el) { _lastFocusedElement = el; },
                 getLastFocusedElement: function() { return _lastFocusedElement; },
                 clearLastFocusedElement: function() { _lastFocusedElement = null; }
             };
         })();
 
-        // --- Globalna funkcija za osveževanje celotnega UI-ja ---
+        /**
+         * Globalna funkcija, ki osveži vse dele uporabniškega vmesnika.
+         * Kliče render funkcije posameznih managerjev, ki nato pridobijo sveže podatke iz AppStore.
+         */
         function refreshAllUI() {
-            // Vse render funkcije bodo zdaj implicitno ali eksplicitno uporabljale AppStore.getData()
             CompanyManager.renderCompaniesList();
-            ServiceManager.renderServicesList(); // Uporabi ServiceManager
-            PartnerManager.renderPartnersList(); // Uporabi PartnerManager
-            InvoiceManager.renderInvoicesTable();
+            ServiceManager.renderServicesList();
+            PartnerManager.renderPartnersList();
+            InvoiceManager.renderInvoicesTable(); // Tabela na pregledni plošči
             InvoiceManager.renderAllInvoicesTable();
             DashboardManager.updateDashboardCards();
             DashboardManager.checkInitialWarnings();
-            InvoiceManager.populatePartnerFilterDropdown(); // Napolni filter za partnerje
+            InvoiceManager.populatePartnerFilterDropdown();
             ChartRenderer.renderEarningsChart();
             ChartRenderer.renderTopPartnersChart();
+            ChartRenderer.renderExpensesChart();
+            ExpenseManager.renderExpensesList();
         }
 
-        // --- Pomožne funkcije in splošne metode (Utils) ---
+        // === MODUL: Utils (Pomožne funkcije) ===
+        // Zbirka splošnih, ponovno uporabnih funkcij.
         const Utils = (function () {
+            // Pridobi vrednost CSS spremenljivke.
             function getCssVariable(variableName) {
                 return getComputedStyle(document.documentElement).getPropertyValue(variableName).trim();
             }
 
+            // Formira število v niz za prikaz cen (npr. 123.45 -> "123,45").
             function formatPriceForDisplay(number) {
                 if (typeof number !== 'number' || isNaN(number)) {
                     return '0,00';
@@ -1534,16 +1767,19 @@
                 return number.toFixed(2).replace('.', ',');
             }
 
+            // Razčleni niz iz vnosnega polja v število, ne glede na to, ali je uporabljen '.' ali ','.
             function parsePriceFromInput(valueStr) {
                 if (typeof valueStr !== 'string') return NaN;
                 const s = valueStr.trim();
                 if (s === '') return NaN;
 
+                // Najde zadnjo piko ali vejico, ki bo obravnavana kot decimalno ločilo.
                 const lastCommaIdx = s.lastIndexOf(',');
                 const lastDotIdx = s.lastIndexOf('.');
-                
                 const actualDecimalSeparatorIdx = Math.max(lastCommaIdx, lastDotIdx);
 
+                // Zgradi normaliziran niz, kjer so vsi znaki razen številk odstranjeni,
+                // decimalno ločilo pa je vedno pika.
                 let normalizedString = "";
                 for (let i = 0; i < s.length; i++) {
                     const char = s[i];
@@ -1554,6 +1790,7 @@
                     }
                 }
 
+                // Preveri, ali je rezultat veljavno število.
                 if (normalizedString === "" || normalizedString === ".") {
                     return NaN;
                 }
@@ -1561,10 +1798,12 @@
                 return parseFloat(normalizedString);
             }
 
+            // Generira unikaten ID z uporabo časovnega žiga in naključnega niza.
             function generateUniqueId(prefix = 'id_') {
                 return prefix + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
             }
 
+            // Formira objekt Date v niz formata 'YYYY-MM-DD' za uporabo v <input type="date">.
             function formatDateForInput(date) {
                 if (!date || !(date instanceof Date) || isNaN(date)) return '';
                 const year = date.getFullYear();
@@ -1573,6 +1812,7 @@
                 return `${year}-${month}-${day}`;
             }
 
+            // Izračuna naslednji 15. dan v mesecu glede na podan datum (uporabno za določanje roka plačila).
             function getNext15th(date = new Date()) {
                 let day = date.getDate();
                 let month = date.getMonth();
@@ -1584,6 +1824,7 @@
                 }
             }
 
+            // Izračuna začetni in končni datum preteklega meseca (uporabno za določanje obdobja storitve).
             function getServicePeriod(date = new Date()) {
                 let day = date.getDate();
                 let targetMonthDate;
@@ -1599,7 +1840,11 @@
                 return { start: firstDay, end: lastDay };
             }
 
-            // Pomožna funkcija za prikaz seznamov (kartic)
+            /**
+             * Generična funkcija za izrisovanje seznama elementov (npr. kartic za storitve, partnerje).
+             * Upravlja prikaz vsebine ali sporočila o praznem stanju.
+             * @param {string} containerId - ID HTML elementa, kamor se bodo izrisali elementi.
+             */
             function renderItemsList(containerId, emptyStateId, items, renderCardFn, editFn, deleteFn, itemTypeLabel = 'element', gridDisplay = true) {
                 const listContainer = document.getElementById(containerId);
                 const emptyState = document.getElementById(emptyStateId);
@@ -1619,6 +1864,23 @@
                 }
             }
 
+            // Določi "aktivno" leto za nadzorno ploščo na podlagi zadnjega računa.
+            function getActiveDashboardYear(invoices) {
+                if (!invoices || invoices.length === 0) {
+                    return new Date().getFullYear();
+                }
+                const years = invoices
+                    .map(inv => inv.dateIssued ? new Date(inv.dateIssued).getFullYear() : null)
+                    .filter(year => year !== null);
+
+                if (years.length === 0) {
+                    return new Date().getFullYear();
+                }
+
+                return Math.max(...years);
+            }
+
+            // Klasična "debounce" funkcija za omejevanje pogostosti izvajanja funkcije (npr. pri filtriranju).
             function debounce(func, wait) {
                 let timeout;
                 return function executedFunction(...args) {
@@ -1638,19 +1900,28 @@
                 generateUniqueId,
                 formatDateForInput,
                 getNext15th,
-                getServicePeriod, // formatPriceForPdfTable is now in PdfGenerator
+                getServicePeriod,
                 renderItemsList,
-                debounce
+                debounce,
+                getActiveDashboardYear
             };
         })();
 
-        // --- Upravljanje validacije (ValidationUtils) ---
+        // === MODUL: ValidationUtils (Validacija obrazcev) ===
+        // Vsebuje funkcije za preverjanje pravilnosti vnosov v obrazcih.
         const ValidationUtils = (function () {
+            /**
+             * Splošna funkcija za validacijo enega polja v obrazcu.
+             * @param {HTMLInputElement} input - Element, ki ga validiramo.
+             * @param {HTMLElement} errorElement - Element, kjer se prikaže sporočilo o napaki.
+             * @param {object} fieldConfig - Konfiguracijski objekt s pravili za validacijo.
+             * @returns {boolean} - Vrne `true`, če je polje veljavno, sicer `false`.
+             */
             function validateField(input, errorElement, fieldConfig) {
                 let errorMessage = '';
                 if (!input) return true; 
                 input.value = input.value.trimStart();
-                input.removeAttribute('title'); // Počisti prejšnji title
+                input.removeAttribute('title'); // Počisti prejšnji tooltip z napako.
                 const value = input.value;
 
                 if (fieldConfig.required && value === '') {
@@ -1672,6 +1943,7 @@
                     }
                 }
 
+                // Posodobi UI glede na rezultat validacije (prikaži/skrij napako, dodaj/odstrani razred 'invalid').
                 if (errorElement) errorElement.textContent = errorMessage;
                 input.setAttribute('aria-describedby', errorElement ? errorElement.id : '');
                 if (errorMessage) {
@@ -1685,7 +1957,11 @@
                 }
             }
 
-            // Ta funkcija ostane tukaj, saj je specifična za validacijo IBAN-a
+            /**
+             * Specifična funkcija za validacijo IBAN številke.
+             * Preveri format in kontrolno vsoto (modulo 97).
+             * @returns {string} - Vrne prazen niz, če je IBAN veljaven, sicer sporočilo o napaki.
+             */
             function validateIban(iban) {
                 const cleanedIban = iban.replace(/\s/g, '').toUpperCase();
                 if (!/^[A-Z]{2}\d{2}[A-Z0-9]{11,30}$/.test(cleanedIban)) {
@@ -1718,22 +1994,25 @@
             };
         })();
 
-        // --- Upravljanje modalnih oken (ModalManager) ---
+        // === MODUL: ModalManager (Upravljanje modalnih oken) ===
+        // Upravlja prikaz, zapiranje in dostopnost (fokus) generičnega modalnega okna.
         const ModalManager = (function () {
             const genericModalEl = document.getElementById('genericModal'); 
             const modalTitleEl = document.getElementById('modalTitle');
             const modalBodyEl = document.getElementById('modalBodyContent');
             const modalFooterEl = document.getElementById('modalFooterContent');
         
+            // Vrne seznam vseh fokusabilnih elementov znotraj starševskega elementa.
             function getFocusableElements(parentElement) {
                 if (!parentElement) return [];
                 return Array.from(
                     parentElement.querySelectorAll(
                         'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
                     )
-                ).filter(el => !el.disabled && el.offsetParent !== null);
+                ).filter(el => !el.disabled && el.offsetParent !== null); // Filtrira skrite ali onemogočene elemente.
             }
         
+            // Funkcija za "ujetje" fokusa znotraj modala, da uporabnik ne more s tipko Tab skočiti na elemente v ozadju.
             function trapFocusInModal(event) {
                 if (event.key !== 'Tab' || !genericModalEl.classList.contains('active')) {
                     return;
@@ -1746,6 +2025,7 @@
                 const firstFocusableElement = focusableElements[0];
                 const lastFocusableElement = focusableElements[focusableElements.length - 1];
         
+                // Logika za premikanje fokusa naprej (Tab) in nazaj (Shift+Tab).
                 if (event.shiftKey) {
                     if (document.activeElement === firstFocusableElement) {
                         lastFocusableElement.focus();
@@ -1759,13 +2039,17 @@
                 }
             }
         
+            // Odpre modalno okno, nastavi vsebino in inicializira upravljanje fokusa.
             function openModal(title, bodyHTML, footerHTML) {
-                AppStore.setLastFocusedElement(document.activeElement);
+                AppStore.setLastFocusedElement(document.activeElement); // Shrani element, ki je imel fokus pred odprtjem.
         
                 if (modalTitleEl) modalTitleEl.textContent = title;
                 if (modalBodyEl) modalBodyEl.innerHTML = bodyHTML;
                 if (modalFooterEl) modalFooterEl.innerHTML = footerHTML;
-                if (modalBodyEl) modalBodyEl.scrollTop = 0;
+                if (modalBodyEl) {
+                    // Ob odprtju vedno skoči na vrh vsebine modala.
+                    modalBodyEl.scrollTop = 0; 
+                }
                 
                 if (genericModalEl) {
                     genericModalEl.classList.add('active');
@@ -1777,23 +2061,27 @@
                 }
             }
         
+            // Zapre modalno okno in vrne fokus na prej aktiven element.
             function closeModal() {
                 if (genericModalEl) genericModalEl.classList.remove('active');
                 if (modalBodyEl) modalBodyEl.innerHTML = ''; 
                 if (modalFooterEl) modalFooterEl.innerHTML = '';
                 genericModalEl.removeEventListener('keydown', trapFocusInModal);
+
                 const prevFocused = AppStore.getLastFocusedElement();
                 if (prevFocused) {
-                    prevFocused.focus();
+                    prevFocused.focus(); // Vrne fokus.
                     AppStore.clearLastFocusedElement();
                 }
             }
 
+            // Nastavi poslušalce dogodkov na gumbe, ki odpirajo modalna okna (npr. "Dodaj storitev").
             function setupModalTriggers() {
                 document.getElementById('addServiceBtn')?.addEventListener('click', () => ServiceManager.openServiceModal());
                 document.getElementById('addCompanyBtn')?.addEventListener('click', () => CompanyManager.openCompanyModal());
                 document.getElementById('addPartnerBtn')?.addEventListener('click', () => PartnerManager.openPartnerModal());
                 document.getElementById('createInvoiceBtn')?.addEventListener('click', () => InvoiceManager.openInvoiceModal());
+                document.getElementById('addExpenseBtn')?.addEventListener('click', () => ExpenseManager.openExpenseModal());
             }
 
             function setupEventListeners() {
@@ -1956,6 +2244,7 @@
         const ChartRenderer = (function () {
             let earningsChartInstance = null;
             let topPartnersChartInstance = null;
+            let expensesChartInstance = null;
         
             function setupChartDefaults() {
                 const fontFamily = Utils.getCssVariable('--pisava-osnovna') || 'sans-serif';
@@ -1985,19 +2274,38 @@
                 const primaryColor = Utils.getCssVariable('--barva-gumba-primarni') || 'rgba(54, 162, 235, 1)';
                 const primaryColorBg = primaryColor.replace(')', ', 0.6)').replace('rgb', 'rgba');
         
-                const currentYear = new Date().getFullYear();
-                const monthlyEarnings = Array(12).fill(0);
-                const monthLabels = ["Jan", "Feb", "Mar", "Apr", "Maj", "Jun", "Jul", "Avg", "Sep", "Okt", "Nov", "Dec"];
+                const { year: yearToFilter, title: periodTitle } = DashboardManager.getSelectedPeriod();
 
-                currentData.invoices.forEach(invoice => {
-                    if (invoice.status === 'paid' && invoice.dateIssued && invoice.totalAmount) {
-                        const invoiceDate = new Date(invoice.dateIssued);
-                        if (invoiceDate.getFullYear() === currentYear) {
-                            const month = invoiceDate.getMonth();
-                            monthlyEarnings[month] += invoice.totalAmount;
+                const titleEl = document.getElementById('earningsChartTitle');
+                if (titleEl) titleEl.textContent = `Zaslužek ${periodTitle}`;
+
+                let labels, data, chartLabel;
+
+                if (yearToFilter) { // Specifično leto ali aktivno leto
+                    labels = ["Jan", "Feb", "Mar", "Apr", "Maj", "Jun", "Jul", "Avg", "Sep", "Okt", "Nov", "Dec"];
+                    const monthlyEarnings = Array(12).fill(0);
+                    currentData.invoices.forEach(invoice => {
+                        if (invoice.status === 'paid' && invoice.dateIssued && invoice.totalAmount) {
+                            const invoiceDate = new Date(invoice.dateIssued);
+                            if (invoiceDate.getFullYear() === yearToFilter) {
+                                monthlyEarnings[invoiceDate.getMonth()] += invoice.totalAmount;
+                            }
                         }
-                    }
-                });
+                    });
+                    data = monthlyEarnings;
+                    chartLabel = `Zaslužek ${yearToFilter} (€)`;
+                } else { // Vsa leta
+                    const yearlyEarnings = {};
+                    currentData.invoices.forEach(invoice => {
+                        if (invoice.status === 'paid' && invoice.dateIssued && invoice.totalAmount) {
+                            const year = new Date(invoice.dateIssued).getFullYear();
+                            yearlyEarnings[year] = (yearlyEarnings[year] || 0) + invoice.totalAmount;
+                        }
+                    });
+                    labels = Object.keys(yearlyEarnings).sort((a, b) => a - b);
+                    data = labels.map(year => yearlyEarnings[year]);
+                    chartLabel = 'Zaslužek po letih (€)';
+                }
         
                 if (earningsChartInstance) {
                     earningsChartInstance.destroy();
@@ -2006,10 +2314,10 @@
                 earningsChartInstance = new Chart(ctx, {
                     type: 'bar',
                     data: {
-                        labels: monthLabels,
+                        labels: labels,
                         datasets: [{
-                            label: `Zaslužek ${currentYear} (€)`,
-                            data: monthlyEarnings,
+                            label: chartLabel,
+                            data: data,
                             backgroundColor: primaryColorBg,
                             borderColor: primaryColor,
                             borderWidth: 1
@@ -2030,9 +2338,13 @@
         
             function renderTopPartnersChart() {
                 const currentData = AppStore.getData();
+                const { year: yearToFilter, title: periodTitle } = DashboardManager.getSelectedPeriod();
                 const canvas = document.getElementById('topPartnersChartCanvas');
                 const chartContainer = canvas?.parentElement;
         
+                const titleEl = document.getElementById('topPartnersChartTitle');
+                if (titleEl) titleEl.textContent = `Top partnerji ${periodTitle}`;
+
                 if (!chartContainer) {
                     console.warn("Canvas za graf top partnerjev ali njegov ovoj ni najden.");
                     return;
@@ -2068,8 +2380,12 @@
                 canvas.style.display = 'block';
                 const ctx = canvas.getContext('2d');
         
+                const invoicesForPeriod = yearToFilter
+                    ? currentData.invoices.filter(inv => inv.dateIssued && new Date(inv.dateIssued).getFullYear() === yearToFilter)
+                    : currentData.invoices;
+
                 const partnerEarnings = {};
-                currentData.invoices.forEach(invoice => {
+                invoicesForPeriod.forEach(invoice => {
                     if (invoice.status === 'paid' && invoice.partnerId && typeof invoice.totalAmount === 'number') {
                         partnerEarnings[invoice.partnerId] = (partnerEarnings[invoice.partnerId] || 0) + invoice.totalAmount;
                     }
@@ -2159,8 +2475,86 @@
                         plugins: { 
                             legend: { 
                                 display: false 
-                            }, 
-                            title: { display: true, text: `Partnerji z največ prometa`, font: { size: 16 } }
+                            }
+                        }
+                    }
+                });
+            }
+
+            function renderExpensesChart() {
+                const { expenses, invoices } = AppStore.getData();
+                const currentYear = Utils.getActiveDashboardYear(invoices);
+                const expensesThisYear = expenses.filter(exp => exp.date && new Date(exp.date).getFullYear() === currentYear);
+                const canvas = document.getElementById('expensesChartCanvas');
+
+                const titleEl = document.getElementById('expensesChartTitle');
+                if (titleEl) titleEl.textContent = `Stroški po kategorijah (${currentYear})`;
+
+                if (!canvas) {
+                    console.warn("Canvas za graf stroškov ni najden.");
+                    return;
+                }
+                const ctx = canvas.getContext('2d');
+                const chartContainer = ctx.canvas.parentElement;
+
+                if (expensesChartInstance) {
+                    expensesChartInstance.destroy();
+                }
+
+                const existingPlaceholder = chartContainer.querySelector('.chart-placeholder');
+                if (existingPlaceholder) {
+                    existingPlaceholder.remove();
+                }
+
+                if (expensesThisYear.length === 0) {
+                    canvas.style.display = 'none';
+                    const placeholder = document.createElement('div');
+                    placeholder.className = 'chart-placeholder';
+                    placeholder.textContent = 'Ni podatkov za prikaz grafa stroškov.';
+                    chartContainer.appendChild(placeholder);
+                    return;
+                }
+                canvas.style.display = 'block';
+
+                const expensesByCategory = expensesThisYear.reduce((acc, expense) => {
+                    const category = expense.category || 'Brez kategorije';
+                    acc[category] = (acc[category] || 0) + (expense.amount || 0);
+                    return acc;
+                }, {});
+
+                const labels = Object.keys(expensesByCategory);
+                const data = Object.values(expensesByCategory);
+
+                const themeColors = [
+                    Utils.getCssVariable('--barva-kartice-modra-zacetek'),
+                    Utils.getCssVariable('--barva-kartice-zelena-zacetek'),
+                    Utils.getCssVariable('--barva-kartice-vijolicna-zacetek'),
+                    Utils.getCssVariable('--barva-kartice-oranzna-zacetek'),
+                    Utils.getCssVariable('--barva-fab-rumena'),
+                    Utils.getCssVariable('--barva-kartice-teal-zacetek'),
+                    '#ef4444', // red
+                    '#6b7280'  // gray
+                ].filter(Boolean); // Odstrani nedefinirane vrednosti
+
+                expensesChartInstance = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Stroški po kategoriji (€)',
+                            data: data,
+                            backgroundColor: themeColors,
+                            borderColor: Utils.getCssVariable('--barva-navigacije-ozadje') || '#fff',
+                            borderWidth: 2,
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'right',
+                            }
                         }
                     }
                 });
@@ -2169,7 +2563,8 @@
             return {
                 setupChartDefaults,
                 renderEarningsChart,
-                renderTopPartnersChart
+                renderTopPartnersChart,
+                renderExpensesChart
             };
         })();
 
@@ -2722,6 +3117,12 @@
         
             let currentPage = 1;
             const ITEMS_PER_PAGE = 20; // Število računov na stran. Lahko spremenite na 50.
+            let dashboardCurrentPage = 1; // Novo za paginacijo na pregledni plošči
+            const DASHBOARD_ITEMS_PER_PAGE = 5; // Število računov na stran na pregledni plošči
+
+            let _currentSortKey = 'dateIssued'; // Privzeti ključ za sortiranje
+            let _currentSortDirection = 'desc'; // Privzeta smer (najnovejši najprej)
+
 
             let currentInvoiceItems = [];
         
@@ -3224,46 +3625,123 @@
             }
 
             // Pomožna funkcija za sortiranje računov
-            function _sortInvoices(invoices) {
-                return [...invoices].sort((a, b) => {
-                    const dateAObj = a.dateIssued ? new Date(a.dateIssued) : null;
-                    const dateBObj = b.dateIssued ? new Date(b.dateIssued) : null;
+            function _sortInvoices(invoices, key, direction) {
+                const { partners } = AppStore.getData(); // Potrebujemo partnerje za sortiranje po imenu
 
-                    const timeA = dateAObj ? dateAObj.getTime() : NaN;
-                    const timeB = dateBObj ? dateBObj.getTime() : NaN;
+                // 1. Obogatitev podatkov za sortiranje
+                const enrichedInvoices = invoices.map(invoice => ({
+                    ...invoice,
+                    partnerName: (partners.find(p => p.id === invoice.partnerId)?.name || '').toLowerCase(),
+                    netAmount: (invoice.items || []).reduce((sum, item) => sum + (item.itemTotal || 0), 0),
+                    grossAmount: invoice.totalAmount || 0,
+                    status: invoice.status || 'unpaid'
+                }));
 
-                    const aDateInvalid = isNaN(timeA);
-                    const bDateInvalid = isNaN(timeB);
+                // 2. Dejanska logika sortiranja
+                enrichedInvoices.sort((a, b) => {
+                    let valA = a[key];
+                    let valB = b[key];
 
-                    if (aDateInvalid && bDateInvalid) {
-                        const numA = a.number || "";
-                        const numB = b.number || "";
-                        return numB.localeCompare(numA);
+                    // Primerjalna logika glede na tip podatka
+                    let comparison = 0;
+                    switch (key) {
+                        case 'dateIssued':
+                            const timeA = valA ? new Date(valA).getTime() : 0;
+                            const timeB = valB ? new Date(valB).getTime() : 0;
+                            comparison = timeA - timeB;
+                            break;
+                        case 'netAmount':
+                        case 'grossAmount':
+                            comparison = valA - valB;
+                            break;
+                        case 'number':
+                        case 'partnerName':
+                        case 'status':
+                            comparison = String(valA).localeCompare(String(valB), 'sl-SI');
+                            break;
+                        default:
+                            if (valA > valB) comparison = 1;
+                            else if (valA < valB) comparison = -1;
                     }
-                    if (aDateInvalid) return 1;
-                    if (bDateInvalid) return -1;
 
-                    if (timeB !== timeA) {
-                        return timeB - timeA;
+                    // Sekundarno sortiranje po številki računa (padajoče) za stabilnost
+                    if (comparison === 0) {
+                        return (b.number || '').localeCompare(a.number || '');
                     }
-                    const numA = a.number || "";
-                    const numB = b.number || "";
-                    return numB.localeCompare(numA);
+
+                    // Upoštevamo smer sortiranja
+                    return direction === 'desc' ? comparison * -1 : comparison;
                 });
+
+                return enrichedInvoices;
             }
         
+            function _updateSortHeadersUI(key, direction) {
+                const allHeaders = document.querySelectorAll('.sortable-header');
+                allHeaders.forEach(header => {
+                    header.removeAttribute('aria-sort');
+                });
+
+                const activeHeader = document.querySelector(`.sortable-header[data-sort-key="${key}"]`);
+                if (activeHeader) {
+                    activeHeader.setAttribute('aria-sort', direction === 'asc' ? 'ascending' : 'descending');
+                }
+            }
+
+            function _handleSortClick(event) {
+                const newKey = event.currentTarget.dataset.sortKey;
+                if (!newKey) return;
+
+                if (newKey === _currentSortKey) {
+                    // Če kliknemo na isti stolpec, samo obrnemo smer
+                    _currentSortDirection = _currentSortDirection === 'asc' ? 'desc' : 'asc';
+                } else {
+                    // Če kliknemo na nov stolpec, nastavimo nov ključ in privzeto smer
+                    _currentSortKey = newKey;
+                    // Smiselna privzeta smer glede na tip podatka
+                    if (['netAmount', 'grossAmount', 'dateIssued'].includes(newKey)) {
+                        _currentSortDirection = 'desc'; // Zneski in datumi najprej padajoče
+                    } else {
+                        _currentSortDirection = 'asc'; // Besedilo naraščajoče (A-Z)
+                    }
+                }
+
+                // Posodobi UI in ponovno izriši tabele
+                _updateSortHeadersUI(_currentSortKey, _currentSortDirection);
+                renderInvoicesTable(); // Osveži tabelo na pregledni plošči
+                applyInvoiceFilters(); // Osveži glavno tabelo z računi (upošteva filtre)
+            }
+
+            function setupTableSorting() {
+                const headers = document.querySelectorAll('.sortable-header');
+                headers.forEach(header => {
+                    header.addEventListener('click', _handleSortClick);
+                });
+                _updateSortHeadersUI(_currentSortKey, _currentSortDirection); // Nastavi začetno stanje ikon
+            }
+
             function renderInvoicesTable() {
             const currentData = AppStore.getData();
             const tableBody = document.getElementById('recentInvoicesTableBody');
             if (!tableBody) return;
             tableBody.innerHTML = '';
+
+            const titleEl = document.getElementById('recentInvoicesTitle');
+            const activeYear = Utils.getActiveDashboardYear(currentData.invoices);
+            if (titleEl) titleEl.textContent = `Nedavni računi (${activeYear})`;
             
-            const sortedInvoices = _sortInvoices(currentData.invoices);
-            const recentInvoices = sortedInvoices.slice(0, 5);
-            if (recentInvoices.length === 0) {
+            const sortedInvoices = _sortInvoices(currentData.invoices, _currentSortKey, _currentSortDirection);
+
+            // Paginacija za pregledno ploščo
+            const totalPages = Math.ceil(sortedInvoices.length / DASHBOARD_ITEMS_PER_PAGE);
+            const startIndex = (dashboardCurrentPage - 1) * DASHBOARD_ITEMS_PER_PAGE;
+            const endIndex = startIndex + DASHBOARD_ITEMS_PER_PAGE;
+            const paginatedInvoices = sortedInvoices.slice(startIndex, endIndex);
+
+            if (paginatedInvoices.length === 0) {
                 tableBody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 2rem;">Ni nedavnih računov.</td></tr>'; // Colspan updated to 7 (Št, Plačnik, Datum, Neto, Bruto, Status, Akcije)
             } else {
-                recentInvoices.forEach(invoice => {
+                paginatedInvoices.forEach(invoice => {
                     const myCompany = currentData.companies.find(c => c.id === invoice.myCompanyId);
                     const partner = currentData.partners.find(p => p.id === invoice.partnerId);
                     const netAmount = (invoice.items || []).reduce((sum, item) => sum + (item.itemTotal || 0), 0);
@@ -3300,6 +3778,16 @@
                     });
                 }); // Internal helper for InvoiceManager
             }
+
+            // Klic nove, splošne funkcije za izris paginacije
+            _renderPaginationControls(
+                'dashboardPaginationContainer',
+                dashboardCurrentPage,
+                DASHBOARD_ITEMS_PER_PAGE,
+                sortedInvoices.length,
+                totalPages,
+                _changeDashboardPage
+            );
             }
 
             function _changePage(page) {
@@ -3307,8 +3795,13 @@
                 applyInvoiceFilters(); // Ponovno uporabi filtre za novo stran
             }
 
-            function _renderPaginationControls(totalItems, totalPages) {
-                const paginationContainer = document.getElementById('invoicesPaginationContainer');
+            function _changeDashboardPage(page) {
+                dashboardCurrentPage = page;
+                renderInvoicesTable(); // Kliče osvežitev tabele na pregledni plošči
+            }
+
+            function _renderPaginationControls(containerId, currentPage, itemsPerPage, totalItems, totalPages, changePageFn) {
+                const paginationContainer = document.getElementById(containerId);
                 if (!paginationContainer) return;
                 paginationContainer.innerHTML = '';
 
@@ -3316,8 +3809,8 @@
                     return; // Ne prikaži paginacije, če je samo ena stran
                 }
 
-                const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-                const endIndex = Math.min(startIndex + ITEMS_PER_PAGE, totalItems);
+                const startIndex = (currentPage - 1) * itemsPerPage;
+                const endIndex = Math.min(startIndex + itemsPerPage, totalItems);
 
                 const infoEl = document.createElement('div');
                 infoEl.className = 'pagination-info';
@@ -3331,7 +3824,7 @@
                 prevBtn.innerHTML = `<i class="fas fa-chevron-left"></i>`;
                 prevBtn.className = 'button button-sm button-primary';
                 prevBtn.disabled = currentPage === 1;
-                prevBtn.addEventListener('click', () => _changePage(currentPage - 1));
+                prevBtn.addEventListener('click', () => changePageFn(currentPage - 1));
                 buttonsEl.appendChild(prevBtn);
 
                 // Gumbi s številkami strani
@@ -3352,7 +3845,7 @@
                     pageBtn.textContent = i;
                     pageBtn.className = 'button button-sm button-primary';
                     if (i === currentPage) pageBtn.classList.add('active');
-                    pageBtn.addEventListener('click', () => _changePage(i));
+                    pageBtn.addEventListener('click', () => changePageFn(i));
                     buttonsEl.appendChild(pageBtn);
                 }
                 if (endPage < totalPages) { buttonsEl.insertAdjacentHTML('beforeend', `<span style="align-self: center; padding: 0 0.5rem;">...</span>`); }
@@ -3362,7 +3855,7 @@
                 nextBtn.innerHTML = `<i class="fas fa-chevron-right"></i>`;
                 nextBtn.className = 'button button-sm button-primary';
                 nextBtn.disabled = currentPage === totalPages;
-                nextBtn.addEventListener('click', () => _changePage(currentPage + 1));
+                nextBtn.addEventListener('click', () => changePageFn(currentPage + 1));
                 buttonsEl.appendChild(nextBtn);
 
                 paginationContainer.appendChild(infoEl);
@@ -3377,7 +3870,7 @@
             const emptyState = document.getElementById('invoicesEmptyState');
             if (!tableBody || !emptyState) return;
 
-            const sortedInvoices = _sortInvoices(invoices);
+            const sortedInvoices = _sortInvoices(invoices, _currentSortKey, _currentSortDirection);
             const totalPages = Math.ceil(sortedInvoices.length / ITEMS_PER_PAGE);
             const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
             const endIndex = startIndex + ITEMS_PER_PAGE;
@@ -3444,7 +3937,14 @@
                 }); // Internal helper for InvoiceManager
             }
 
-            _renderPaginationControls(sortedInvoices.length, totalPages);
+            _renderPaginationControls(
+                'invoicesPaginationContainer',
+                currentPage,
+                ITEMS_PER_PAGE,
+                sortedInvoices.length,
+                totalPages,
+                _changePage // Pass the correct change function
+            );
             }
         
             function toggleInvoiceStatus(invoiceId) {
@@ -3573,12 +4073,130 @@
                 populatePartnerFilterDropdown,
                 applyInvoiceFilters,
                 resetInvoiceFilters,
-                setupInvoiceFilters
+                setupInvoiceFilters,
+                setupTableSorting
+            };
+        })();
+
+        // === MODUL: SettingsManager (Upravljanje nastavitev) ===
+        // Ta modul bo centralno mesto za vso logiko, povezano z nastavitvami in globalnim upravljanjem podatkov.
+        const SettingsManager = (function () {
+            // Privatne funkcije, ki vsebujejo logiko za posamezne akcije.
+
+            // Logika za prenos vseh podatkov v .json datoteko.
+            function _handleDownloadData() {
+                const dataStr = JSON.stringify(AppStore.getData(), null, 2);
+                const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+                const exportFileDefaultName = `racunovodstvo_podatki_${new Date().toISOString().slice(0,10)}.json`;
+                
+                const linkElement = document.createElement('a');
+                linkElement.setAttribute('href', dataUri);
+                linkElement.setAttribute('download', exportFileDefaultName);
+                linkElement.click();
+                linkElement.remove();
+                ToastManager.showToast('Podatki preneseni!');
+            }
+
+            // Logika, ki se izvede ob spremembi skritega input polja za nalaganje datoteke.
+            function _handleUploadFileChange(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        try {
+                            const importedData = JSON.parse(e.target.result);
+                            if (confirm("Ali ste prepričani, da želite naložiti te podatke? Obstoječi podatki bodo prepisani.")) {
+                                AppStore.replaceAllData(importedData);
+                                sessionStorage.setItem('importSuccess', 'true');
+                                sessionStorage.setItem('importTimestamp', new Date().toISOString());
+                                window.location.reload(true); 
+                            }
+                        } catch (error) {
+                            ToastManager.showToast('Napaka pri branju datoteke. Preverite, ali je veljavna JSON datoteka.', 'error');
+                            console.error("Napaka pri uvozu:", error);
+                        } finally {
+                           event.target.value = ''; // Počisti input, da lahko naložimo isto datoteko ponovno.
+                        }
+                    };
+                    reader.readAsText(file);
+                }
+            }
+
+            // Logika za brisanje vseh podatkov aplikacije.
+            function _handleDeleteAllData() {
+                if (confirm("Ali ste prepričani, da želite izbrisati VSE podatke aplikacije? Tega dejanja ni mogoče razveljaviti.")) {
+                    if (confirm("ZADNJE OPOZORILO: Res želite izbrisati vse podatke? Vsi računi, partnerji, storitve in nastavitve bodo trajno odstranjeni.")) {
+                        AppStore.deleteAllData();
+                        window.location.reload(true); 
+                    }
+                }
+            }
+
+            return {
+                /**
+                 * Inicializira poslušalce dogodkov za nove gumbe v zavihku "Nastavitve".
+                 */
+                initSettingsTab: function() {
+                    const downloadBtn = document.getElementById('settingsDownloadBtn');
+                    const uploadBtn = document.getElementById('settingsUploadBtn');
+                    const deleteBtn = document.getElementById('settingsDeleteBtn');
+                    const uploadInput = document.getElementById('uploadInput'); // Potrebujemo referenco na skriti input
+                    downloadBtn?.addEventListener('click', _handleDownloadData);
+                    uploadBtn?.addEventListener('click', () => uploadInput?.click());
+                    deleteBtn?.addEventListener('click', _handleDeleteAllData);
+                    uploadInput?.addEventListener('change', _handleUploadFileChange); 
+                }
             };
         })();
 
         // --- Upravljanje nadzorne plošče (DashboardManager) ---
         const DashboardManager = (function () {
+            function getSelectedPeriod() {
+                let yearToFilter;
+                let title = '';
+
+                if (_selectedYear === 'active') {
+                    yearToFilter = Utils.getActiveDashboardYear(AppStore.getData().invoices);
+                    title = `(${yearToFilter})`;
+                } else if (_selectedYear === 'all') {
+                    yearToFilter = null; // Brez letnega filtra
+                    title = '(Skupno)';
+                } else {
+                    yearToFilter = parseInt(_selectedYear, 10);
+                    title = `(${yearToFilter})`;
+                }
+                return { year: yearToFilter, title: title };
+            }
+            let _selectedYear = 'active'; // 'active', 'all', ali specifično leto
+
+            function _populateYearFilter() {
+                const filterSelect = document.getElementById('dashboardYearFilter');
+                if (!filterSelect) return;
+
+                const { invoices } = AppStore.getData();
+                const years = [...new Set(invoices.map(inv => new Date(inv.dateIssued).getFullYear()))]
+                    .filter(year => !isNaN(year))
+                    .sort((a, b) => b - a);
+
+                filterSelect.innerHTML = ''; // Počisti obstoječe možnosti
+
+                // Dodaj posebne možnosti
+                filterSelect.add(new Option('Aktivno leto', 'active'));
+                filterSelect.add(new Option('Vsa leta (skupno)', 'all'));
+
+                // Dodaj možnosti za vsako leto s podatki
+                years.forEach(year => {
+                    filterSelect.add(new Option(year, year));
+                });
+
+                filterSelect.value = _selectedYear; // Nastavi trenutno izbiro
+            }
+
+            function _handleYearFilterChange(event) {
+                _selectedYear = event.target.value;
+                refreshAllUI(); // Osveži celoten UI, vključno s karticami, grafi in tabelami
+            }
+
             function addWarning(container, message) {
                 const warningDiv = document.createElement('div');
                 warningDiv.className = 'warning-message';
@@ -3652,74 +4270,86 @@
             }
 
             function setupFabButtons() {
-                const fabDownload = document.getElementById('fabDownload');
-                const fabUpload = document.getElementById('fabUpload');
-                const uploadInput = document.getElementById('uploadInput');
-                const fabDelete = document.getElementById('fabDelete');
-    
-                fabDownload?.addEventListener('click', () => {
-                    const dataStr = JSON.stringify(AppStore.getData(), null, 2);
-                    const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
-                    const exportFileDefaultName = `racunovodstvo_podatki_${new Date().toISOString().slice(0,10)}.json`;
-                    
-                    const linkElement = document.createElement('a');
-                    linkElement.setAttribute('href', dataUri);
-                    linkElement.setAttribute('download', exportFileDefaultName);
-                    linkElement.click();
-                    linkElement.remove();
-                    ToastManager.showToast('Podatki preneseni!');
-                });
-    
-                fabUpload?.addEventListener('click', () => uploadInput?.click());
-                uploadInput?.addEventListener('change', (event) => {
-                    const file = event.target.files[0];
-                    if (file) {
-                        const reader = new FileReader();
-                        reader.onload = function(e) {
-                            try {
-                                const importedData = JSON.parse(e.target.result);
-                                if (confirm("Ali ste prepričani, da želite naložiti te podatke? Obstoječi podatki bodo prepisani.")) {
-                                    AppStore.replaceAllData(importedData);
-                                    window.location.reload(true); 
-                                }
-                            } catch (error) {
-                                ToastManager.showToast('Napaka pri branju datoteke. Preverite, ali je veljavna JSON datoteka.', 'error');
-                                console.error("Napaka pri uvozu:", error);
-                            } finally {
-                               uploadInput.value = '';
-                            }
-                        };
-                        reader.readAsText(file);
-                    }
-                });
-    
-                fabDelete?.addEventListener('click', () => {
-                    if (confirm("Ali ste prepričani, da želite izbrisati VSE podatke aplikacije? Tega dejanja ni mogoče razveljaviti.")) {
-                        if (confirm("ZADNJE OPOZORILO: Res želite izbrisati vse podatke? Vsi računi, partnerji, storitve in nastavitve bodo trajno odstranjeni.")) {
-                            AppStore.deleteAllData();
-                            window.location.reload(true); 
-                        }
-                    }
-                });
+                // Ta funkcija ni več v uporabi.
             }
         
             function updateDashboardCards() {
-                const currentData = AppStore.getData();
-                const paidInvoices = currentData.invoices.filter(inv => inv.status === 'paid');
+                const { invoices, expenses, partners, services } = AppStore.getData();
+                
+                // 1. Določi obdobje in filtriraj podatke
+                let yearToFilter;
+                let periodLabel = '';
 
-                document.getElementById('dashboardInvoiceCount').textContent = currentData.invoices.length; // Še vedno kaže vse račune
+                if (_selectedYear === 'active') {
+                    yearToFilter = Utils.getActiveDashboardYear(invoices);
+                    periodLabel = `(${yearToFilter})`;
+                } else if (_selectedYear === 'all') {
+                    yearToFilter = null; // Brez letnega filtra
+                    periodLabel = '(Skupno)';
+                } else {
+                    yearToFilter = parseInt(_selectedYear, 10);
+                    periodLabel = `(${yearToFilter})`;
+                }
+
+                const invoicesForPeriod = yearToFilter 
+                    ? invoices.filter(inv => inv.dateIssued && new Date(inv.dateIssued).getFullYear() === yearToFilter)
+                    : invoices;
                 
-                const totalEarnings = paidInvoices.reduce((sum, inv) => sum + (inv.totalAmount || 0), 0);
-                document.getElementById('dashboardTotalEarnings').textContent = Utils.formatPriceForDisplay(totalEarnings) + ' €';
+                const expensesForPeriod = yearToFilter
+                    ? expenses.filter(exp => exp.date && new Date(exp.date).getFullYear() === yearToFilter)
+                    : expenses;
+
+                // 2. Izračunaj metrike na podlagi filtriranih podatkov
+                const paidInvoices = invoicesForPeriod.filter(inv => inv.status === 'paid');
+                const unpaidInvoices = invoicesForPeriod.filter(inv => inv.status !== 'paid');
+
+                const realizedRevenue = paidInvoices.reduce((sum, inv) => sum + (inv.totalAmount || 0), 0);
+                const unrealizedRevenue = unpaidInvoices.reduce((sum, inv) => sum + (inv.totalAmount || 0), 0);
+                const totalExpenses = expensesForPeriod.reduce((sum, exp) => sum + (exp.amount || 0), 0);
+                const profit = realizedRevenue - totalExpenses;
+                const profitMargin = realizedRevenue > 0 ? (profit / realizedRevenue) * 100 : 0;
+
+                const totalInvoicesCount = invoicesForPeriod.length;
+                const paidInvoicesCount = paidInvoices.length;
+                const unpaidInvoicesCount = unpaidInvoices.length;
+                const paymentRate = totalInvoicesCount > 0 ? (paidInvoicesCount / totalInvoicesCount) * 100 : 0;
                 
-                const avgInvoiceValue = paidInvoices.length > 0 ? (totalEarnings / paidInvoices.length) : 0;
-                document.getElementById('dashboardAverageInvoiceValue').textContent = `Povp. vrednost: ${Utils.formatPriceForDisplay(avgInvoiceValue)} €`;
-                
-                document.getElementById('dashboardPartnerCount').textContent = currentData.partners.length;
-                document.getElementById('dashboardServiceCount').textContent = currentData.services.length;
-                
-                const lastInvoice = currentData.invoices.length > 0 ? currentData.invoices.sort((a,b) => new Date(b.dateIssued) - new Date(a.dateIssued))[0] : null;
-                document.getElementById('dashboardLastInvoiceDate').textContent = lastInvoice ? `Zadnji: ${new Date(lastInvoice.dateIssued).toLocaleDateString('sl-SI')}` : 'Ni izdanih računov';
+                const averageInvoiceValue = paidInvoicesCount > 0 ? realizedRevenue / paidInvoicesCount : 0;
+
+                // 3. Posodobitev DOM elementov
+                // Posodobi naslove skupin
+                document.querySelectorAll('.dashboard-period-label').forEach(el => el.textContent = periodLabel);
+
+                // Finančni pregled
+                document.getElementById('dashboardRealizedRevenue').textContent = Utils.formatPriceForDisplay(realizedRevenue) + ' €';
+                document.getElementById('dashboardTotalExpenses').textContent = Utils.formatPriceForDisplay(totalExpenses) + ' €';
+                document.getElementById('dashboardProfit').textContent = Utils.formatPriceForDisplay(profit) + ' €';
+                document.getElementById('dashboardProfitMargin').textContent = `Marža: ${profitMargin.toFixed(2)}%`;
+                document.getElementById('dashboardUnrealizedRevenue').textContent = Utils.formatPriceForDisplay(unrealizedRevenue) + ' €';
+
+                // Stanje računov
+                document.getElementById('dashboardTotalInvoices').textContent = totalInvoicesCount;
+                document.getElementById('dashboardPaidInvoices').textContent = paidInvoicesCount;
+                document.getElementById('dashboardUnpaidInvoices').textContent = unpaidInvoicesCount;
+                document.getElementById('dashboardPaymentRate').textContent = `${paymentRate.toFixed(1)}%`;
+
+                // Analitika in statistika
+                document.getElementById('dashboardAverageInvoiceValue').textContent = Utils.formatPriceForDisplay(averageInvoiceValue) + ' €';
+                // Ti podatki niso odvisni od obdobja, zato vedno prikazujejo celoto
+                document.getElementById('dashboardPartnerCount').textContent = partners.length;
+                document.getElementById('dashboardServiceCount').textContent = services.length;
+
+                // 4. Pogojno prikazovanje kartic
+                const unrealizedRevenueCard = document.getElementById('dashboardUnrealizedRevenueCard');
+                const unpaidInvoicesCard = document.getElementById('dashboardUnpaidInvoicesCard');
+
+                if (unpaidInvoicesCount > 0) {
+                    if (unrealizedRevenueCard) unrealizedRevenueCard.style.display = 'flex';
+                    if (unpaidInvoicesCard) unpaidInvoicesCard.style.display = 'flex';
+                } else {
+                    if (unrealizedRevenueCard) unrealizedRevenueCard.style.display = 'none';
+                    if (unpaidInvoicesCard) unpaidInvoicesCard.style.display = 'none';
+                }
             }
         
             function checkInitialWarnings() {
@@ -3746,13 +4376,17 @@
 
             function _setupDashboardActions() {
                 document.getElementById('exportCsvButton')?.addEventListener('click', _exportInvoicesToCsv);
+                // Dodaj poslušalca dogodkov za filter
+                document.getElementById('dashboardYearFilter')?.addEventListener('change', _handleYearFilterChange);
+                _populateYearFilter(); // Napolni filter ob zagonu
             }
 
             return {
                 setupFabButtons,
                 updateDashboardCards,
                 checkInitialWarnings,
-                setupDashboardActions: _setupDashboardActions
+                setupDashboardActions: _setupDashboardActions,
+                getSelectedPeriod
             };
         })();
 
@@ -3948,7 +4582,7 @@
                     if (el && el.tagName === 'CANVAS') {
                         resolve(el.toDataURL('image/png'));
                     } else {
-                        reject(new Error('kjua ni vrnil canvas elementa.'));
+                        reject(new Error('Napaka.'));
                     }
                 } catch (error) {
                     reject(error);
@@ -4006,7 +4640,7 @@
                     // Vrstica 10: Nujno (opcijsko, "DA" če nujno)
                     '',
                     // Vrstica 11: Koda namena (OBVEZNO)
-                    sanitizeUpnString('COST', 4), // Ali druga ustrezna koda, npr. GDSV
+                    sanitizeUpnString('GDSV', 4), // Ali druga ustrezna koda, npr. GDSV
                     // Vrstica 12: Namen plačila (OBVEZNO)
                     sanitizeUpnString(`Plačilo računa št. ${invoice.number || 'N/A'}`, 42),
                     // Vrstica 13: Rok plačila (OBVEZNO, DD.MM.LLLL)
@@ -4072,6 +4706,248 @@
             };
         })();
 
+        // === MODUL: ExpenseManager (Upravljanje stroškov) ===
+        // Ta modul bo vseboval vso poslovno logiko za upravljanje s stroški.
+        const ExpenseManager = (function () {
+            // Konfiguracija za obrazec stroškov, ki jo bo uporabil FormBuilder.
+            const expenseFormFields = [
+                { id: 'expenseDate', name: 'date', errorId: 'expenseDateError', required: true, type: 'date', label: 'Datum stroška' },
+                { id: 'expenseDescription', name: 'description', errorId: 'expenseDescriptionError', required: true, maxLength: 150, label: 'Opis stroška', fullWidth: true },
+                { 
+                    id: 'expenseAmount', name: 'amount', errorId: 'expenseAmountError', required: true, type: 'text', inputmode: 'decimal', label: 'Znesek (€)',
+                    customValidation: (value) => {
+                        const numericValue = Utils.parsePriceFromInput(value);
+                        if (isNaN(numericValue)) return "Vnesite veljaven znesek.";
+                        if (numericValue <= 0) return "Znesek mora biti večji od 0.";
+                        return '';
+                    },
+                    getValue: (itemToEdit) => itemToEdit ? Utils.formatPriceForDisplay(itemToEdit.amount) : ''
+                },
+                { 
+                    id: 'expenseCategory', name: 'category', errorId: 'expenseCategoryError', required: true, type: 'select', label: 'Kategorija',
+                    options: [
+                        {v: 'Potni stroški', t: 'Potni stroški'},
+                        {v: 'Pisarniški material', t: 'Pisarniški material'},
+                        {v: 'Storitve (računovodstvo, svetovanje)', t: 'Storitve (računovodstvo, svetovanje)'},
+                        {v: 'Nakup opreme', t: 'Nakup opreme'},
+                        {v: 'Gostinstvo in reprezentanca', t: 'Gostinstvo in reprezentanca'},
+                        {v: 'Izobraževanje', t: 'Izobraževanje'},
+                        {v: 'Drugo', t: 'Drugo'}
+                    ],
+                    defaultValue: 'Drugo'
+                },
+                { id: 'expenseReceiptImage', name: 'receiptImage', errorId: 'expenseReceiptImageError', required: false, type: 'file', label: 'Slika računa/dokazila', accept: 'image/png, image/jpeg, image/gif', fullWidth: true }
+            ];
+
+            function openExpenseModal(expenseToEdit = null) {
+                const mainFields = expenseFormFields.filter(f => f.type !== 'file');
+                const imageFieldConfig = expenseFormFields.find(f => f.type === 'file');
+
+                const formElement = FormBuilder.buildForm('expenseFormModal', mainFields, expenseToEdit);
+
+                if (imageFieldConfig) {
+                    const imageFieldFragment = FormBuilder.createField(imageFieldConfig, expenseToEdit);
+                    const fileInput = imageFieldFragment.querySelector('input[type="file"]');
+                    
+                    const preview = document.createElement('img');
+                    preview.id = 'receiptPreview';
+                    preview.alt = 'Predogled računa';
+                    preview.style.cssText = 'max-width: 300px; max-height: 150px; display: none; margin-top: 0.5rem; border: 1px solid #ddd; padding: 2px;';
+
+                    const removeBtn = document.createElement('button');
+                    removeBtn.type = 'button';
+                    removeBtn.id = 'removeReceiptBtn';
+                    removeBtn.className = 'button button-sm button-danger';
+                    removeBtn.style.cssText = 'margin-top: 0.5rem; display: none;';
+                    removeBtn.innerHTML = '<i class="fas fa-times"></i> Odstrani sliko';
+
+                    const removeImageFlagInput = document.createElement('input');
+                    removeImageFlagInput.type = 'hidden';
+                    removeImageFlagInput.id = 'removeReceiptImageFlag';
+                    removeImageFlagInput.name = 'removeReceiptImage';
+                    removeImageFlagInput.value = 'false';
+
+                    const formGroup = imageFieldFragment.querySelector('.form-group');
+                    formGroup.appendChild(preview);
+                    formGroup.appendChild(removeBtn);
+                    formGroup.appendChild(removeImageFlagInput);
+
+                    fileInput.addEventListener('change', function(event) {
+                        const file = event.target.files[0];
+                        if (file) {
+                            const reader = new FileReader();
+                            reader.onload = function(e) {
+                                preview.src = e.target.result;
+                                preview.style.display = 'block';
+                                removeBtn.style.display = 'inline-block';
+                                removeImageFlagInput.value = 'false';
+                            }
+                            reader.readAsDataURL(file);
+                        }
+                    });
+
+                    removeBtn.addEventListener('click', () => {
+                        fileInput.value = ''; 
+                        preview.src = ''; 
+                        preview.style.display = 'none';
+                        removeBtn.style.display = 'none';
+                        removeImageFlagInput.value = 'true';
+                    });
+
+                    if (expenseToEdit && expenseToEdit.receiptImage) {
+                        preview.src = expenseToEdit.receiptImage;
+                        preview.style.display = 'block';
+                        removeBtn.style.display = 'inline-block';
+                    }
+
+                    formElement.appendChild(imageFieldFragment);
+                }
+
+                const footerHTML = `
+                    <button type="button" class="button button-cancel" id="cancelExpenseModalBtn">Prekliči</button>
+                    <button type="submit" form="expenseFormModal" class="button button-success">${expenseToEdit ? 'Shrani spremembe' : 'Dodaj strošek'}</button>
+                `;
+                ModalManager.openModal(expenseToEdit ? 'Uredi strošek' : 'Dodaj nov strošek', '', footerHTML);
+                
+                const modalBody = document.getElementById('modalBodyContent');
+                modalBody.innerHTML = '';
+                modalBody.appendChild(formElement);
+
+                document.getElementById('cancelExpenseModalBtn')?.addEventListener('click', ModalManager.closeModal);
+                formElement.addEventListener('submit', (event) => handleExpenseFormSubmit(event, expenseToEdit ? expenseToEdit.id : null));
+            }
+
+            function handleExpenseFormSubmit(event, editingId = null) {
+                event.preventDefault();
+                const form = event.target;
+                let isFormValid = true;
+
+                expenseFormFields.forEach(field => {
+                    const el = form.elements[field.name];
+                    if (el && field.type !== 'file' && !ValidationUtils.validateField(el, document.getElementById(field.errorId), field)) {
+                        isFormValid = false;
+                    }
+                });
+
+                if (isFormValid) {
+                    const expenseData = {};
+                    expenseFormFields.forEach(f => {
+                        if (f.type !== 'file') {
+                            if (f.name === 'amount') {
+                                expenseData[f.name] = Utils.parsePriceFromInput(form.elements[f.name].value);
+                            } else {
+                                expenseData[f.name] = form.elements[f.name]?.value;
+                            }
+                        }
+                    });
+
+                    const receiptFileInput = form.elements.receiptImage;
+                    const removeImageFlag = form.elements.removeReceiptImage?.value === 'true';
+                    let imagePromise;
+
+                    if (receiptFileInput && receiptFileInput.files && receiptFileInput.files[0]) {
+                        imagePromise = new Promise((resolve, reject) => {
+                            const reader = new FileReader();
+                            reader.onload = (e) => resolve(e.target.result);
+                            reader.onerror = (err) => reject(err);
+                            reader.readAsDataURL(receiptFileInput.files[0]);
+                        });
+                    } else if (editingId) {
+                        const existingExpense = AppStore.getData().expenses.find(e => e.id === editingId);
+                        if (removeImageFlag && existingExpense && existingExpense.receiptImage) {
+                            imagePromise = Promise.resolve(null);
+                        } else if (existingExpense && existingExpense.receiptImage) {
+                            imagePromise = Promise.resolve(existingExpense.receiptImage);
+                        } else {
+                            imagePromise = Promise.resolve(null);
+                        }
+                    } else {
+                        imagePromise = Promise.resolve(null);
+                    }
+
+                    imagePromise.then(receiptBase64 => {
+                        expenseData.receiptImage = receiptBase64;
+
+                        if (editingId) {
+                            AppStore.updateExpense(editingId, expenseData);
+                            ToastManager.showToast('Strošek uspešno posodobljen!');
+                        } else {
+                            AppStore.addExpense(expenseData);
+                            ToastManager.showToast('Strošek uspešno dodan!');
+                        }
+                        ModalManager.closeModal();
+                    }).catch(error => {
+                        console.error("Napaka pri obdelavi slike računa:", error);
+                        ToastManager.showToast('Napaka pri obdelavi slike računa.', 'error');
+                    });
+                } else {
+                    ToastManager.showToast('Prosimo, popravite napake v obrazcu.', 'error');
+                }
+            }
+
+            function deleteExpense(expenseId) {
+                if (confirm(`Ali ste prepričani, da želite izbrisati ta strošek?`)) {
+                    AppStore.deleteExpense(expenseId);
+                    ToastManager.showToast('Strošek izbrisan.');
+                }
+            }
+
+            function renderExpensesList() {
+                const currentData = AppStore.getData();
+                
+                // Pomožna funkcija za formatiranje datuma, zaenkrat lokalno.
+                function formatDate(dateStr) {
+                    if (!dateStr) return 'N/A';
+                    const date = new Date(dateStr);
+                    if (isNaN(date.getTime())) return 'N/A';
+                    return `${date.getDate().toString().padStart(2, '0')}.${(date.getMonth() + 1).toString().padStart(2, '0')}.${date.getFullYear()}`;
+                }
+
+                const renderExpenseCard = (expense, editFn, deleteFn) => {
+                    const card = document.createElement('div');
+                    card.className = 'item-card';
+                    
+                    const receiptImageHTML = expense.receiptImage
+                        ? `<p class="item-detail" style="margin-top: 0.5rem;"><strong>Slika računa:</strong> <img src="${expense.receiptImage}" alt="Račun" style="max-height: 40px; vertical-align: middle; border: 1px solid #eee; cursor: pointer;" title="Klikni za ogled slike"></p>`
+                        : '';
+
+                    card.innerHTML = `
+                        <div class="item-card-header">
+                            <span class="item-name">${expense.description}</span>
+                        </div>
+                        <div class="item-card-body">
+                            <p class="item-detail"><strong>Znesek:</strong> ${Utils.formatPriceForDisplay(expense.amount || 0)} €</p>
+                            <p class="item-detail"><strong>Datum:</strong> ${formatDate(expense.date)}</p>
+                            <p class="item-detail"><strong>Kategorija:</strong> ${expense.category}</p>
+                            ${receiptImageHTML}
+                        </div>
+                        <div class="item-card-actions">
+                            <button class="button button-sm button-primary edit-btn" data-id="${expense.id}" title="Uredi strošek"><i class="fas fa-edit"></i> Uredi</button>
+                            <button class="button button-sm button-danger delete-btn" data-id="${expense.id}" title="Izbriši strošek"><i class="fas fa-trash"></i> Izbriši</button>
+                        </div>
+                    `;
+                    
+                    card.querySelector('.edit-btn').addEventListener('click', (e) => editFn(e.currentTarget.dataset.id, openExpenseModal));
+                    card.querySelector('.delete-btn').addEventListener('click', (e) => deleteFn(e.currentTarget.dataset.id));
+                    
+                    const img = card.querySelector('img');
+                    if (img) { img.addEventListener('click', () => window.open(img.src, '_blank')); }
+
+                    return card;
+                };
+
+                Utils.renderItemsList('expensesListContainer', 'expensesEmptyState', currentData.expenses, renderExpenseCard,
+                    (id, modalOpener) => { const item = AppStore.getData().expenses.find(e => e.id === id); if(item) modalOpener(item); },
+                    deleteExpense, 'strošek');
+            }
+
+            // Javne metode
+            return {
+                openExpenseModal,
+                renderExpensesList
+            };
+        })();
+
         document.addEventListener('DOMContentLoaded', function () {
             function setupTabs() {
                 const tabButtons = document.querySelectorAll('.nav-tab-button');
@@ -4108,6 +4984,18 @@
                 });
             }
 
+            function checkForImportSuccess() {
+                if (sessionStorage.getItem('importSuccess') === 'true') {
+                    const timestamp = sessionStorage.getItem('importTimestamp');
+                    const importTime = new Date(timestamp).toLocaleString('sl-SI');
+                    ToastManager.showToast(`Podatki uspešno naloženi ${importTime}.`, 'success', 5000);
+                    
+                    // Počisti sessionStorage, da se sporočilo ne prikaže ponovno
+                    sessionStorage.removeItem('importSuccess');
+                    sessionStorage.removeItem('importTimestamp');
+                }
+            }
+
             setupTabs();
             
             AppStore.loadInitialData(); 
@@ -4116,11 +5004,14 @@
             ModalManager.setupModalTriggers();
             ModalManager.setupEventListeners();
             InvoiceManager.setupInvoiceFilters();
-            DashboardManager.setupFabButtons();
+            SettingsManager.initSettingsTab(); // Dodan klic za inicializacijo novih gumbov.
+            InvoiceManager.setupTableSorting();
             DashboardManager.setupDashboardActions();
             setupCollapsibles();
             
             refreshAllUI();
+
+            checkForImportSuccess();
         });
     </script>
 
